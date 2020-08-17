@@ -30,3 +30,13 @@ brew cask install vagrant
 # Start Development VM
 vagrant up
 ```
+
+## Nomad Jobs
+- [VSCode Server](https://coder.com/)
+- [Docker Registry](https://docs.docker.com/registry/deploying/)
+- [Home-Assistant](https://www.home-assistant.io/)
+- [Homebridge](https://homebridge.io/)
+- [Heimdall](https://heimdall.site/)
+
+## Resources
+- https://docs.diladele.com/docker/timezones.html
