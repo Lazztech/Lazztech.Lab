@@ -29,9 +29,18 @@ brew cask install vagrant
 
 # Start Development VM
 vagrant up
+vagrant ssh
+nomad agent -dev -bind 0.0.0.0
+```
+
+```bash
+# From Mac OS host machine
+open http://localhost:4646/
 ```
 
 ## Nomad Jobs
+- [Traefik](https://containo.us/traefik/)
+    - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
 - [VSCode Server](https://coder.com/)
 - [Docker Registry](https://docs.docker.com/registry/deploying/)
 - [Home-Assistant](https://www.home-assistant.io/)
@@ -40,3 +49,5 @@ vagrant up
 
 ## Resources
 - https://docs.diladele.com/docker/timezones.html
+- https://github.com/hashicorp/nomad/tree/master/terraform#provision-a-nomad-cluster-in-the-cloud
+- https://github.com/hashicorp/nomad/pull/7164
