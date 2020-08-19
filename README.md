@@ -5,7 +5,7 @@ This makes use of the Hashicorp stack of technologies for IaC(Infrastructure as 
 - https://www.hashicorp.com/
 - https://en.wikipedia.org/wiki/Infrastructure_as_code
 
-## Setup
+## WIP: Local Setup -- Broken
 *For Mac*
 
 ```bash
@@ -36,30 +36,44 @@ open http://localhost:4646/
 open http://localhost:8500/
 ```
 
-## Local Nomad Vagrant VM
-
+## WIP: Local Vagrant VM Setup -- Working
+*For Mac*
 
 ```bash
 # https://sourabhbajaj.com/mac-setup/Vagrant/README.html
 
 # Install Virtualbox
-brew cask install virtualbox
+MacBook:Lazztech.Infrastructure me$ brew cask install virtualbox
 # Install Vagrant
-brew cask install vagrant
+MacBook:Lazztech.Infrastructure me$ brew cask install vagrant
 ```
 
 ```bash
 # https://learn.hashicorp.com/tutorials/nomad/get-started-install?in=nomad/get-started#vagrant-setup-optional
 
 # Start Development VM
-vagrant up
-vagrant ssh
-nomad agent -dev -bind 0.0.0.0
+MacBook:Lazztech.Infrastructure me$ vagrant up
+# SSH Into VM
+MacBook:Lazztech.Infrastructure me$ vagrant ssh
+# From VM
+# Start Nomad in Dev Mode
+vagrant@nomad:~$ nomad agent -dev -bind 0.0.0.0
 ```
 
 ```bash
 # From Mac OS host machine
-open http://localhost:4646/
+# Check Nomad Status
+MacBook:Lazztech.Infrastructure me$ nomad status
+# Test Nomad UI
+MacBook:Lazztech.Infrastructure me$ nomad ui
+# Start Demo WebApp Job
+MacBook:Lazztech.Infrastructure me$ nomad job run jobs/webapp.nomad
+# Start Traefik Job
+MacBook:Lazztech.Infrastructure me$ nomad job run jobs/traefik.nomad 
+# Open Traefik UI
+MacBook:Lazztech.Infrastructure me$ open http://localhost:8081
+# Open Traefik Route to Demo WebApp Job
+MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp
 ```
 
 ## Azure Nomad Cluster

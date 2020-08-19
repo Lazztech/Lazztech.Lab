@@ -73,23 +73,30 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "nomad"
   config.vm.provision "shell", inline: $script, privileged: false
 
+  # Sync Nomad jobs folder
+  config.vm.synced_folder "./jobs", "/jobs"
+
   # Expose the nomad api and ui to the host
   config.vm.network "forwarded_port", guest: 4646, host: 4646, auto_correct: true, host_ip: "127.0.0.1"
 
+  # Expose the traefik api and ui to the host
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8081, host: 8081, auto_correct: true, host_ip: "127.0.0.1"
+
   # Increase memory for Parallels Desktop
   config.vm.provider "parallels" do |p, o|
-    p.memory = "1024"
+    p.memory = "2048"
   end
 
   # Increase memory for Virtualbox
   config.vm.provider "virtualbox" do |vb|
-        vb.memory = "1024"
+        vb.memory = "2048"
   end
 
   # Increase memory for VMware
   ["vmware_fusion", "vmware_workstation"].each do |p|
     config.vm.provider p do |v|
-      v.vmx["memsize"] = "1024"
+      v.vmx["memsize"] = "2048"
     end
   end
 end
