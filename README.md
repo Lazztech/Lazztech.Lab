@@ -80,3 +80,5 @@ open http://localhost:4646/
 - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
 - https://learn.hashicorp.com/collections/nomad/get-started
 - https://learn.hashicorp.com/tutorials/consul/get-started-explore-the-ui
+- https://github.com/docker/compose/issues/3800
+    - https://github.com/docker/compose/issues/3800#issuecomment-285271175

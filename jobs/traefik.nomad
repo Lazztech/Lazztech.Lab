@@ -11,7 +11,7 @@ job "traefik" {
 
       config {
         image        = "traefik:v2.2"
-        network_mode = "host"
+        // network_mode = "host" Doesn't work on Mac OS # https://github.com/docker/compose/issues/3800
 
         volumes = [
           "local/traefik.toml:/etc/traefik/traefik.toml",
@@ -36,7 +36,8 @@ job "traefik" {
     exposedByDefault = false
 
     [providers.consulCatalog.endpoint]
-      address = "127.0.0.1:8500"
+      # https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds
+      address = "host.docker.internal:8500"
       scheme  = "http"
 EOF
 
