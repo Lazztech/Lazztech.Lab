@@ -79,6 +79,9 @@ Vagrant.configure(2) do |config|
   # Expose the nomad api and ui to the host
   config.vm.network "forwarded_port", guest: 4646, host: 4646, auto_correct: true, host_ip: "127.0.0.1"
 
+    # Expose the consul api and ui to the host
+  config.vm.network "forwarded_port", guest: 8500, host: 8500, auto_correct: true, host_ip: "127.0.0.1"
+
   # Expose the traefik api and ui to the host
   config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 8081, host: 8081, auto_correct: true, host_ip: "127.0.0.1"

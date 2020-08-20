@@ -61,19 +61,27 @@ vagrant@nomad:~$ nomad agent -dev -bind 0.0.0.0
 ```
 
 ```bash
-# From Mac OS host machine
-# Check Nomad Status
-MacBook:Lazztech.Infrastructure me$ nomad status
 # Test Nomad UI
 MacBook:Lazztech.Infrastructure me$ nomad ui
-# Start Demo WebApp Job
-MacBook:Lazztech.Infrastructure me$ nomad job run jobs/webapp.nomad
 # Start Traefik Job
-MacBook:Lazztech.Infrastructure me$ nomad job run jobs/traefik.nomad 
+MacBook:Lazztech.Infrastructure me$ nomad job run jobs/traefik.nomad
+
+# Start Example Job 1
+MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp1.nomad
+# Start Example Job 2
+MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp2.nomad
+# Start Example Job 3
+MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp3.nomad
+
 # Open Traefik UI
 MacBook:Lazztech.Infrastructure me$ open http://localhost:8081
-# Open Traefik Route to Demo WebApp Job
-MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp
+
+# Open Traefik Route to  Example Job 1
+MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp1
+# Open Traefik Route to  Example Job 2
+MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
+# Open Traefik Route to  Example Job 3
+MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
 ```
 
 ## Azure Nomad Cluster
@@ -96,3 +104,4 @@ MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp
 - https://learn.hashicorp.com/tutorials/consul/get-started-explore-the-ui
 - https://github.com/docker/compose/issues/3800
     - https://github.com/docker/compose/issues/3800#issuecomment-285271175
+- https://docs.traefik.io/routing/routers/

@@ -1,8 +1,8 @@
-job "demo-webapp" {
+job "demo-webapp2" {
   datacenters = ["dc1"]
 
   group "demo" {
-    count = 3
+    count = 2
 
     task "server" {
       env {
@@ -24,12 +24,12 @@ job "demo-webapp" {
       }
 
       service {
-        name = "demo-webapp"
+        name = "demo-webapp2"
         port = "http"
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.http.rule=Path(`/myapp`)",
+          "traefik.http.routers.myOtherHttpRouter.rule=PathPrefix(`/myapp2`)",
         ]
 
         check {
