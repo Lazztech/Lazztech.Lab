@@ -28,6 +28,8 @@ job "traefik" {
     dashboard = true
     insecure  = true
 
+[accessLog]
+
 # Enable Consul Catalog configuration backend.
 [providers.consulCatalog]
     prefix           = "traefik"
