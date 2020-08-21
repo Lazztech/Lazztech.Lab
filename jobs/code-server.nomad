@@ -1,14 +1,10 @@
-job "vscode-server" {
+job "code-server" {
   datacenters = ["dc1"]
-  type = "service"
+  // type = "service"
 
-  group "development" {
+  group "code-server" {
     count = 1
-    # For more information and examples on the "ephemeral_disk" stanza, please
-    # see the online documentation at:
-    #
-    #     https://www.nomadproject.io/docs/job-specification/ephemeral_disk.html
-    #
+
     ephemeral_disk {
       sticky = true
       migrate = true
@@ -17,6 +13,15 @@ job "vscode-server" {
     }
 
     task "code-server" {
+      env {
+        "PUID" = "1000"
+        "PGID" = "1000"
+        "TZ" = "America/Los_Angeles"
+        // "PASSWORD" = "password" #optional
+        // "SUDO_PASSWORD" = "password" #optional
+        // "PROXY_DOMAIN" = "code-server.my.domain" #optional
+      }
+      
       driver = "docker"
 
       config {
@@ -44,15 +49,6 @@ job "vscode-server" {
         ]
       }
 
-      env {
-        "PUID" = "1000"
-        "PGID" = "1000"
-        "TZ" = "America/Los_Angeles"
-        // "PASSWORD" = "password" #optional
-        // "SUDO_PASSWORD" = "password" #optional
-        // "PROXY_DOMAIN" = "code-server.my.domain" #optional
-      }
-
       resources {
         cpu    = 500 # 500 MHz
         memory = 256 # 256MB
@@ -60,6 +56,23 @@ job "vscode-server" {
         network {
           mbits = 10
           port "http" {}
+        }
+      }
+
+      service {
+        name = "code-server"
+        port = "http"
+
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.code-server.rule=Host(`code.localhost`)"
+        ]
+
+        check {
+          type     = "http"
+          path     = "/"
+          interval = "2s"
+          timeout  = "2s"
         }
       }
     }
