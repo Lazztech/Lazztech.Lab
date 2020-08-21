@@ -88,18 +88,18 @@ Vagrant.configure(2) do |config|
 
   # Increase memory for Parallels Desktop
   config.vm.provider "parallels" do |p, o|
-    p.memory = "2048"
+    p.memory = "3072"
   end
 
   # Increase memory for Virtualbox
   config.vm.provider "virtualbox" do |vb|
-        vb.memory = "2048"
+        vb.memory = "3072"
   end
 
   # Increase memory for VMware
   ["vmware_fusion", "vmware_workstation"].each do |p|
     config.vm.provider p do |v|
-      v.vmx["memsize"] = "2048"
+      v.vmx["memsize"] = "3072"
     end
   end
 end
