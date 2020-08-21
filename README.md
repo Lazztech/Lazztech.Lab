@@ -5,36 +5,57 @@ This makes use of the Hashicorp stack of technologies for IaC(Infrastructure as 
 - https://www.hashicorp.com/
 - https://en.wikipedia.org/wiki/Infrastructure_as_code
 
-## WIP: Local Setup -- Broken
+## WIP: Local Setup -- Working
 *For Mac*
 
-```bash
-# https://brew.sh/
-
-# Install Brew Package Manger
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-```
+First install Docker for Mac:
+- https://docs.docker.com/docker-for-mac/install/
 
 ```bash
-# Install Nomad: https://learn.hashicorp.com/tutorials/nomad/get-started-install?in=nomad/get-started
-brew install nomad
-# Install Consul:
-brew install consul
+# install brew package manger
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
 
 ```bash
-# Start Nomad in Dev Mode:
-sudo nomad agent -dev
-# Start Consul in Dev Mode:
-sudo consul agent -dev -bind 127.0.0.1
+# install nomad: https://learn.hashicorp.com/tutorials/nomad/get-started-install?in=nomad/get-started
+$ brew install nomad
 ```
 
+```bash
+# start nomad in dev mode:
+$ sudo nomad agent -dev
+# start consul raw-exec nomad job
+$ nomad job run jobs/mac-exec/consul.nomad 
+# start traefik raw-exec nomad job
+$ nomad job run jobs/mac-exec/traefik.nomad
 ```
-# Open Nomad UI
-open http://localhost:4646/
-# Open Consul UI
-open http://localhost:8500/
+
+```bash
+# open nomad ui
+$ nomad ui
+# open consul ui
+$ open http://localhost:8500/
+# open traefik ui
+$ open http://127.0.0.1:8081/
 ```
+
+```bash
+# start example job 1
+$ nomad job run jobs/examples/webapp1.nomad
+# start example job 2
+$ nomad job run jobs/examples/webapp2.nomad
+# start example job 3
+$ nomad job run jobs/examples/webapp3.nomad
+
+# open traefik route to example job 1
+$ open http://localhost:8080/myapp1
+# open traefik route to example job 2
+$ open http://localhost:8080/myapp2
+# open traefik route to example job 3
+$ open http://localhost:8080/myapp3
+```
+
+
 
 ## WIP: Local Vagrant VM Setup -- Working
 *For Mac*
@@ -42,46 +63,45 @@ open http://localhost:8500/
 ```bash
 # https://sourabhbajaj.com/mac-setup/Vagrant/README.html
 
-# Install Virtualbox
+# install virtualbox
 MacBook:Lazztech.Infrastructure me$ brew cask install virtualbox
-# Install Vagrant
+# install vagrant
 MacBook:Lazztech.Infrastructure me$ brew cask install vagrant
 ```
 
 ```bash
 # https://learn.hashicorp.com/tutorials/nomad/get-started-install?in=nomad/get-started#vagrant-setup-optional
 
-# Start Development VM
+# start development vm
 MacBook:Lazztech.Infrastructure me$ vagrant up
-# SSH Into VM
+# ssh into vm
 MacBook:Lazztech.Infrastructure me$ vagrant ssh
-# From VM
-# Start Nomad in Dev Mode
+# from vm, start nomad in dev mod
 vagrant@nomad:~$ nomad agent -dev -bind 0.0.0.0
 ```
 
 ```bash
-# Test Nomad UI
+# test nomad ui
 MacBook:Lazztech.Infrastructure me$ nomad ui
-# Start Traefik Job
+# start traefik job
 MacBook:Lazztech.Infrastructure me$ nomad job run jobs/traefik.nomad
 
-# Start Example Job 1
+# start example job 1
 MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp1.nomad
-# Start Example Job 2
+# start example job 2
 MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp2.nomad
-# Start Example Job 3
+# start example job 3
 MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp3.nomad
 
-# Open Traefik UI
+# open traefik ui
 MacBook:Lazztech.Infrastructure me$ open http://localhost:8081
 
-# Open Traefik Route to  Example Job 1
+# open traefik route to example job 1
 MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp1
-# Open Traefik Route to  Example Job 2
+# open traefik route to example job 2
 MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
-# Open Traefik Route to  Example Job 3
-MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
+# open traefik route to example job 3
+MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp3
 ```
 
 ## Azure Nomad Cluster
@@ -96,7 +116,12 @@ MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
 - [Heimdall](https://heimdall.site/)
 
 ## Resources
+
+**Documentation:**
 - https://docs.diladele.com/docker/timezones.html
+- https://docs.traefik.io/routing/routers/
+
+**Articles:**
 - https://github.com/hashicorp/nomad/tree/master/terraform#provision-a-nomad-cluster-in-the-cloud
 - https://github.com/hashicorp/nomad/pull/7164
 - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
@@ -104,4 +129,5 @@ MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
 - https://learn.hashicorp.com/tutorials/consul/get-started-explore-the-ui
 - https://github.com/docker/compose/issues/3800
     - https://github.com/docker/compose/issues/3800#issuecomment-285271175
-- https://docs.traefik.io/routing/routers/
+
+**Media:**
