@@ -58,6 +58,23 @@ job "heimdall" {
           port "https" {}
         }
       }
+
+      service {
+        name = "heimdall"
+        port = "http"
+
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.heimdall.rule=Host(`heimdall.localhost`)"
+        ]
+
+        check {
+          type     = "http"
+          path     = "/"
+          interval = "2s"
+          timeout  = "2s"
+        }
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ job "home-assistant" {
   datacenters = ["dc1"]
   type = "service"
 
-  group "smart-home" {
+  group "home-assistant" {
     count = 1
 
     # The "ephemeral_disk" stanza instructs Nomad to utilize an ephemeral disk
@@ -31,7 +31,7 @@ job "home-assistant" {
       size = 300
     }
 
-    task "home-assistant-server" {
+    task "home-assistant" {
       driver = "docker"
 
       config {
@@ -54,6 +54,23 @@ job "home-assistant" {
         network {
           mbits = 10
           port "http" {}
+        }
+      }
+
+      service {
+        name = "home-assistant"
+        port = "http"
+
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.home-assistant.rule=Host(`home-assistant.localhost`)"
+        ]
+
+        check {
+          type     = "http"
+          path     = "/"
+          interval = "2s"
+          timeout  = "2s"
         }
       }
     }

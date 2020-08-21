@@ -66,6 +66,23 @@ job "homebridge" {
           port "http" {}
         }
       }
+
+      service {
+        name = "homebridge"
+        port = "http"
+
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.homebridge.rule=Host(`homebridge.localhost`)",
+        ]
+
+        check {
+          type     = "http"
+          path     = "/"
+          interval = "2s"
+          timeout  = "2s"
+        }
+      }
     }
   }
 }
