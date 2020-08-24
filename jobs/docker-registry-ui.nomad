@@ -1,4 +1,11 @@
-job "docker-registry" {
+// docker run \
+// -d \
+// -p 80:80 \
+// -e URL=http://127.0.0.1:5000 \
+// -e DELETE_IMAGES=true \ 
+// joxit/docker-registry-ui:static
+
+job "docker-registry-ui" {
   datacenters = ["dc1"]
   type = "service"
 
@@ -9,12 +16,16 @@ job "docker-registry" {
       migrate = true
       size = 300
     }
-    task "docker-registry" {
+    task "docker-registry-ui" {
       driver = "docker"
+      env {
+        "URL" = "http://registry.localhost:8080/"
+        "DELETE_IMAGES" = "true"
+      }
       config {
-        image = "registry:2"
+        image = "joxit/docker-registry-ui:static"
         port_map {
-          http = 5000
+          http = 80
         }
       }
       resources {
@@ -27,13 +38,12 @@ job "docker-registry" {
         }
       }
       service {
-        name = "docker-registry"
+        name = "docker-registry-ui"
         port = "http"
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.docker-registry.rule=HostRegexp(`registry.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
-
+          "traefik.http.routers.docker-registry-ui.rule=HostRegexp(`registry-ui.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
         ]
 
         check {

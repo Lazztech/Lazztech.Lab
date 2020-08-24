@@ -116,9 +116,11 @@ MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp3
 
 ## Nomad Jobs
 - [Traefik](https://containo.us/traefik/)
-    - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
+- [Consul](https://www.hashicorp.com/products/consul/)
+- [Vault](https://www.hashicorp.com/products/vault/)
 - [VSCode Server](https://coder.com/)
 - [Docker Registry](https://docs.docker.com/registry/deploying/)
+- [Docker Registry UI](https://github.com/Joxit/docker-registry-ui)
 - [Home-Assistant](https://www.home-assistant.io/)
 - [Homebridge](https://homebridge.io/)
 - [Heimdall](https://heimdall.site/)
