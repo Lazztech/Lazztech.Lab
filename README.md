@@ -28,6 +28,8 @@ $ sudo nomad agent -dev -bind 0.0.0.0
 $ nomad job run jobs/mac-exec/consul.nomad 
 # start traefik raw-exec nomad job
 $ nomad job run jobs/mac-exec/traefik.nomad
+# start vault raw-exec nomad job
+$ nomad job run jobs/mac-exec/vault.nomad
 ```
 
 ```bash
@@ -37,6 +39,8 @@ $ nomad ui
 $ open http://localhost:8500/
 # open traefik ui
 $ open http://127.0.0.1:8081/
+# open vault ui
+$ open http://127.0.0.1:8200/
 ```
 
 ```bash
@@ -46,6 +50,8 @@ $ nomad job run jobs/examples/webapp1.nomad
 $ nomad job run jobs/examples/webapp2.nomad
 # start example job 3
 $ nomad job run jobs/examples/webapp3.nomad
+# start example job 4
+$ nomad job run jobs/examples/webapp4.nomad
 
 # open traefik route to example job 1
 $ open http://localhost:8080/myapp1
@@ -53,6 +59,8 @@ $ open http://localhost:8080/myapp1
 $ open http://localhost:8080/myapp2
 # open traefik route to example job 3
 $ open http://localhost:8080/myapp3
+# open traefik route to example job 4
+$ open http://myapp.localhost:8080/
 ```
 
 
