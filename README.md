@@ -63,8 +63,6 @@ $ open http://localhost:8080/myapp3
 $ open http://myapp.localhost:8080/
 ```
 
-
-
 ## WIP: Local Vagrant VM Setup -- Working
 *For Mac*
 
@@ -112,7 +110,25 @@ MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
 MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp3
 ```
 
-## Azure Nomad Cluster
+## WIP: On-Prem
+*For Mac*
+
+```bash
+# start nomad server agent
+$ nomad agent -config on-prem/server.hcl
+# start nomad client agent 1
+$ sudo nomad agent -config on-prem/client1.hcl
+# start nomad client agent 2
+$ sudo nomad agent -config on-prem/client2.hcl
+
+# run nomad node status to verify the clients are up
+$ nomad node status
+ID        DC   Name     Class   Drain  Eligibility  Status
+fca62612  dc1  client1  <none>  false  eligible     ready
+c887deef  dc1  client2  <none>  false  eligible     ready
+```
+
+## Soon: Azure
 
 ## Nomad Jobs
 - [Traefik](https://containo.us/traefik/)
