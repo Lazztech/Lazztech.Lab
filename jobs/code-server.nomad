@@ -15,6 +15,7 @@
 job "code-server" {
   datacenters = ["dc1"]
   type = "service"
+  
   group "code-server" {
     count = 1
     ephemeral_disk {
@@ -53,7 +54,7 @@ job "code-server" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.code-server.rule=Host(`code.localhost`)"
+          "traefik.http.routers.code-server.rule=HostRegexp(`code.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
         ]
 
         check {

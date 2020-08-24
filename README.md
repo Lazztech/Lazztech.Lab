@@ -23,7 +23,7 @@ $ brew install nomad
 
 ```bash
 # start nomad in dev mode:
-$ sudo nomad agent -dev
+$ sudo nomad agent -dev -bind 0.0.0.0
 # start consul raw-exec nomad job
 $ nomad job run jobs/mac-exec/consul.nomad 
 # start traefik raw-exec nomad job
@@ -120,6 +120,8 @@ MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp3
 **Documentation:**
 - https://docs.diladele.com/docker/timezones.html
 - https://docs.traefik.io/routing/routers/
+- https://regex101.com/
+- https://containo.us/traefik/
 
 **Articles:**
 - https://github.com/hashicorp/nomad/tree/master/terraform#provision-a-nomad-cluster-in-the-cloud

@@ -1,4 +1,4 @@
-job "demo-webapp1" {
+job "demo-webapp4" {
   datacenters = ["dc1"]
 
   group "demo" {
@@ -24,12 +24,13 @@ job "demo-webapp1" {
       }
 
       service {
-        name = "demo-webapp1"
+        name = "demo-webapp4"
         port = "http"
 
+        // test regex: https://regex101.com/r/qPKqS3/2
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.webapp4.rule=Host(`example.localhost`)"
+          "traefik.http.routers.webapp4.rule=HostRegexp(`myapp.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)",
         ]
 
         check {
