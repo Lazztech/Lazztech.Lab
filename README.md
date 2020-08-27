@@ -140,6 +140,8 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Home-Assistant](https://www.home-assistant.io/)
 - [Homebridge](https://homebridge.io/)
 - [Heimdall](https://heimdall.site/)
+- [Shlink](https://shlink.io/)
+- [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 
 ## Resources
 
