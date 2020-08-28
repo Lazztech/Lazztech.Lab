@@ -21,3 +21,9 @@ client {
 ports {
     http = 5656
 }
+
+plugin "docker" {
+  config {
+    allow_caps = ["ALL"]
+  }
+}

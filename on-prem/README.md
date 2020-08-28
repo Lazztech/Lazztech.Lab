@@ -25,3 +25,5 @@ $ consul agent \
   -data-dir=/tmp/consul \
   -config-dir=/etc/consul.d
 ```
+- setup wireguard vpn
+  - add `allow_caps = ["ALL"]` to nomad client.hcl plugin "docker" config
