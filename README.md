@@ -142,6 +142,7 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Heimdall](https://heimdall.site/)
 - [Shlink](https://shlink.io/)
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
+- [Trango](https://web.trango.io/)
 
 ## Resources
 
