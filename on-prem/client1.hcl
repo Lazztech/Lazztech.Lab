@@ -15,6 +15,11 @@ client {
     # this should be like "nomad.service.consul:4647" and a system
     # like Consul used for service discovery.
     servers = ["127.0.0.1:4647"]
+
+  host_volume "acme" {
+    path     = "/acme"
+    read_only = false
+  }
 }
 
 # Modify our port to avoid a collision with server1

@@ -6,8 +6,20 @@ job "traefik" {
   group "traefik" {
     count = 1
 
+    volume "acme" {
+      type      = "host"
+      read_only = false
+      source    = "acme"
+    }
+
     task "traefik" {
       driver = "docker"
+
+      volume_mount {
+        volume      = "acme"
+        destination = "/acme"
+        read_only   = false
+      }
 
       config {
         image        = "traefik:v2.2"
@@ -22,9 +34,23 @@ job "traefik" {
         data = <<EOF
 [entryPoints]
     [entryPoints.http]
-    address = ":8080"
+    address = ":80"
+    [entryPoints.https]
+    address = ":443"
     [entryPoints.traefik]
     address = ":8081"
+
+[accessLog]
+[log]
+  level = "DEBUG"
+  filepath = "/var/log/traefik.log"
+
+[certificatesResolvers.letsencrypt.acme]
+  email = "gianlazzarini@gmail.com"
+  storage = "acme.json"
+  [certificatesResolvers.letsencrypt.acme.httpChallenge]
+    # used during the challenge
+    entryPoint = "http"
 
 [api]
     dashboard = true
@@ -52,9 +78,11 @@ EOF
           mbits = 10
 
           port "http" {
-            static = 8080
+            static = 80
           }
-
+          port "https" {
+            static = 443
+          }
           port "api" {
             static = 8081
           }
@@ -63,6 +91,16 @@ EOF
 
       service {
         name = "traefik"
+
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.api.rule=Host(`traefik.lazz.tech`, `traefik.localhost`)",
+          "traefik.http.routers.api.entrypoints=https",
+          "traefik.http.routers.api.service=api@internal",
+          "traefik.http.routers.api.tls=true",
+          "traefik.http.routers.api.tls.certresolver=letsencrypt",
+          "traefik.http.routers.api.middlewares=authelia@docker",
+        ]
 
         check {
           name     = "alive"
