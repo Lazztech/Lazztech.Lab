@@ -41,7 +41,7 @@ job "home-assistant" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.home-assistant.rule=HostRegexp(`home-assistant.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.home-assistant.rule=HostRegexp(`home-assistant.lazz.tech`)"
         ]
 
         check {

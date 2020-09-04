@@ -60,7 +60,7 @@ EOF
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.shlink-ui.rule=HostRegexp(`urls.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.shlink-ui.rule=HostRegexp(`urls.lazz.tech`)"
         ]
 
         check {

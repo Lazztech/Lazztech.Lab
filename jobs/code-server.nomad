@@ -54,7 +54,7 @@ job "code-server" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.code-server.rule=HostRegexp(`code.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.code-server.rule=Host(`code.lazz.tech`)",
         ]
 
         check {

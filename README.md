@@ -5,6 +5,27 @@ This makes use of the Hashicorp stack of technologies for IaC(Infrastructure as 
 - https://www.hashicorp.com/
 - https://en.wikipedia.org/wiki/Infrastructure_as_code
 
+## Setting Hosts File
+*For Mac*
+
+```bash
+$ sudo nano /etc/hosts
+# add the line below
+192.168.1.11    lazz.tech
+192.168.1.11    code.lazz.tech
+192.168.1.11    traefik.lazz.tech
+192.168.1.11    consul.lazz.tech
+192.168.1.11    nomad.lazz.tech
+192.168.1.11    vault-ui.lazz.tech
+```
+
+```bash
+# flush dns cache
+$ sudo killall -HUP mDNSResponder
+# flush chrome dns by opening the following as a url
+chrome://net-internals/#dns
+```
+
 ## WIP: Local Setup -- Working
 *For Mac*
 
@@ -152,6 +173,7 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://docs.traefik.io/routing/routers/
 - https://regex101.com/
 - https://containo.us/traefik/
+- https://docs.traefik.io/https/acme/
 
 **Articles:**
 - https://github.com/hashicorp/nomad/tree/master/terraform#provision-a-nomad-cluster-in-the-cloud

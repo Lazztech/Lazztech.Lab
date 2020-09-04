@@ -43,7 +43,7 @@ job "docker-registry-ui" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.docker-registry-ui.rule=HostRegexp(`registry-ui.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.docker-registry-ui.rule=HostRegexp(`registry-ui.lazz.tech`)"
         ]
 
         check {

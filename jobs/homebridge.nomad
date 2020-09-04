@@ -45,7 +45,7 @@ job "homebridge" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.homebridge.rule=HostRegexp(`homebridge.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.homebridge.rule=HostRegexp(`homebridge.lazz.tech`)"
         ]
 
         check {

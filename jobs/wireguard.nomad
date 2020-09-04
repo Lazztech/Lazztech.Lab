@@ -72,7 +72,7 @@ job "wireguard" {
 
 		tags = [
 		  "traefik.enable=true",
-		  "traefik.http.routers.wireguard.rule=HostRegexp(`wireguard.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+		  "traefik.http.routers.wireguard.rule=HostRegexp(`wireguard.lazz.tech`)"
 		]
 
 		check {

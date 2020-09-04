@@ -40,7 +40,7 @@ job "trango" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.trango.rule=HostRegexp(`trango.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.trango.rule=HostRegexp(`trango.lazz.tech`)"
         ]
 
         check {

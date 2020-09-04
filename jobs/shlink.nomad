@@ -49,7 +49,7 @@ job "shlink" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.shlink.rule=HostRegexp(`url.{domainWildCardRegex:[a-zA-Z0-9+.]+}`)"
+          "traefik.http.routers.shlink.rule=HostRegexp(`url.lazz.tech`)"
         ]
 
         check {

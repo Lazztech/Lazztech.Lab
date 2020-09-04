@@ -94,7 +94,7 @@ EOF
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.api.rule=Host(`traefik.lazz.tech`, `traefik.localhost`)",
+          "traefik.http.routers.api.rule=Host(`traefik.lazz.tech`)",
           "traefik.http.routers.api.entrypoints=https",
           "traefik.http.routers.api.service=api@internal",
           "traefik.http.routers.api.tls=true",
