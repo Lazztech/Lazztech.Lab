@@ -38,7 +38,7 @@ job "wireguard" {
 		"TZ" = "America/Los_Angeles"
 		"SERVERURL" = "auto"
 		"SERVERPORT" = "51820"
-		"PEERS" = "1"
+		"PEERS" = "2"
 		"PEERDNS" = "auto"
 		"INTERNAL_SUBNET" = "10.13.13.0"
 	  }
