@@ -27,6 +27,7 @@ job "traefik" {
 
         volumes = [
           "local/traefik.toml:/etc/traefik/traefik.toml",
+          "local/providers.toml:/etc/traefik/providers.toml"
         ]
       }
 
@@ -62,12 +63,38 @@ job "traefik" {
     exposedByDefault = false
 
     [providers.consulCatalog.endpoint]
-      # https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds
       address = "127.0.0.1:8500"
       scheme  = "http"
+      
+[providers.file]
+    filename = "/etc/traefik/providers.toml"
 EOF
 
         destination = "local/traefik.toml"
+      }
+
+      template {
+        data = <<EOF
+        [http.routers]
+          [http.routers.nomad]
+            service = "nomad"
+            rule = "Host(`nomad.lazz.tech`)"
+          [http.routers.vault]
+            service = "vault"
+            rule = "Host(`vault-ui.lazz.tech`)"
+          [http.routers.consul]
+            service = "consul"
+            rule = "Host(`consul.lazz.tech`)"
+    
+        [http.services]
+          [[http.services.nomad.loadBalancer.servers]]
+            url = "http://127.0.0.1:4646/"
+          [[http.services.consul.loadBalancer.servers]]
+            url = "http://127.0.0.1:8500/"
+          [[http.services.vault.loadBalancer.servers]]
+            url = "http://127.0.0.1:8200/"
+EOF
+        destination = "local/providers.toml"
       }
 
       resources {
