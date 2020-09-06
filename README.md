@@ -12,11 +12,22 @@ This makes use of the Hashicorp stack of technologies for IaC(Infrastructure as 
 $ sudo nano /etc/hosts
 # add the line below
 192.168.1.11    lazz.tech
-192.168.1.11    code.lazz.tech
+
+192.168.1.11    nomad.lazz.tech
 192.168.1.11    traefik.lazz.tech
 192.168.1.11    consul.lazz.tech
-192.168.1.11    nomad.lazz.tech
 192.168.1.11    vault-ui.lazz.tech
+
+192.168.1.11    code.lazz.tech
+192.168.1.11    registry.lazz.tech
+192.168.1.11    registry-ui.lazz.tech
+192.168.1.11    home-assistant.lazz.tech
+192.168.1.11    heimdall.lazz.tech
+192.168.1.11    homebridge.lazz.tech
+192.168.1.11    url.lazz.tech
+192.168.1.11    urls.lazz.tech
+192.168.1.11    trango.lazz.tech
+192.168.1.11    wireguard.lazz.tech
 ```
 
 ```bash
@@ -165,6 +176,8 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 - [Trango](https://web.trango.io/)
 - [WireGuard](https://www.wireguard.com/)
+- [WireGuard UI](https://github.com/subspacecloud/subspace)
+- [Authelia](https://www.authelia.com/)
 
 ## Resources
 
@@ -175,7 +188,6 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://containo.us/traefik/
 - https://docs.traefik.io/https/acme/
 
-**Articles:**
 - https://github.com/hashicorp/nomad/tree/master/terraform#provision-a-nomad-cluster-in-the-cloud
 - https://github.com/hashicorp/nomad/pull/7164
 - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
@@ -183,5 +195,7 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://learn.hashicorp.com/tutorials/consul/get-started-explore-the-ui
 - https://github.com/docker/compose/issues/3800
     - https://github.com/docker/compose/issues/3800#issuecomment-285271175
+- https://news.ycombinator.com/item?id=23243248
+- https://www.reddit.com/r/selfhosted/comments/ajxtg3/a_simple_wireguard_vpn_server_gui/
 
 **Media:**
