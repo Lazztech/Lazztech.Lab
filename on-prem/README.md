@@ -27,3 +27,17 @@ $ consul agent \
 ```
 - setup wireguard vpn
   - add `allow_caps = ["ALL"]` to nomad client.hcl plugin "docker" config
+
+## UDM
+- https://community.ui.com/questions/UDM-UDMPro-Is-it-possible-to-redirect-Hard-coded-DNS-request-by-clients/00088d27-c8b0-42fa-9665-71988d7dbd15
+```
+$ ssh root@192.168.1.1
+
+# echo "192.168.1.11 my.dns.name" >> /etc/hosts
+
+# pkill -HUP dnsmasq  # tell dnsmasq to reload the hosts file
+
+# nslookup my.dns.name  # confirm the address has been mapped as you expect
+Name:      my.dns.nz
+Address 1: 192.168.1.11 my.dns.name
+```
