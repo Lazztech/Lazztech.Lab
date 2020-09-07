@@ -181,13 +181,11 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 
 ## Resources
 
-**Documentation:**
 - https://docs.diladele.com/docker/timezones.html
 - https://docs.traefik.io/routing/routers/
 - https://regex101.com/
 - https://containo.us/traefik/
 - https://docs.traefik.io/https/acme/
-
 - https://github.com/hashicorp/nomad/tree/master/terraform#provision-a-nomad-cluster-in-the-cloud
 - https://github.com/hashicorp/nomad/pull/7164
 - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
@@ -197,5 +195,10 @@ c887deef  dc1  client2  <none>  false  eligible     ready
     - https://github.com/docker/compose/issues/3800#issuecomment-285271175
 - https://news.ycombinator.com/item?id=23243248
 - https://www.reddit.com/r/selfhosted/comments/ajxtg3/a_simple_wireguard_vpn_server_gui/
+- https://www.notion.so/Server-Configs-487708332a2a49b18fa345111b48de58
 
-**Media:**
+## Inspiration
+- http://blog.codeday.org/hashicorp-nomad-howto
+- https://www.reddit.com/r/selfhosted/
+- https://www.reddit.com/r/homelab/
+- https://www.reddit.com/r/startpages/
