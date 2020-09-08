@@ -42,7 +42,7 @@ job "heimdall" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.heimdall.rule=HostRegexp(`heimdall.lazz.tech`)"
+          "traefik.http.routers.heimdall.rule=HostRegexp(`heimdall.lazz.tech`, `home`)"
         ]
 
         check {
