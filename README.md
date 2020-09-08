@@ -11,8 +11,6 @@ This makes use of the Hashicorp stack of technologies for IaC(Infrastructure as 
 ```bash
 $ sudo nano /etc/hosts
 # add the line below
-192.168.1.11    lazz.tech
-
 192.168.1.11    nomad.lazz.tech
 192.168.1.11    traefik.lazz.tech
 192.168.1.11    consul.lazz.tech
