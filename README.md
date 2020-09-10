@@ -26,6 +26,7 @@ $ sudo nano /etc/hosts
 192.168.1.11    urls.lazz.tech
 192.168.1.11    trango.lazz.tech
 192.168.1.11    wireguard.lazz.tech
+192.168.1.11    wiki.lazz.tech
 ```
 
 ```bash
@@ -174,8 +175,9 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 - [Trango](https://web.trango.io/)
 - [WireGuard](https://www.wireguard.com/)
-- [WireGuard UI](https://github.com/subspacecloud/subspace)
-- [Authelia](https://www.authelia.com/)
+- [DokuWiki](https://www.dokuwiki.org/dokuwiki)
+<!-- - [WireGuard UI](https://github.com/subspacecloud/subspace)
+- [Authelia](https://www.authelia.com/) -->
 
 ## Resources
 
