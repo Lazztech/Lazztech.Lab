@@ -27,6 +27,21 @@ $ consul agent \
 ```
 - setup wireguard vpn
   - add `allow_caps = ["ALL"]` to nomad client.hcl plugin "docker" config
+- setup ssh
+  - https://linuxconfig.org/enable-ssh-on-ubuntu-20-04-focal-fossa-linux
+```bash
+$ sudo apt install ssh
+$ sudo systemctl enable --now ssh
+$ sudo systemctl status ssh
+```
+
+```bash
+$ ssh gian@192.168.1.11
+```
+- setup host path for dokuwiki volume
+```bash
+$ sudo mkdir -p /opt/dokuwiki/
+```
 
 ## UDM
 

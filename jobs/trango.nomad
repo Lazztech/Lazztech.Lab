@@ -4,6 +4,9 @@
 //    -p 443:443 \
 //    --name trango \
 //    tak786/trango-self-hosted
+//
+// Upon first install go to https://$IP:$PORT/
+// on chrome you may need to click anyware and type "thisisunsafe"
 
 job "trango" {
   datacenters = ["dc1"]
@@ -21,8 +24,7 @@ job "trango" {
       config {
         image = "tak786/trango-self-hosted"
         port_map {
-          http = 80
-        //   https = 443
+          https = 443
         }
       }
       resources {
@@ -32,11 +34,12 @@ job "trango" {
         network {
           mbits = 10
           port "http" {}
+          port "https" {}
         }
       }
       service {
         name = "trango"
-        port = "http"
+        port = "https"
 
         tags = [
           "traefik.enable=true",
@@ -44,7 +47,7 @@ job "trango" {
         ]
 
         check {
-          type     = "http"
+          type     = "tcp"
           path     = "/"
           interval = "2s"
           timeout  = "2s"
