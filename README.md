@@ -174,11 +174,26 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Heimdall](https://heimdall.site/)
 - [Shlink](https://shlink.io/)
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
-- [Trango](https://web.trango.io/)
 - [WireGuard](https://www.wireguard.com/)
 - [DokuWiki](https://www.dokuwiki.org/dokuwiki)
 <!-- - [WireGuard UI](https://github.com/subspacecloud/subspace)
 - [Authelia](https://www.authelia.com/) -->
+
+**Watching**
+- VPN
+    - [Mistborn](https://gitlab.com/cyber5k/mistborn)
+    - [Pritunl](https://pritunl.com/)
+- Wiki
+    - [Wiki.js](https://wiki.js.org/)
+    - [Bookstack](https://www.bookstackapp.com/)
+    - [Outline](https://github.com/outline/outline)
+    - [TiddlyWiki](https://tiddlywiki.com/)
+- Chat/Communication/Filesharing
+    - [Trango](https://web.trango.io/)
+    - [Mattermost](https://mattermost.com/)
+- Storage
+    - [Minio](https://min.io/)
+
 
 ## Resources
 
