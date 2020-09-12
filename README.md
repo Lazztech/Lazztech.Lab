@@ -176,13 +176,18 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 - [WireGuard](https://www.wireguard.com/)
 - [DokuWiki](https://www.dokuwiki.org/dokuwiki)
-<!-- - [WireGuard UI](https://github.com/subspacecloud/subspace)
-- [Authelia](https://www.authelia.com/) -->
 
 **Watching**
 - VPN
     - [Mistborn](https://gitlab.com/cyber5k/mistborn)
     - [Pritunl](https://pritunl.com/)
+    - [WireGuard UI](https://github.com/subspacecloud/subspace)
+    - [wg-manager](https://github.com/perara/wg-manager)
+    - [wirt](https://wirt.network/)
+    - [wg-access-server](https://github.com/Place1/wg-access-server)
+    - [algo](https://github.com/trailofbits/algo)
+- Account/User Management
+    - [Authelia](https://www.authelia.com/)
 - Wiki
     - [Wiki.js](https://wiki.js.org/)
     - [Bookstack](https://www.bookstackapp.com/)
@@ -193,6 +198,9 @@ c887deef  dc1  client2  <none>  false  eligible     ready
     - [Mattermost](https://mattermost.com/)
 - Storage
     - [Minio](https://min.io/)
+- StartPage/Dashboard
+    - [Homer](https://github.com/bastienwirtz/homer)
+
 
 
 ## Resources
