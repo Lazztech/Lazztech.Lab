@@ -27,6 +27,7 @@ $ sudo nano /etc/hosts
 192.168.1.11    trango.lazz.tech
 192.168.1.11    wireguard.lazz.tech
 192.168.1.11    wiki.lazz.tech
+192.168.1.11    subspace.lazz.tech
 ```
 
 ```bash
@@ -191,11 +192,13 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://learn.hashicorp.com/tutorials/nomad/load-balancing-traefik
 - https://learn.hashicorp.com/collections/nomad/get-started
 - https://learn.hashicorp.com/tutorials/consul/get-started-explore-the-ui
+- https://medium.com/hashicorp-engineering/hashicorp-nomad-from-zero-to-wow-1615345aa539
 - https://github.com/docker/compose/issues/3800
     - https://github.com/docker/compose/issues/3800#issuecomment-285271175
 - https://news.ycombinator.com/item?id=23243248
 - https://www.reddit.com/r/selfhosted/comments/ajxtg3/a_simple_wireguard_vpn_server_gui/
 - https://www.notion.so/Server-Configs-487708332a2a49b18fa345111b48de58
+- https://github.com/codeday/containercfg
 
 ## Inspiration
 - http://blog.codeday.org/hashicorp-nomad-howto
