@@ -181,11 +181,12 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - VPN
     - [Mistborn](https://gitlab.com/cyber5k/mistborn)
     - [Pritunl](https://pritunl.com/)
-    - [WireGuard UI](https://github.com/subspacecloud/subspace)
+    - [subspace WireGuard UI](https://github.com/subspacecloud/subspace)
     - [wg-manager](https://github.com/perara/wg-manager)
     - [wirt](https://wirt.network/)
     - [wg-access-server](https://github.com/Place1/wg-access-server)
-    - [algo](https://github.com/trailofbits/algo)
+    - [wg-gen-web](https://github.com/vx3r/wg-gen-web)
+    - [wg-ui](https://github.com/EmbarkStudios/wg-ui)
 - Account/User Management
     - [Authelia](https://www.authelia.com/)
 - Wiki
@@ -201,7 +202,14 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - StartPage/Dashboard
     - [Homer](https://github.com/bastienwirtz/homer)
 
-
+**Pass**
+- VPN
+    - [algo](https://github.com/trailofbits/algo)
+        - Ansible script based, & no UI
+    - [tunesafe](https://tunsafe.com/)
+        - Is Wireguard based, though iOS app not supported in the US
+    - [tailscale](https://tailscale.com/)
+        - Is Wireguard based, has nice UI & app though it's not got a permissive license on source
 
 ## Resources
 
