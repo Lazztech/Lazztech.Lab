@@ -171,7 +171,7 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Docker Registry UI](https://github.com/Joxit/docker-registry-ui)
 - [Home-Assistant](https://www.home-assistant.io/)
 - [Homebridge](https://homebridge.io/)
-- [Heimdall](https://heimdall.site/)
+- [Heimdall | Stars 2.1k](https://heimdall.site/)
 - [Shlink](https://shlink.io/)
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 - [WireGuard](https://www.wireguard.com/)
@@ -180,11 +180,20 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 **Watching**
 - VPN
     - [Subspace WireGuard UI | Stars 1.5k*](https://github.com/subspacecloud/subspace)
+        - MIT license
+        - Supports SSO
+        - Supports Docker though it expects wg to be installed on the host
+    - [Subspace Community Fork | Stars 1.1k*](https://github.com/subspacecommunity/subspace)
+        - Continued maintenance as a community fork
+        - Supports custom themes
+        - [use wireguard running on another container instead of host #45](https://github.com/subspacecommunity/subspace/issues/45)
     - [Pritunl | Stars 2.8k*](https://pritunl.com/)
     - [Mistborn | Stars 110*](https://gitlab.com/cyber5k/mistborn)
-    - [wg-manager | Stars 144*](https://github.com/perara/wg-manager)
     - [wirt | Stars 120*](https://wirt.network/)
+    - [wg-manager | Stars 144*](https://github.com/perara/wg-manager)
     - [wg-access-server | Stars 484*](https://github.com/Place1/wg-access-server)
+        - Combines wireguard & admin in one docker container
+        - MIT license
     - [wg-gen-web | Stars 306*](https://github.com/vx3r/wg-gen-web)
     - [wg-ui | Stars 441*](https://github.com/EmbarkStudios/wg-ui)
 - Account/User Management
@@ -203,6 +212,9 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - StartPage/Dashboard
     - [Homer | Stars 931*](https://github.com/bastienwirtz/homer)
     - [Mobile first startpage | Stars 14*](https://github.com/Jaredk3nt/startpage)
+    - [DashMachine | Stars 556*](https://github.com/rmountjoy92/DashMachine)
+    - [Organizr | Stars 2.9k*](https://github.com/causefx/Organizr)
+    - [simple-dash | Stars 185*](https://github.com/kutyla-philipp/simple-dash)
 
 **Pass**
 - VPN
@@ -212,6 +224,10 @@ c887deef  dc1  client2  <none>  false  eligible     ready
         - Is Wireguard based, though iOS app not supported in the US
     - [tailscale](https://tailscale.com/)
         - Is Wireguard based, has nice UI & app though it doesn't have a permissive license on source
+    - [wg-dashboard](https://github.com/wg-dashboard/wg-dashboard)
+        - Is unmaintained
+    - [streisand](https://github.com/StreisandEffect/streisand)
+        - Is just scripts for installing many vpn services
 
 * footnote: stars are as of last updating the text
 
@@ -234,9 +250,15 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://www.reddit.com/r/selfhosted/comments/ajxtg3/a_simple_wireguard_vpn_server_gui/
 - https://www.notion.so/Server-Configs-487708332a2a49b18fa345111b48de58
 - https://github.com/codeday/containercfg
+- https://denbeke.be/blog/software/configuring-wireguard-vpn-with-wg-access-server/
+- https://docs.sweeting.me/s/wireguard#WireGuard-Setup-Tools
+- https://hn.matthewblode.com/item/21421365
 
 ## Inspiration
 - http://blog.codeday.org/hashicorp-nomad-howto
 - https://www.reddit.com/r/selfhosted/
 - https://www.reddit.com/r/homelab/
 - https://www.reddit.com/r/startpages/
+- https://homelabos.com/
+- https://cloudron.io/
+
