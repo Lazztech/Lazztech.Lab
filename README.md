@@ -179,14 +179,14 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 
 **Watching**
 - VPN
-    - [Mistborn](https://gitlab.com/cyber5k/mistborn)
-    - [Pritunl](https://pritunl.com/)
-    - [subspace WireGuard UI](https://github.com/subspacecloud/subspace)
-    - [wg-manager](https://github.com/perara/wg-manager)
-    - [wirt](https://wirt.network/)
-    - [wg-access-server](https://github.com/Place1/wg-access-server)
-    - [wg-gen-web](https://github.com/vx3r/wg-gen-web)
-    - [wg-ui](https://github.com/EmbarkStudios/wg-ui)
+    - [Subspace WireGuard UI | Stars 1.5k*](https://github.com/subspacecloud/subspace)
+    - [Pritunl | Stars 2.8k*](https://pritunl.com/)
+    - [Mistborn | Stars 110*](https://gitlab.com/cyber5k/mistborn)
+    - [wg-manager | Stars 144*](https://github.com/perara/wg-manager)
+    - [wirt | Stars 120*](https://wirt.network/)
+    - [wg-access-server | Stars 484*](https://github.com/Place1/wg-access-server)
+    - [wg-gen-web | Stars 306*](https://github.com/vx3r/wg-gen-web)
+    - [wg-ui | Stars 441*](https://github.com/EmbarkStudios/wg-ui)
 - Account/User Management
     - [Authelia](https://www.authelia.com/)
 - Wiki
@@ -195,10 +195,11 @@ c887deef  dc1  client2  <none>  false  eligible     ready
     - [Outline](https://github.com/outline/outline)
     - [TiddlyWiki](https://tiddlywiki.com/)
 - Chat/Communication/Filesharing
-    - [Trango](https://web.trango.io/)
-    - [Mattermost](https://mattermost.com/)
+    - [Mattermost | Stars 18.9k*](https://mattermost.com/)
+    - [Rocket.Chat | Stars 28.2k*](https://rocket.chat/)
+    - [Trango | Stars 43*](https://web.trango.io/)
 - Storage
-    - [Minio](https://min.io/)
+    - [Minio | Stars 23.8k*](https://min.io/)
 - StartPage/Dashboard
     - [Homer](https://github.com/bastienwirtz/homer)
 
@@ -209,7 +210,9 @@ c887deef  dc1  client2  <none>  false  eligible     ready
     - [tunesafe](https://tunsafe.com/)
         - Is Wireguard based, though iOS app not supported in the US
     - [tailscale](https://tailscale.com/)
-        - Is Wireguard based, has nice UI & app though it's not got a permissive license on source
+        - Is Wireguard based, has nice UI & app though it doesn't have a permissive license on source
+
+* footnote: stars are as of last updating the text
 
 ## Resources
 
