@@ -27,7 +27,7 @@ $ sudo nano /etc/hosts
 192.168.1.11    trango.lazz.tech
 192.168.1.11    wireguard.lazz.tech
 192.168.1.11    wiki.lazz.tech
-192.168.1.11    subspace.lazz.tech
+192.168.1.11    chat.lazz.tech
 ```
 
 ```bash
@@ -175,7 +175,9 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Shlink](https://shlink.io/)
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 - [WireGuard](https://www.wireguard.com/)
+- [wg-access-server](https://github.com/Place1/wg-access-server)
 - [DokuWiki](https://www.dokuwiki.org/dokuwiki)
+- [TheLounge IRC](https://thelounge.chat/)
 
 **Watching**
 - VPN
@@ -203,10 +205,16 @@ c887deef  dc1  client2  <none>  false  eligible     ready
     - [Bookstack](https://www.bookstackapp.com/)
     - [Outline](https://github.com/outline/outline)
     - [TiddlyWiki](https://tiddlywiki.com/)
-- Chat/Communication/Filesharing
+- Chat/Communication/FileSharing
     - [Mattermost | Stars 18.9k*](https://mattermost.com/)
     - [Rocket.Chat | Stars 28.2k*](https://rocket.chat/)
     - [Trango | Stars 43*](https://web.trango.io/)
+    - [TheLounge IRC Client | Stars 4.1k*](https://github.com/thelounge/thelounge)
+    - [Convo IRC Client | Stars 669I](https://github.com/nordaaker/convos/)
+    - [KiwiIRC | Stars 415I](https://kiwiirc.com/)
+    - [Dispatch IRC Client | Stars 567*](https://github.com/khlieng/dispatch)
+    - [Matrix - Open Source Decentralized Chat](https://matrix.org/)
+    - [Element - Matrix Client](https://element.io/)
 - Storage
     - [Minio | Stars 23.8k*](https://min.io/)
 - StartPage/Dashboard
@@ -253,6 +261,8 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://denbeke.be/blog/software/configuring-wireguard-vpn-with-wg-access-server/
 - https://docs.sweeting.me/s/wireguard#WireGuard-Setup-Tools
 - https://hn.matthewblode.com/item/21421365
+- https://autoize.com/configuring-wireguard-vpn/
+- https://techcrunch.com/2020/05/21/automattic-pumps-4-6m-into-new-vector-to-help-grow-matrix-an-open-decentralized-comms-ecosystem/
 
 ## Inspiration
 - http://blog.codeday.org/hashicorp-nomad-howto
