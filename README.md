@@ -28,6 +28,8 @@ $ sudo nano /etc/hosts
 192.168.1.11    wireguard.lazz.tech
 192.168.1.11    wiki.lazz.tech
 192.168.1.11    chat.lazz.tech
+192.168.1.11    grafana.lazz.tech
+192.168.1.11    read.lazz.tech
 ```
 
 ```bash
@@ -178,6 +180,7 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [wg-access-server](https://github.com/Place1/wg-access-server)
 - [DokuWiki](https://www.dokuwiki.org/dokuwiki)
 - [TheLounge IRC](https://thelounge.chat/)
+- [Calibre-Web](https://github.com/janeczku/calibre-web)
 
 **Watching**
 - VPN
