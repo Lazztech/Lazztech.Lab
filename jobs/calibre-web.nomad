@@ -28,7 +28,8 @@
 // External Binaries > Path to Kepubify E-Book Converter > /usr/bin/kepubify
 // then save
 //
-// Now you may upload books and opt to convert them which enables online reading.
+// http://read.lazz.tech/admin/view
+// Users > admin > Allow Ebook Viewer > save 
 
 job "calibre-web" {
   datacenters = ["dc1"]
