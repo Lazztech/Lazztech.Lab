@@ -26,7 +26,7 @@ job "home-assistant" {
         }
       }
       resources {
-        cpu    = 500 # 500 MHz
+        cpu    = 250 # 250 MHz
         memory = 256 # 256MB
 
         network {
