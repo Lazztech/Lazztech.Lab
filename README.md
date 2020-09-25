@@ -28,6 +28,7 @@ $ sudo nano /etc/hosts
 192.168.1.11    wireguard.lazz.tech
 192.168.1.11    wiki.lazz.tech
 192.168.1.11    chat.lazz.tech
+192.168.1.11    irc.lazz.tech
 192.168.1.11    grafana.lazz.tech
 192.168.1.11    read.lazz.tech
 ```
@@ -218,6 +219,7 @@ c887deef  dc1  client2  <none>  false  eligible     ready
     - [Dispatch IRC Client | Stars 567*](https://github.com/khlieng/dispatch)
     - [Matrix - Open Source Decentralized Chat](https://matrix.org/)
     - [Element - Matrix Client](https://element.io/)
+    - [Zulipchat](https://zulipchat.com/)
 - Storage
     - [Minio | Stars 23.8k*](https://min.io/)
 - StartPage/Dashboard
@@ -266,6 +268,10 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://hn.matthewblode.com/item/21421365
 - https://autoize.com/configuring-wireguard-vpn/
 - https://techcrunch.com/2020/05/21/automattic-pumps-4-6m-into-new-vector-to-help-grow-matrix-an-open-decentralized-comms-ecosystem/
+- https://medium.com/@pentacent/lets-encrypt-for-your-docker-app-in-less-than-5-minutes-24e5b38ca40b
+- https://itnext.io/calibre-web-home-in-browser-online-library-with-nextcloud-storage-and-moon-reader-on-android-bee6a30c15b9
+- https://servercat.app/
+- https://github.com/Nordaaker/convos/tree/master/public/themes
 
 ## Inspiration
 - http://blog.codeday.org/hashicorp-nomad-howto
@@ -274,4 +280,5 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - https://www.reddit.com/r/startpages/
 - https://homelabos.com/
 - https://cloudron.io/
+- https://geek-cookbook.funkypenguin.co.nz/
 
