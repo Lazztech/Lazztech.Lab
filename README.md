@@ -180,7 +180,8 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [WireGuard](https://www.wireguard.com/)
 - [wg-access-server](https://github.com/Place1/wg-access-server)
 - [DokuWiki](https://www.dokuwiki.org/dokuwiki)
-- [TheLounge IRC](https://thelounge.chat/)
+- [Convo IRC Client | Stars 669I](https://github.com/nordaaker/convos/)
+- [Inspired IRC Server](https://www.inspircd.org/)
 - [Calibre-Web](https://github.com/janeczku/calibre-web)
 
 **Watching**
