@@ -19,7 +19,8 @@
 // ssh server@ip
 // chmod a+w /opt/calibre/library/metadata.db
 //
-// On the initial setup screen, enter /books as your calibre library location.
+// On the initial setup screen, 
+// enter /books as your calibre library location.
 // Default admin login: Username: admin Password: admin123
 //
 // http://read.lazz.tech/admin/config
@@ -29,7 +30,10 @@
 // then save
 //
 // http://read.lazz.tech/admin/view
-// Users > admin > Allow Ebook Viewer > save 
+// Users > admin > Allow Ebook Viewer > save
+//
+// http://read.lazz.tech/admin/view
+// 
 
 job "calibre-web" {
   datacenters = ["dc1"]
