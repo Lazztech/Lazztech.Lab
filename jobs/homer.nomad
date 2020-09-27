@@ -41,7 +41,7 @@ job "homer" {
 # externalConfig: https://example.com/server-luci/config.yaml
 
 title: "App dashboard"
-subtitle: "Homer"
+subtitle: "Lazztech"
 # documentTitle: "Welcome" # Customize the browser tab text
 # logo: "assets/logo.png"
 # Alternatively a fa icon can be provided:
@@ -96,42 +96,120 @@ colors:
 message:
   # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
   style: "is-warning"
-  title: "Optional message!"
-  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  title: "Work in Progress!"
+  content: "Services may change and shouldn't be considered stable. Future announcements may be posted here."
 
 # Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
 links:
-  - name: "Link 1"
+  - name: "Infrastructure Repo"
     icon: "fab fa-github"
-    url: "https://github.com/bastienwirtz/homer"
+    url: "https://github.com/lazztech/Lazztech.Infrastructure"
     target: "_blank" # optional html tag target attribute
-  - name: "link 2"
-    icon: "fas fa-book"
-    url: "https://github.com/bastienwirtz/homer"
 
 # Services
 # First level array represent a group.
 # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
 services:
-  - name: "Application"
-    icon: "fa fa-code-fork"
+  - name: "Community"
+    icon: "fas fa-heartbeat"
     items:
-      - name: "Awesome app"
+      - name: "Wiki"
+        icon: "fab fa-wikipedia-w"
+        subtitle: "Community Wiki"
+        tag: "community"
+        url: "http://wiki.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "EBook Library"
+        icon: "fas fa-book"
+        subtitle: "Community Ebook Libary & Reader"
+        tag: "community"
+        url: "http://read.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Chat"
+        icon: "fas fa-comments"
+        subtitle: "IRC Chat Web Client"
+        tag: "community"
+        url: "http://chat.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Snapdrop"
+        icon: "fas fa-satellite-dish"
+        subtitle: "The easiest way to transfer data across devices"
+        tag: "community"
+        url: "http://share.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Home Assistant"
+        icon: "fas fa-laptop-house"
+        subtitle: "Home Automation"
+        tag: "community"
+        url: "http://home-assistant.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Home Bridge"
+        icon: "fas fa-laptop-house"
+        subtitle: "HomeKit support for non-HomeKit devices"
+        tag: "community"
+        url: "http://home-bridge.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+  - name: "SysAdmin"
+    icon: "fa fa-server"
+    items:
+      - name: "Nomad"
         logo: "assets/tools/sample.png"
         # Alternatively a fa icon can be provided:
         # icon: "fab fa-jenkins"
-        subtitle: "Bookmark example"
-        tag: "app"
-        url: "https://www.reddit.com/r/selfhosted/"
-        target: "_blank" # optional html tag target attribute
-      - name: "Another one"
+        subtitle: "Workload Orchestrator"
+        tag: "sysadmin"
+        url: "http://nomad.lazz.tech/"
+        # target: "_blank" # optional html tag target attribute
+      - name: "Consul"
         logo: "assets/tools/sample2.png"
-        subtitle: "Another application"
-        tag: "app"
+        subtitle: "Service Discovery"
+        tag: "sysadmin"
         # Optional tagstyle
         tagstyle: "is-success"
-        url: "#"
+        url: "http://consul.lazz.tech/"
+      - name: "Vault"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Secrets Management"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://vault.lazz.tech/"
+      - name: "Traefik"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Reverse Proxy & Load Balancer"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://traefik.lazz.tech:8081/"
+      - name: "Unifi"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Network Management"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://unifi/"
+      - name: "Wireguard"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Wireguard VPN Management"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://wireguard.lazz.tech/"
+      - name: "Grafana"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Monitoring & Visibility"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://grafana.lazz.tech/"
+      - name: "Docker Registry"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Local Docker Container Registry"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://docker.lazz.tech/"
   - name: "Other group"
     icon: "fas fa-heartbeat"
     items:

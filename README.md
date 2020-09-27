@@ -166,6 +166,8 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 ## Soon: Azure
 
 ## Nomad Jobs
+
+**Keep**
 - [Traefik](https://containo.us/traefik/)
 - [Consul](https://www.hashicorp.com/products/consul/)
 - [Vault](https://www.hashicorp.com/products/vault/)
@@ -174,7 +176,6 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Docker Registry UI](https://github.com/Joxit/docker-registry-ui)
 - [Home-Assistant](https://www.home-assistant.io/)
 - [Homebridge](https://homebridge.io/)
-- [Heimdall | Stars 2.1k](https://heimdall.site/)
 - [Shlink](https://shlink.io/)
 - [Shlink UI](https://shlink.io/documentation/shlink-web-client/)
 - [WireGuard](https://www.wireguard.com/)
@@ -183,8 +184,9 @@ c887deef  dc1  client2  <none>  false  eligible     ready
 - [Convo IRC Client | Stars 669I](https://github.com/nordaaker/convos/)
 - [Inspired IRC Server](https://www.inspircd.org/)
 - [Calibre-Web](https://github.com/janeczku/calibre-web)
+- [Homer | Stars 931*](https://github.com/bastienwirtz/homer)
 
-**Watching**
+**Watch**
 - VPN
     - [Subspace WireGuard UI | Stars 1.5k*](https://github.com/subspacecloud/subspace)
         - MIT license
@@ -242,6 +244,8 @@ c887deef  dc1  client2  <none>  false  eligible     ready
         - Is unmaintained
     - [streisand](https://github.com/StreisandEffect/streisand)
         - Is just scripts for installing many vpn services
+- StartePage/Dashboard
+    - [Heimdall | Stars 2.1k](https://heimdall.site/)
 
 * footnote: stars are as of last updating the text
 
