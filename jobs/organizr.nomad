@@ -52,7 +52,7 @@ job "organizr" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.organizr.rule=HostRegexp(`organizr.lazz.tech`, `home`)"
+          "traefik.http.routers.organizr.rule=HostRegexp(`organizr.lazz.tech`)"
         ]
 
         check {
