@@ -210,16 +210,6 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://docker.lazz.tech/"
-  - name: "Other group"
-    icon: "fas fa-heartbeat"
-    items:
-      - name: "Another app"
-        logo: "assets/tools/sample.png"
-        subtitle: "Another example"
-        tag: "other"
-        url: "https://www.reddit.com/r/selfhosted/"
-        target: "_blank" # optional html a tag target attribute
-        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 EOF
         destination = "homer/assets/config.yml"
       }
