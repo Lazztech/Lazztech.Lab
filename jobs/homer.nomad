@@ -174,7 +174,7 @@ services:
         tag: "sysadmin"
         # Optional tagstyle
         tagstyle: "is-success"
-        url: "http://vault.lazz.tech/"
+        url: "http://vault-ui.lazz.tech/"
       - name: "Traefik"
         logo: "assets/tools/sample2.png"
         subtitle: "Reverse Proxy & Load Balancer"
