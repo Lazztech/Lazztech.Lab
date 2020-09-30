@@ -145,16 +145,35 @@ $ sudo systemctl enable vault
 $ sudo systemctl start vault
 # check status of vault service
 $ sudo systemctl status vault
+```
+
+```bash
+# systemctl status vault output should look like this:
+● vault.service - "HashiCorp Vault - A tool for managing secrets"
+     Loaded: loaded (/etc/systemd/system/vault.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2020-09-29 20:11:48 PDT; 7min ago
+       Docs: https://www.vaultproject.io/docs/
+   Main PID: 1951208 (vault)
+      Tasks: 8 (limit: 11833)
+     Memory: 12.3M
+     CGroup: /system.slice/vault.service
+             └─1951208 /usr/bin/vault server -config=/etc/vault.d/vault.hcl
+
+Sep 29 20:11:48 gian-ProLiant-MicroServer-Gen8 vault[1951208]:                  Version: Vault v1.5.4
+
 # to see logs for troubleshooting incase of problems, then scroll up or down
 $ journalctl -u vault
 # or
 $ journalctl -u vault | cat
 ```
-
-```bash
-# systemctl status vault output should look like
-
-```
+- open http://vault-ui.lazz.tech/
+- Create a new Raft cluster & click next
+- enter 5 in the Key shares and 3 in the Key threshold text fields, then click initialize
+- download keys then click continue to unseal
+- open download, copy one of the keys (not keys_base64) 
+- enter it in the Master Key Portion field. Click Unseal to proceed.
+- repeat the process for two more keys
+- copy the root_token and enter its value in the Token field. Click Sign in.
 
 ## UDM
 
