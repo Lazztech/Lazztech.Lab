@@ -2,7 +2,7 @@ ui = true
 disable_mlock = true
 
 storage "raft" {
-  path    = "/etc/vault.d/data"
+  path    = "/opt/raft"
   node_id = "node1"
 }
 

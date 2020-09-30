@@ -51,6 +51,8 @@ $ sudo mkdir -p /opt/dokuwiki/
 
 - ### setup vault
   - https://learn.hashicorp.com/tutorials/vault/getting-started-install
+  - https://www.42.mach7x.com/2020/08/11/error-initializing-storage-of-type-raft-failed-to-create-fsm-failed-to-open-bolt-file-open-home-vault-data-vault-db-permission-denied/
+  - https://learn.hashicorp.com/tutorials/vault/raft-deployment-guide?in=vault/day-one-raft
 ```bash
 # Installing Vault
 # add repo
@@ -89,7 +91,7 @@ AmbientCapabilities=CAP_IPC_LOCK
 Capabilities=CAP_IPC_LOCK+ep
 CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
 NoNewPrivileges=yes
-ExecStart=/usr/local/bin/vault server -config=/etc/vault.d/vault.hcl
+ExecStart=/usr/bin/vault server -config=/etc/vault.d/vault.hcl
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGINT
@@ -109,16 +111,16 @@ EOF
 $ sudo cat /etc/systemd/system/vault.service
 
 # create vault config dir
-$ sudo mkdir --parents /etc/vault.d
+$ sudo mkdir /opt/raft
 # create dir for vault data
-$ sudo mkdir -p /etc/vault.d/data
+$ sudo chown -R vault:vault /opt/raft
 # create and enter vault config file
 $ sudo tee /etc/vault.d/vault.hcl <<EOF
 ui = true
 disable_mlock = true
 
 storage "raft" {
-  path    = "/etc/vault.d/data"
+  path    = "/opt/raft"
   node_id = "node1"
 }
 
@@ -143,16 +145,15 @@ $ sudo systemctl enable vault
 $ sudo systemctl start vault
 # check status of vault service
 $ sudo systemctl status vault
+# to see logs for troubleshooting incase of problems, then scroll up or down
+$ journalctl -u vault
+# or
+$ journalctl -u vault | cat
 ```
-```
+
+```bash
 # systemctl status vault output should look like
-gian@gian-ProLiant-MicroServer-Gen8:/etc/vault.d$ sudo systemctl status vault
-● vault.service - "HashiCorp Vault - A tool for managing secrets"
-     Loaded: loaded (/etc/systemd/system/vault.service; enabled; vendor preset: enabled)
-     Active: activating (auto-restart) (Result: exit-code) since Mon 2020-09-28 20:36:47 PDT; 3s ago
-       Docs: https://www.vaultproject.io/docs/
-    Process: 98690 ExecStart=/usr/local/bin/vault server -config=/etc/vault.d/vault.hcl (code=exited, status=203/EXEC)
-   Main PID: 98690 (code=exited, status=203/EXEC)
+
 ```
 
 ## UDM
