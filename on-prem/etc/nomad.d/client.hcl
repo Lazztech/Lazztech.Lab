@@ -1,9 +1,6 @@
 # Increase log verbosity
 log_level = "DEBUG"
 
-# Setup data dir
-data_dir = "/tmp/client1"
-
 # Give the agent a unique name. Defaults to hostname
 name = "client1"
 
@@ -20,6 +17,15 @@ client {
     path     = "/acme"
     read_only = false
   }
+}
+
+# For Prometheus metrics
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
 }
 
 # Modify our port to avoid a collision with server1

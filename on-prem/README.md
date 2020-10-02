@@ -1,12 +1,45 @@
 # On Prem
+Dev journal and documentation on my home server setup.
+
+### Directories:
+The ".d" directories are a linux convention for holding configuration files. Typically these are stored like "/etc/asdf.d".
+The systemd directory is used for systemctl service configurations. These allow "services" which are executable code to be kept alive with automatic restart/startup.
+This setup depends on a combination of a few core systemctl/systemd services to be running.
+
+All assumed to be in /etc/ directory:
+- consul.d/ # Configurations for setting up Consul service discovery service
+  - consul.hcl # used by consul via the --config arg
+- dnsmasq.d/ # Configurations for setting up DNS via dnsmasq
+  - > "Dnsmasq is typically configured via a dnsmasq.conf or a series of files in the /etc/dnsmasq.d directory. In Dnsmasq's configuration file (e.g. /etc/dnsmasq.d/10-consul)"
+  - https://learn.hashicorp.com/tutorials/consul/dns-forwarding#dnsmasq-setup
+  - consul.conf # used to configure dnsmasq to work in conjunction with consul service discovery. This allows services in nomad jobs to connect to each other.
+- nomad.d/
+  - needs to be documented...
+- vault.d/
+  - needs to be documented...
+- systemd/
+  - network/
+    - needs to be documented...
+  - system/
+    - vault.service # systemd/systemctl vault service configuration file
+
+
 
 ## HP Microserver Gen 8
-- appears to already have grub boot usb drive setup
-    - http://blog.thestateofme.com/2015/01/21/howto-factory-reset-ilo-4-on-hp-microserver-gen8/
-- installing new os requires inserting live usb and rebooting. thats it.
-- ubuntu 20 lts minimal desktop install
+
+### Machine Specs:
+- Intel Celeron, dual core @ 2.5 GHz
+- 10Gb EMMC DDR Ram
+- 1x 2tb HP 3.5 inch spinning rust
+- ubuntu 20 lts minimal desktop
+- Boot drive setup for booting right to usb?
+  - appears to already have grub boot usb drive setup
+  - http://blog.thestateofme.com/2015/01/21/howto-factory-reset-ilo-4-on-hp-microserver-gen8/
+  - installing new os requires inserting live usb and rebooting. thats it.
 
 ---
+
+Setup notes:
 
 - ### linux nomad install
 - nomad server.hcl example
@@ -174,6 +207,166 @@ $ journalctl -u vault | cat
 - enter it in the Master Key Portion field. Click Unseal to proceed.
 - repeat the process for two more keys
 - copy the root_token and enter its value in the Token field. Click Sign in.
+- Setup vault/nomad integration https://learn.hashicorp.com/tutorials/nomad/vault-postgres?in=nomad/integrate-vault#write-a-policy-for-nomad-server-tokens
+
+- ### setup consul dns
+- https://www.server-world.info/en/note?os=Ubuntu_20.04&p=dnsmasq&f=1
+- https://askubuntu.com/questions/191226/dnsmasq-failed-to-create-listening-socket-for-port-53-address-already-in-use
+- https://askubuntu.com/questions/500162/how-do-i-restart-dnsmasq
+- https://www.linuxuprising.com/2020/07/ubuntu-how-to-free-up-port-53-used-by.html
+- https://discuss.hashicorp.com/t/dns-forwarding-using-systemd-resolved-on-aws-ubuntu-minimal-18-04/1656
+- https://stackoverflow.com/questions/41247817/consul-set-up-without-docker-for-production-use
+- https://www.findip-address.com/169.254.1.1
+- https://serverfault.com/questions/118324/what-is-a-link-local-address
+
+```bash
+# check if anything is listening to the dns port 53 (domain)
+# it will most likely be systemd-resolved
+$ sudo ss -lp "sport = :domain"
+# disable systemd-resolved service
+$ sudo systemctl disable systemd-resolved
+$ sudo systemctl mask systemd-resolved
+# stop currently running systemd-resolved service
+$ sudo systemctl stop systemd-resolved
+# install dnsmasq and allow service to be started
+$ sudo apt install dnsmasq
+# create directory
+$ sudo mkdir /etc/dnsmasq.d
+# pipe value into consul.conf file in the newly created dir
+$ sudo tee /etc/dnsmasq.d/consul.conf <<EOF
+# Enable forward lookup of the 'consul' domain:
+server=/consul/127.0.0.1#8600
+listen-address=127.0.0.1
+listen-address=169.254.1.1
+EOF
+# verify content
+$ cat /etc/dnsmasq.d/consul.conf
+# restart dnsmasq
+$ systemctl restart dnsmasq
+# check dnsmasq service status
+$ systemctl status dnsmasq
+```
+
+### nomad systemd service
+- https://learn.hashicorp.com/tutorials/nomad/production-deployment-guide-vm-with-consul#configure-systemd
+```bash
+# create nomad service file
+$ sudo touch /etc/systemd/system/nomad.service
+# add content to nomad service file
+$ sudo tee /etc/systemd/system/nomad.service <<EOF
+[Unit]
+Description=Nomad
+Documentation=https://nomadproject.io/docs/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/bin/nomad agent -config /etc/nomad.d
+KillMode=process
+KillSignal=SIGINT
+LimitNOFILE=infinity
+LimitNPROC=infinity
+Restart=on-failure
+RestartSec=2
+StartLimitBurst=3
+StartLimitIntervalSec=10
+TasksMax=infinity
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# make nomad data dir
+$ sudo mkdir --parents /opt/nomad
+
+# common configuration
+$ sudo mkdir --parents /etc/nomad.d
+$ sudo chmod 700 /etc/nomad.d
+$ sudo touch /etc/nomad.d/nomad.hcl
+# Note: Replace the datacenter parameter value with the identifier you will use for the datacenter this Nomad cluster is deployed in.
+$ sudo tee /etc/nomad.d/nomad.hcl <<EOF
+# common configurations for both server(s) and client(s)
+datacenter = "dc1"
+data_dir = "/opt/nomad"
+EOF
+
+# server configuration
+$ sudo touch /etc/nomad.d/server.hcl
+$ sudo tee /etc/nomad.d/server.hcl <<EOF
+# Increase log verbosity
+log_level = "DEBUG"
+
+# Enable the server
+server {
+    enabled = true
+
+    # Self-elect, should be 3 or 5 for production
+    bootstrap_expect = 1
+}
+
+# For Prometheus metrics
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
+}
+EOF
+
+# client configuration
+$ sudo touch /etc/nomad.d/client.hcl
+$ sudo tee /etc/nomad.d/client.hcl <<EOF
+# Increase log verbosity
+log_level = "DEBUG"
+
+# Give the agent a unique name. Defaults to hostname
+name = "client1"
+
+# Enable the client
+client {
+    enabled = true
+
+    # For demo assume we are talking to server1. For production,
+    # this should be like "nomad.service.consul:4647" and a system
+    # like Consul used for service discovery.
+    servers = ["127.0.0.1:4647"]
+
+  host_volume "acme" {
+    path     = "/acme"
+    read_only = false
+  }
+}
+
+# For Prometheus metrics
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
+}
+
+# Modify our port to avoid a collision with server1
+ports {
+    http = 5656
+}
+
+plugin "docker" {
+  config {
+    allow_caps = ["ALL"]
+  }
+}
+EOF
+
+# enable nomad systemd service
+$ sudo systemctl enable nomad
+# start nomad systemd service
+$ sudo systemctl start nomad
+# check status of nomad systemd service
+$ sudo systemctl status nomad
+```
 
 ## UDM
 
