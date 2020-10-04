@@ -28,9 +28,8 @@ telemetry {
   publish_node_metrics = true
 }
 
-# Modify our port to avoid a collision with server1
 ports {
-    http = 5656
+    http = 4646
 }
 
 plugin "docker" {

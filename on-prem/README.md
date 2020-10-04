@@ -41,10 +41,91 @@ All assumed to be in /etc/ directory:
 
 Setup notes:
 
-- ### linux nomad install
+- ### linux nomad setup
 - nomad server.hcl example
 - nomad client1.hcl example
-- with non-dev setup containers are accessible outside the machines localhost
+- with non-dev or binding 0.0.0.0 setup containers are accessible outside the machines localhost
+```bash
+# setup example server.hcl
+$ tee server.hcl <<EOF
+# Increase log verbosity
+log_level = "DEBUG"
+
+# Setup data dir
+data_dir = "/tmp/server1"
+
+# Give the agent a unique name. Defaults to hostname
+name = "server1"
+
+# Enable the server
+server {
+  enabled = true
+
+  # Self-elect, should be 3 or 5 for production
+  bootstrap_expect = 1
+}
+
+# For Prometheus metrics
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
+}
+EOF
+# setup example client1.hcl
+$ tee client1.hcl <<EOF
+# Increase log verbosity
+log_level = "DEBUG"
+
+# Setup data dir
+data_dir = "/tmp/client1"
+
+# Give the agent a unique name. Defaults to hostname
+name = "client1"
+
+# Enable the client
+client {
+    enabled = true
+
+    # For demo assume we are talking to server1. For production,
+    # this should be like "nomad.service.consul:4647" and a system
+    # like Consul used for service discovery.
+    servers = ["127.0.0.1:4647"]
+
+    host_volume "acme" {
+        path = "/acme"
+        read_only = false
+    }
+}
+
+# For Prometheus metrics
+telemetry {
+  collection_interval = "1s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
+}
+
+ports {
+    http = 4646
+}
+
+plugin "docker" {
+        config {
+                allow_caps = ["ALL"]
+        }
+}
+EOF
+# start server
+$ nomad agent -config server.hcl
+# start client
+$ sudo nomad agent -config client1.hcl
+# deploying jobs remotely 
+$ nomad job run -address=http://192.168.1.11:4646 jobs/homer.nomad
+```
 - ### linux docker install
   - https://www.nomadproject.io/docs/drivers/docker.html#client-requirements
 - docker user group permissions
@@ -297,12 +378,15 @@ $ sudo tee /etc/nomad.d/server.hcl <<EOF
 # Increase log verbosity
 log_level = "DEBUG"
 
+# Give the agent a unique name. Defaults to hostname
+name = "server1"
+
 # Enable the server
 server {
-    enabled = true
+  enabled = true
 
-    # Self-elect, should be 3 or 5 for production
-    bootstrap_expect = 1
+  # Self-elect, should be 3 or 5 for production
+  bootstrap_expect = 1
 }
 
 # For Prometheus metrics
@@ -348,9 +432,8 @@ telemetry {
   publish_node_metrics = true
 }
 
-# Modify our port to avoid a collision with server1
 ports {
-    http = 5656
+    http = 4646
 }
 
 plugin "docker" {
