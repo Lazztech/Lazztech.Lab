@@ -29,6 +29,9 @@ job "homebridge" {
         port_map {
           http = 8080
         }
+        volumes = [
+          "local/config:/config", # Contains all relevant configuration files.
+        ]
       }
       resources {
         cpu    = 250 # 250 MHz
