@@ -544,6 +544,61 @@ $ sudo systemctl start consul
 $ sudo systemctl status consul
 ```
 
+## Using vault secrets
+- https://medium.com/hashicorp-engineering/nomad-integration-with-vault-42b0e5feca78
+- https://play.instruqt.com/hashicorp/tracks/nomad-integration-with-vault
+- https://www.nomadproject.io/docs/job-specification/template#environment-variables
+- https://www.nomadproject.io/docs/integrations/vault-integration
+
+Download and write the nomad-server & nomad-cluster policies to vault:
+- https://www.nomadproject.io/docs/integrations/vault-integration#example-configuration
+```bash
+# Download the policy and token role
+$ curl https://nomadproject.io/data/vault/nomad-server-policy.hcl -O -s -L
+$ curl https://nomadproject.io/data/vault/nomad-cluster-role.json -O -s -L
+
+# Write the policy to Vault
+$ vault policy write nomad-server nomad-server-policy.hcl
+
+# Create the token role with Vault
+$ vault write /auth/token/roles/nomad-cluster @nomad-cluster-role.json
+```
+
+Retrieve token role based token:
+```bash
+$ vault token create -policy nomad-server -period 72h -orphan
+```
+
+
+Add the following to /etc/nomad.d/nomad.hcl:
+```
+vault {
+    enabled = true
+    address = "http://active.vault.service.consul:8200"
+    task_token_ttl = "1h"
+    create_from_role = "nomad-cluster"
+    token = "s.1gr0YoLyTBVZl5UqqvCfK9RJ"
+}
+```
+
+Vault secrets can then be used by adding the policy with vault stanza:
+```
+      vault {
+        policies = ["lazztechhub"]
+      }
+```
+Then you can use the template stanza to inject secrets in as environment variables:
+```
+      template {
+        data = <<EOF
+{{- with secret "kv/data/lazztechhub-dev" -}}
+ACCESS_TOKEN_SECRET={{ .Data.data.access_token_secret }}
+{{ end }}
+EOF
+        destination = "secrets/file.env"
+        env         = true
+      }
+```
 
 ## UDM
 
