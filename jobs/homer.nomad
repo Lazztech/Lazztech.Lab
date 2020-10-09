@@ -148,7 +148,7 @@ services:
         icon: "fas fa-laptop-house"
         subtitle: "HomeKit support for non-HomeKit devices"
         tag: "community"
-        url: "http://home-bridge.lazz.tech/"
+        url: "http://homebridge.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
   - name: "SysAdmin"
     icon: "fa fa-server"
