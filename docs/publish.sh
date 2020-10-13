@@ -8,7 +8,7 @@ git checkout gh-pages
 git pull origin gh-pages --rebase
 
 # copy the static site files into the current directory.
-cp -R _book/* .
+cp -R _book/* . && cp _book/gitbook ./gitbook
 
 # remove 'node_modules' and '_book' directory
 # git clean -fx node_modules
