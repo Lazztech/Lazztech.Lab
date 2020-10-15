@@ -14,6 +14,7 @@
 
 **UDM DNS/HOSTS CONFIG:**
 - https://community.ui.com/questions/UDM-UDMPro-Is-it-possible-to-redirect-Hard-coded-DNS-request-by-clients/00088d27-c8b0-42fa-9665-71988d7dbd15
+
 ```
 $ ssh root@192.168.1.1
 
@@ -25,6 +26,7 @@ $ ssh root@192.168.1.1
 Name:      my.dns.nz
 Address 1: 192.168.1.11 my.dns.name
 ```
+
 - https://community.ui.com/questions/UDM-DNS-Configuration/cb79f4ad-04c1-47a2-b3cc-6d3739426bf1
 - https://community.ui.com/questions/Dream-Machine-Host-Names/111bd201-e2d0-454e-b592-5b2332492cdd
 - https://www.reddit.com/r/Ubiquiti/comments/d9dd8p/udm_pihole/
