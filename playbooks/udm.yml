@@ -2,25 +2,24 @@
   - name: Configure Unifi UDM
     hosts: udm
     remote_user: root
+    gather_facts: False
 
     tasks:
 
       - name: Test task
         debug: msg="Hello Unifi Dream Machine!"
-      
+        
       - name: Ping Test
         ping:
-    
-      - name: Test shell
-        shell: "whoami"
 
-      # - name: Tell dnsmasq to reload hosts
-      #   shell: "pkill -HUP dnsmasq"
-      - name: works ok without -f 
-        action: shell pkill -HUP dnsmasq || true
+      - name: Tell dnsmasq to reload hosts
+        shell: "pkill -HUP dnsmasq"
       
       - name: append line to /etc/hosts
         action: shell echo '192.168.1.11  asdf' >> /etc/hosts
+    
+      - name: Test shell
+        shell: "whoami"
 
     # - name: Add mappings to /etc/hosts
     #   blockinfile:
