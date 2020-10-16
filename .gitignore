@@ -1,5 +1,5 @@
 .vagrant/
-
+*.retry
 # Logs
 logs
 *.log

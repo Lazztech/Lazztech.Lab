@@ -4,34 +4,49 @@
     remote_user: root
 
     tasks:
-    - name: Add mappings to /etc/hosts
-      blockinfile:
-        path: /etc/hosts
-        block: |
-          {{ item.ip }} {{ item.name }}
-        marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
-      loop:
-        - { name: home, ip: 192.168.1.11 }
-        - { name: nomad.lazz.tech, ip: 192.168.1.11 }
-        - { name: traefik.lazz.tech, ip: 192.168.1.11 }
-        - { name: consul.lazz.tech, ip: 192.168.1.11 }
-        - { name: vault-ui.lazz.tech, ip: 192.168.1.11 }
-        - { name: code.lazz.tech, ip: 192.168.1.11 }
-        - { name: registry.lazz.tech, ip: 192.168.1.11 }
-        - { name: registry-ui.lazz.tech, ip: 192.168.1.11 }
-        - { name: home-assistant.lazz.tech, ip: 192.168.1.11 }
-        - { name: heimdall.lazz.tech, ip: 192.168.1.11 }
-        - { name: homebridge.lazz.tech, ip: 192.168.1.11 }
-        - { name: wireguard.lazz.tech, ip: 192.168.1.11 }
-        - { name: wiki.lazz.tech, ip: 192.168.1.11 }
-        - { name: share.lazz.tech, ip: 192.168.1.11 }
-        - { name: chat.lazz.tech, ip: 192.168.1.11 }
-        - { name: irc.lazz.tech, ip: 192.168.1.11 }
-        - { name: grafana.lazz.tech, ip: 192.168.1.11 }
-        - { name: read.lazz.tech, ip: 192.168.1.11 }
 
-    - name: Tell dnsmasq to reload hosts
-      shell: "pkill -HUP dnsmasq"
+      - name: Test task
+        debug: msg="Hello Unifi Dream Machine!"
+      
+      - name: Ping Test
+        ping:
+    
+      - name: Test shell
+        shell: "whoami"
+
+      # - name: Tell dnsmasq to reload hosts
+      #   shell: "pkill -HUP dnsmasq"
+      - name: works ok without -f 
+        action: shell pkill -HUP dnsmasq || true
+      
+      - name: append line to /etc/hosts
+        action: shell echo '192.168.1.11  asdf' >> /etc/hosts
+
+    # - name: Add mappings to /etc/hosts
+    #   blockinfile:
+    #     path: /etc/hosts
+    #     block: |
+    #       {{ item.ip }} {{ item.name }}
+    #     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+    #   loop:
+    #     - { name: home, ip: 192.168.1.11 }
+    #     - { name: nomad.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: traefik.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: consul.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: vault-ui.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: code.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: registry.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: registry-ui.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: home-assistant.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: heimdall.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: homebridge.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: wireguard.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: wiki.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: share.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: chat.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: irc.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: grafana.lazz.tech, ip: 192.168.1.11 }
+    #     - { name: read.lazz.tech, ip: 192.168.1.11 }
 
 
 
