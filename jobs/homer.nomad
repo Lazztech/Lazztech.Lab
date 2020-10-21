@@ -27,7 +27,7 @@ job "homer" {
           http = 8080
         }
         volumes = [
-          "homer/assets/:/www/assets", # Contains all relevant configuration files.
+          "/opt/homer/assets/:/www/assets", # Contains all relevant configuration files.
           "homer/assets/config.yml:/www/assets/config.yml"
         ]
       }
@@ -152,7 +152,7 @@ services:
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
   - name: "Development"
-    icon: "fas fa-laptop-code"
+    icon: "fas fa-code"
     items:
       - name: "Gitea"
         icon: "fab fa-git-alt"
@@ -171,6 +171,12 @@ services:
         subtitle: "Docker container registry"
         tag: "community"
         url: "http://docker.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Code Server"
+        icon: "fas fa-laptop-code"
+        subtitle: "VSCode web server"
+        tag: "community"
+        url: "http://code.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
   - name: "Monitoring"

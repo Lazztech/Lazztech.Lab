@@ -30,7 +30,7 @@ job "homebridge" {
           http = 8080
         }
         volumes = [
-          "local/config:/config", # Contains all relevant configuration files.
+          "opt/homebridge/config:/config", # Contains all relevant configuration files.
         ]
       }
       resources {

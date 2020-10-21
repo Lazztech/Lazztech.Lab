@@ -36,7 +36,7 @@ job "snapdrop" {
           https = 443
         }
         volumes = [
-          "snapdrop/config:/config" # Contains all relevant configuration files.
+          "/opt/snapdrop/config:/config" # Contains all relevant configuration files.
         ]
       }
       resources {

@@ -36,7 +36,7 @@ job "code-server" {
           http = 8443
         }
         volumes = [
-          "code-server/config:/config" # Contains all relevant configuration files.
+          "/opt/code-server/config:/config" # Contains all relevant configuration files.
         ]
       }
       resources {
