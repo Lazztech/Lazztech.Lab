@@ -30,8 +30,8 @@ job "wg-access-server" {
 	  config {
 		image = "place1/wg-access-server"
 		volumes = [
-		    "wg-access-server-data:/data",
-			"wg-access-server-config/config.yaml:/config.yaml"
+		    "/opt/wg-access-server-data:/data",
+			"/opt/wg-access-server-config/config.yaml:/config.yaml"
 		]
 		cap_add = [
 			"NET_ADMIN",

@@ -28,8 +28,8 @@ job "home-assistant" {
           http = 8123
         }
         volumes = [
-          "home-assistant/config:/config", # Contains all relevant configuration files.
-          "home-assistant/config/configuration.yaml:/config/configuration.yaml"
+          "/opt/home-assistant/config:/config", # Contains all relevant configuration files.
+          "/opt/home-assistant/config/configuration.yaml:/config/configuration.yaml"
         ]
         devices = [
           {

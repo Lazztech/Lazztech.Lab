@@ -60,7 +60,7 @@ job "calibre-web" {
           http = 8083
         }
         volumes = [
-          "data:/config", # Contains all relevant configuration files.
+          "/opt/nextcloud/data:/config", # Contains all relevant configuration files.
           "/opt/calibre/library:/books"
         ]
       }
