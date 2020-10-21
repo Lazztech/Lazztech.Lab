@@ -112,8 +112,14 @@ links:
 # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
 services:
   - name: "Community"
-    icon: "fas fa-heartbeat"
+    icon: "fas fa-building"
     items:
+      - name: "Nextcloud"
+        icon: "fas fa-cloud"
+        subtitle: "Files, Chat, Productivity & Collaboration"
+        tag: "community"
+        url: "http://nextcloud.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
       - name: "Wiki"
         icon: "fab fa-wikipedia-w"
         subtitle: "Community Wiki"
@@ -125,12 +131,6 @@ services:
         subtitle: "Community Ebook Libary & Reader"
         tag: "community"
         url: "http://read.lazz.tech/"
-        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-      - name: "Chat"
-        icon: "fas fa-comments"
-        subtitle: "IRC Chat Web Client"
-        tag: "community"
-        url: "http://chat.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
       - name: "Snapdrop"
         icon: "fas fa-satellite-dish"
@@ -150,6 +150,47 @@ services:
         tag: "community"
         url: "http://homebridge.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+  - name: "Development"
+    icon: "fas fa-laptop-code"
+    items:
+      - name: "Gitea"
+        icon: "fab fa-git-alt"
+        subtitle: "Local Git mirror"
+        tag: "community"
+        url: "http://git.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Drone"
+        icon: "fas fa-truck-loading"
+        subtitle: "Container native Continous Integration /Continous Delivery"
+        tag: "community"
+        url: "http://cicd.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Harbor"
+        icon: "fab fa-docker"
+        subtitle: "Docker container registry"
+        tag: "community"
+        url: "http://docker.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+  - name: "Monitoring"
+    icon: "fas fa-heartbeat"
+    items:
+      - name: "Grafana"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Monitoring & Visibility"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://grafana.lazz.tech/"
+      - name: "Scrutiny"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Hard Drive S.M.A.R.T Monitoring"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://scrutiny.lazz.tech/"
+
   - name: "SysAdmin"
     icon: "fa fa-server"
     items:
@@ -196,20 +237,6 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://wireguard.lazz.tech/"
-      - name: "Grafana"
-        logo: "assets/tools/sample2.png"
-        subtitle: "Monitoring & Visibility"
-        tag: "sysadmin"
-        # Optional tagstyle
-        tagstyle: "is-success"
-        url: "http://grafana.lazz.tech/"
-      - name: "Docker Registry"
-        logo: "assets/tools/sample2.png"
-        subtitle: "Local Docker Container Registry"
-        tag: "sysadmin"
-        # Optional tagstyle
-        tagstyle: "is-success"
-        url: "http://docker.lazz.tech/"
 EOF
         destination = "homer/assets/config.yml"
       }

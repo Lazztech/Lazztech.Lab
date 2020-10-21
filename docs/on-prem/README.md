@@ -45,6 +45,7 @@ Setup notes:
 - nomad server.hcl example
 - nomad client1.hcl example
 - with non-dev or binding 0.0.0.0 setup containers are accessible outside the machines localhost
+
 ```bash
 # setup example server.hcl
 $ tee server.hcl <<EOF
@@ -126,6 +127,7 @@ $ sudo nomad agent -config client1.hcl
 # deploying jobs remotely 
 $ nomad job run -address=http://192.168.1.11:4646 jobs/homer.nomad
 ```
+
 - ### linux docker install
   - https://www.nomadproject.io/docs/drivers/docker.html#client-requirements
 - docker user group permissions

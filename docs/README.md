@@ -16,7 +16,10 @@ $ sudo nano /etc/hosts
 192.168.1.11    traefik.lazz.tech
 192.168.1.11    consul.lazz.tech
 192.168.1.11    vault-ui.lazz.tech
+192.168.1.11    scrutiny.lazz.tech
+192.168.1.11    git.lazz.tech
 
+192.168.1.11    nextcloud.lazz.tech
 192.168.1.11    code.lazz.tech
 192.168.1.11    registry.lazz.tech
 192.168.1.11    registry-ui.lazz.tech
