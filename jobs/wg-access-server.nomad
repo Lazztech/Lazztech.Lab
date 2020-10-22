@@ -29,11 +29,12 @@ job "wg-access-server" {
 	task "wg-access-server" {
 	  driver = "docker"
 	  env {
-		WG_WIREGUARD_PRIVATE_KEY="" # use this command to generate: "openssl rand -base64 32"
+		WG_WIREGUARD_PRIVATE_KEY=""
 		WG_ADMIN_PASSWORD=""
+		WG_EXTERNAL_HOST="24.18.203.15"
 	  }
 	  config {
-		image = "place1/wg-access-server"
+		image = "place1/wg-access-server:v0.3.0"
 		volumes = [
 		    "/opt/wg-access-server-data:/data",
 			"wg-access-server-config/config.yaml:/config.yaml"
@@ -48,14 +49,14 @@ job "wg-access-server" {
 			}
 		]
 	  }
-      template {
-        data = <<EOF
-loglevel: info
-wireguard:
-  externalHost: "24.18.203.15"
-EOF
-        destination = "wg-access-server-config/config.yaml"
-      }
+//       template {
+//         data = <<EOF
+// loglevel: info
+// wireguard:
+//   externalHost: "24.18.203.15"
+// EOF
+//         destination = "wg-access-server-config/config.yaml"
+//       }
 	  resources {
 		cpu    = 250 # 250 MHz
 		memory = 256 # 256MB
