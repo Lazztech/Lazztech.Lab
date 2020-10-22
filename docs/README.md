@@ -18,6 +18,7 @@ $ sudo nano /etc/hosts
 192.168.1.11    vault-ui.lazz.tech
 192.168.1.11    scrutiny.lazz.tech
 192.168.1.11    git.lazz.tech
+192.168.1.11    cicd.lazz.tech
 
 192.168.1.11    nextcloud.lazz.tech
 192.168.1.11    code.lazz.tech

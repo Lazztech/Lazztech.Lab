@@ -1,5 +1,9 @@
 // https://github.com/Place1/wg-access-server
 // https://www.youtube.com/watch?v=GZRTnP4lyuo
+//
+// # use this for the secret key
+// openssl rand -base64 32
+//
 // docker run \
 //   -it \
 //   --rm \
@@ -25,13 +29,14 @@ job "wg-access-server" {
 	task "wg-access-server" {
 	  driver = "docker"
 	  env {
-		// "WIREGUARD_PRIVATE_KEY" = "$(wg genkey)"
+		WG_WIREGUARD_PRIVATE_KEY="" # use this command to generate: "openssl rand -base64 32"
+		WG_ADMIN_PASSWORD=""
 	  }
 	  config {
 		image = "place1/wg-access-server"
 		volumes = [
 		    "/opt/wg-access-server-data:/data",
-			"/opt/wg-access-server-config/config.yaml:/config.yaml"
+			"wg-access-server-config/config.yaml:/config.yaml"
 		]
 		cap_add = [
 			"NET_ADMIN",
