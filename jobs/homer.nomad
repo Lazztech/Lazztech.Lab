@@ -102,9 +102,17 @@ message:
 # Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
 links:
+  - name: "Lazztech Blog"
+    icon: "fas fa-blog"
+    url: "https://lazz.tech/"
+    target: "_blank" # optional html tag target attribute
   - name: "Infrastructure Repo"
     icon: "fab fa-github"
     url: "https://github.com/lazztech/Lazztech.Infrastructure"
+    target: "_blank" # optional html tag target attribute
+  - name: "Infrastructure Docs"
+    icon: "fas fa-book-dead"
+    url: "https://lazztech-infrastructure.netlify.app/"
     target: "_blank" # optional html tag target attribute
 
 # Services
@@ -166,9 +174,9 @@ services:
         tag: "community"
         url: "http://cicd.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-      - name: "Harbor"
+      - name: "Docker Registry"
         icon: "fab fa-docker"
-        subtitle: "Docker container registry"
+        subtitle: "minimal registry:2 frontend"
         tag: "community"
         url: "http://docker.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet

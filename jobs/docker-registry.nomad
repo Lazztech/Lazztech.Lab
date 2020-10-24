@@ -47,7 +47,7 @@ job "docker-registry" {
     task "docker-registry-frontend" {
       driver = "docker"
       env {
-        ENV_DOCKER_REGISTRY_HOST="docker.for.mac.localhost"
+        ENV_DOCKER_REGISTRY_HOST="0.0.0.0"
         ENV_DOCKER_REGISTRY_PORT="5000"
         // ENV_DOCKER_REGISTRY_USE_SSL="1"
       }
@@ -67,12 +67,12 @@ job "docker-registry" {
         }
       }
       service {
-        name = "docker-registry-ui"
+        name = "docker-registry-frontend"
         port = "http"
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.docker-registry-ui.rule=HostRegexp(`registry-ui.lazz.tech`)"
+          "traefik.http.routers.docker-registry-frontend.rule=HostRegexp(`docker.lazz.tech`)"
         ]
 
         check {
