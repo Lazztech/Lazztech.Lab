@@ -53,10 +53,11 @@ job "nextcloud" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.nextcloud.rule=Host(`nextcloud.lazz.tech`)",
+          "traefik.http.routers.nextcloud.tls.certresolver=cloudflare"
         ]
 
         check {
-          type     = "http"
+          type     = "tcp"
           path     = "/"
           interval = "2s"
           timeout  = "2s"

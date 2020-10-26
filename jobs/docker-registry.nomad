@@ -32,7 +32,9 @@ job "docker-registry" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.docker-registry.rule=HostRegexp(`registry.lazz.tech`)"
+          "traefik.http.routers.docker-registry.rule=HostRegexp(`registry.lazz.tech`)",
+          "traefik.http.routers.docker-registry.tls.certresolver=cloudflare"
+
         ]
 
         check {
@@ -47,9 +49,9 @@ job "docker-registry" {
     task "docker-registry-frontend" {
       driver = "docker"
       env {
-        ENV_DOCKER_REGISTRY_HOST="0.0.0.0"
+        ENV_DOCKER_REGISTRY_HOST="registry.lazz.tech"
         ENV_DOCKER_REGISTRY_PORT="5000"
-        // ENV_DOCKER_REGISTRY_USE_SSL="1"
+        ENV_DOCKER_REGISTRY_USE_SSL="1"
       }
       config {
         image = "konradkleine/docker-registry-frontend:v2"
@@ -72,7 +74,8 @@ job "docker-registry" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.docker-registry-frontend.rule=HostRegexp(`docker.lazz.tech`)"
+          "traefik.http.routers.docker-registry-frontend.rule=HostRegexp(`docker.lazz.tech`)",
+          "traefik.http.routers.docker-registry-frontend.tls.certresolver=cloudflare"
         ]
 
         check {

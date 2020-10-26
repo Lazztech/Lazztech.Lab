@@ -63,6 +63,7 @@ job "dokuwiki" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.dokuwiki.rule=Host(`wiki.lazz.tech`)",
+          "traefik.http.routers.dokuwiki.tls.certresolver=cloudflare"
         ]
 
         check {

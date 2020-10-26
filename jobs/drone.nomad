@@ -60,6 +60,7 @@ job "drone" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.drone.rule=Host(`cicd.lazz.tech`)",
+          "traefik.http.routers.drone.tls.certresolver=cloudflare"
         ]
 
         check {
@@ -117,7 +118,8 @@ job "drone" {
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.drone.rule=Host(`drone-container-runner.lazz.tech`)",
+          "traefik.http.routers.drone-runner.rule=Host(`drone-container-runner.lazz.tech`)",
+          "traefik.http.routers.drone-runner.tls.certresolver=cloudflare"
         ]
 
         check {

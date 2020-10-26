@@ -55,6 +55,7 @@ job "code-server" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.code-server.rule=Host(`code.lazz.tech`)",
+          "traefik.http.routers.code-server.tls.certresolver=cloudflare"
         ]
 
         check {

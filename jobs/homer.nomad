@@ -197,6 +197,13 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://grafana.lazz.tech/"
+      - name: "Prometheus"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Records real-time metrics"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://prometheus.lazz.tech/"
       - name: "Scrutiny"
         logo: "assets/tools/sample2.png"
         subtitle: "Hard Drive S.M.A.R.T Monitoring"
@@ -236,7 +243,7 @@ services:
         tag: "sysadmin"
         # Optional tagstyle
         tagstyle: "is-success"
-        url: "http://traefik.lazz.tech:8081/"
+        url: "http://traefik.lazz.tech/"
       - name: "Unifi"
         logo: "assets/tools/sample2.png"
         subtitle: "Network Management"

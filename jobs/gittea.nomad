@@ -46,7 +46,7 @@ job "gitea" {
       }
       resources {
         cpu    = 250 # 250 MHz
-        memory = 256 # 256MB
+        memory = 512 # 512MB
 
         network {
           mbits = 10
@@ -60,6 +60,7 @@ job "gitea" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.gitea.rule=Host(`git.lazz.tech`)",
+          "traefik.http.routers.gitea.tls.certresolver=cloudflare"
         ]
 
         check {

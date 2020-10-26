@@ -56,6 +56,7 @@ job "snapdrop" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.snapdrop.rule=Host(`share.lazz.tech`)",
+          "traefik.http.routers.snapdrop.tls.certresolver=cloudflare"
         ]
 
         check {

@@ -14,12 +14,15 @@ job "traefik" {
 
     task "traefik" {
       driver = "docker"
-
-      volume_mount {
-        volume      = "acme"
-        destination = "/acme"
-        read_only   = false
+      env {
+        CF_API_EMAIL="gianlazzarini@gmail.com"
+        CF_API_KEY=""
       }
+      // volume_mount {
+      //   volume      = "acme"
+      //   destination = "/acme"
+      //   read_only   = false
+      // }
 
       config {
         image        = "traefik:v2.2"
@@ -27,7 +30,8 @@ job "traefik" {
 
         volumes = [
           "local/traefik.toml:/etc/traefik/traefik.toml",
-          "local/providers.toml:/etc/traefik/providers.toml"
+          "local/providers.toml:/etc/traefik/providers.toml",
+          "/opt/traefik/acme:/acme"
         ]
       }
 
@@ -44,14 +48,14 @@ job "traefik" {
 [accessLog]
 [log]
   level = "DEBUG"
-  filepath = "/var/log/traefik.log"
 
-[certificatesResolvers.letsencrypt.acme]
+# Needs to challenge domain name server to get wildcard ssl cert
+[certificatesResolvers.cloudflare.acme]
   email = "gianlazzarini@gmail.com"
-  storage = "acme.json"
-  [certificatesResolvers.letsencrypt.acme.httpChallenge]
-    # used during the challenge
-    entryPoint = "http"
+  storage = "acme/acme.json"
+  [certificatesResolvers.cloudflare.acme.dnsChallenge]
+    provider = "cloudflare"
+    resolvers = ["1.1.1.1:53", "1.0.0.1:53"]
 
 [api]
     dashboard = true
@@ -121,12 +125,22 @@ EOF
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.api.rule=Host(`traefik.lazz.tech`)",
-          "traefik.http.routers.api.entrypoints=https",
-          "traefik.http.routers.api.service=api@internal",
-          "traefik.http.routers.api.tls=true",
-          "traefik.http.routers.api.tls.certresolver=letsencrypt",
-          "traefik.http.routers.api.middlewares=authelia@docker",
+          "traefik.http.routers.traefik.entrypoints=http",
+          "traefik.http.routers.traefik.rule=Host(`traefik.lazz.tech`)",
+          "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https",
+          "traefik.http.routers.traefik.middlewares=traefik-https-redirect",
+          "traefik.http.routers.traefik-secure.entrypoints=https",
+          "traefik.http.routers.traefik-secure.rule=Host(`traefik.lazz.tech`)",
+          "traefik.http.routers.traefik-secure.tls=true",
+          "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare",
+          "traefik.http.routers.traefik-secure.tls.domains[0].main=lazz.tech",
+          "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.lazz.tech",
+          "traefik.http.routers.traefik-secure.service=api@internal",
+
+          "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)",
+          "traefik.http.routers.http-catchall.entrypoints=http",
+          "traefik.http.routers.http-catchall.middlewares=redirect-to-https@consulcatalog",
+          "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
         ]
 
         check {

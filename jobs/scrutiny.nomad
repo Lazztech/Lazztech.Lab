@@ -59,6 +59,7 @@ job "scrutiny" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.scrutiny.rule=Host(`scrutiny.lazz.tech`)",
+          "traefik.http.routers.scrutiny.tls.certresolver=cloudflare"
         ]
 
         check {

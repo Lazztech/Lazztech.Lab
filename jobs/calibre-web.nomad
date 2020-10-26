@@ -80,6 +80,7 @@ job "calibre-web" {
         tags = [
           "traefik.enable=true",
           "traefik.http.routers.calibre-web.rule=Host(`read.lazz.tech`)",
+          "traefik.http.routers.calibre-web.tls.certresolver=cloudflare"
         ]
 
         check {

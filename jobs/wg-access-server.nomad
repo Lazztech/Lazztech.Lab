@@ -77,7 +77,8 @@ job "wg-access-server" {
 
 		tags = [
 		  "traefik.enable=true",
-		  "traefik.http.routers.wg-access-server.rule=HostRegexp(`wireguard.lazz.tech`)"
+		  "traefik.http.routers.wg-access-server.rule=Host(`wireguard.lazz.tech`)",
+          "traefik.http.routers.wg-access-server.tls.certresolver=cloudflare"
 		]
 
 		check {
