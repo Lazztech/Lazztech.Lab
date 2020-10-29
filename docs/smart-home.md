@@ -1,9 +1,19 @@
 # Smart Home Dev Journal
 
-### Device Specs
-- Nortek HUSBZB-1 Z-Wave/Zigbee USB Stick
-- Samsung SmartThings
-    - Multipurpose Sensor
+### Devices
+
+| Kind | Hubs |
+|---------|---------|
+| Zigbee/Z-Wave | Nortek HUSBZB-1 Z-Wave/Zigbee USB Stick |
+
+| Zigbee Repeating Devices |
+|---------|
+| IKEA Tradfri lights |
+
+| Zigbee Devices |
+|---------|
+| Samsung SmartThings Multipurpose Sensor |
+
 
 ## Home Assistant Configuration
 - https://www.home-assistant.io/docs/configuration/
@@ -100,3 +110,30 @@ zha:
 
 ## Hacs
 - https://hacs.xyz/
+- https://hacs.xyz/docs/installation/manual
+- https://hacs.xyz/docs/faq/custom_repositories
+
+Note I actually installed this dependency with this:
+- https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack
+
+```
+sudo curl -o /opt/home-assistant/config/custom_components/hacs.zip "https://github.com/hacs/integration/releases/download/1.6.0/hacs.zip"
+sudo unzip hacs.zip -d "hacs"
+rm -f hacs.zip
+```
+
+## Circadian Lighting
+- https://www.reddit.com/r/homeassistant/comments/akztvn/whats_your_solution_for_flux_circadian_lighting/
+- https://github.com/claytonjn/hass-circadian_lighting
+
+Add the following to the custom repos in hacs:
+- https://github.com/basnijholt/adaptive-lighting
+
+Video of setting up adaptive-lighting integration
+- https://www.reddit.com/r/homeassistant/comments/jabhso/ha_has_it_before_apple_has_even_finished_it_i/
+
+UI card for adaptive lighting:
+- https://www.reddit.com/r/homeassistant/comments/enpeik/i_keep_seeing_my_own_theme_on_reddit_so_now_its/
+
+## Inspiration
+- https://github.com/basnijholt/home-assistant-config/

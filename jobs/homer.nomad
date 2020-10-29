@@ -152,12 +152,6 @@ services:
         tag: "community"
         url: "http://home-assistant.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-      - name: "Home Bridge"
-        icon: "fas fa-laptop-house"
-        subtitle: "HomeKit support for non-HomeKit devices"
-        tag: "community"
-        url: "http://homebridge.lazz.tech/"
-        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
   - name: "Development"
     icon: "fas fa-code"
