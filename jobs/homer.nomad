@@ -153,7 +153,17 @@ services:
         url: "http://home-assistant.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
-  - name: "Development"
+  - name: "Lazztech Development"
+    icon: "fas fa-code"
+    items:
+      - name: "dev-lazztechhub-service"
+        icon: "fab fa-git-alt"
+        subtitle: "Local development deployment"
+        tag: "community"
+        url: "http://dev-lazztechhub.lazz.tech/graphql"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+  - name: "Development Resources"
     icon: "fas fa-code"
     items:
       - name: "Gitea"
@@ -271,7 +281,7 @@ EOF
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.homer.rule=HostRegexp(`homer.lazz.tech`, `home`)"
+          "traefik.http.routers.homer.rule=Host(`homer.lazz.tech`, `home`)"
         ]
 
         check {
