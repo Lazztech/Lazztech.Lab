@@ -79,24 +79,30 @@ EOF
 
       template {
         data = <<EOF
-        [http.routers]
-          [http.routers.nomad]
-            service = "nomad"
-            rule = "Host(`nomad.lazz.tech`)"
-          [http.routers.vault]
-            service = "vault"
-            rule = "Host(`vault-ui.lazz.tech`)"
-          [http.routers.consul]
-            service = "consul"
-            rule = "Host(`consul.lazz.tech`)"
-    
-        [http.services]
-          [[http.services.nomad.loadBalancer.servers]]
-            url = "http://127.0.0.1:4646/"
-          [[http.services.consul.loadBalancer.servers]]
-            url = "http://127.0.0.1:8500/"
-          [[http.services.vault.loadBalancer.servers]]
-            url = "http://127.0.0.1:8200/"
+[http.routers]
+  [http.routers.nomad]
+    service = "nomad"
+    rule = "Host(`nomad.lazz.tech`)"
+    [http.routers.nomad.tls]
+      certresolver = "cloudflare"
+  [http.routers.vault]
+    service = "vault"
+    rule = "Host(`vault-ui.lazz.tech`)"
+    [http.routers.vault.tls]
+      certresolver = "cloudflare"
+  [http.routers.consul]
+    service = "consul"
+    rule = "Host(`consul.lazz.tech`)"
+    [http.routers.consul.tls]
+      certresolver = "cloudflare"
+
+[http.services]
+  [[http.services.nomad.loadBalancer.servers]]
+    url = "http://127.0.0.1:4646/"
+  [[http.services.consul.loadBalancer.servers]]
+    url = "http://127.0.0.1:8500/"
+  [[http.services.vault.loadBalancer.servers]]
+    url = "http://127.0.0.1:8200/"
 EOF
         destination = "local/providers.toml"
       }
