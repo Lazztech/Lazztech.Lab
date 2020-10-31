@@ -135,5 +135,64 @@ Video of setting up adaptive-lighting integration
 UI card for adaptive lighting:
 - https://www.reddit.com/r/homeassistant/comments/enpeik/i_keep_seeing_my_own_theme_on_reddit_so_now_its/
 
+## HomeKit
+- https://www.home-assistant.io/integrations/homekit/
+- https://community.home-assistant.io/t/using-homekit-component-inside-docker/45409/25
+
+Add the following to the home-assistant configuration.yml
+
+```
+zeroconf:
+  default_interface: true
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.homekit: debug
+    pyhap: debug
+
+homekit:
+  safe_mode: true
+  advertise_ip: "STATIC_IP_OF_YOUR_DOCKER_HOST"
+```
+
+```
+sudo touch /etc/avahi/services/homeassistant.service
+sudo nano /etc/avahi/services/homeassistant.service
+```
+
+Find the homekit mac address. Your file will be named differently though will look similar.
+
+```
+cat /opt/home-assistant/config/.storage/homekit.76612d3d555b4fc3b4b26e7d1c546822.state
+```
+
+Add the following to /etc/avahi/services/homeassistant.service using the macc address from the step above.
+
+```
+<service-group>
+  <name>Home Assistant Bridge</name>
+  <service>
+    <type>_hap._tcp</type>
+    <port>51827</port>
+    <txt-record>md=Bridge</txt-record>            <!-- friendly name                 -->
+
+    <!-- the following appear to be mandatory -->
+    <txt-record>pv=1.0</txt-record>               <!-- HAP version                   -->
+    <txt-record>id=65:5A:74:1B:97:A9</txt-record> <!-- MAC (from `.homekit.state`)   -->
+    <txt-record>c#=2</txt-record>                 <!-- config version                -->
+  </service>
+</service-group>
+```
+
+Restart avahi daemon
+
+```
+sudo service avahi-daemon restart
+```
+
+## Casting
+- https://cast.home-assistant.io/
+
 ## Inspiration
 - https://github.com/basnijholt/home-assistant-config/

@@ -5,6 +5,7 @@
     * [HP MicroServer Gen8](on-prem/hp-microserver-gen8.md)
     * [Networking](on-prem/networking.md)
     * [Power](on-prem/power.md)
+    * [Cameras](on-prem/cameras.md)
 * [Services](services/README.md)
     * [Traefik](services/traefik.md)
     * [Docker Registry](services/docker-registry.md)
