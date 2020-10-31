@@ -102,6 +102,10 @@ message:
 # Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
 links:
+  - name: "Lazztech Status"
+    icon: "fas fa-heartbeat"
+    url: "https://status.lazz.tech/"
+    target: "_blank" # optional html tag target attribute
   - name: "Lazztech Blog"
     icon: "fas fa-blog"
     url: "https://lazz.tech/"
@@ -194,6 +198,13 @@ services:
   - name: "Monitoring"
     icon: "fas fa-heartbeat"
     items:
+      - name: "Statping"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Uptime status and notifications"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://status.lazz.tech/"
       - name: "Grafana"
         logo: "assets/tools/sample2.png"
         subtitle: "Monitoring & Visibility"
