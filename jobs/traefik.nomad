@@ -45,6 +45,9 @@ job "traefik" {
     [entryPoints.traefik]
     address = ":8081"
 
+[serversTransport]
+  insecureSkipVerify = "true"
+
 [accessLog]
 [log]
   level = "DEBUG"
