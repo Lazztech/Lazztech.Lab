@@ -11,6 +11,7 @@
     * [Docker Registry](services/docker-registry.md)
     * [Nextcloud](services/nextcloud.md)
     * [Gitea](services/gitea.md)
+    * [Drone](services/drone.md)
 * [Smart Home](smart-home.md)
 * [Monitoring](monitoring.md)
 * [AI](ai.md)
