@@ -123,7 +123,7 @@ job "drone" {
         ]
 
         check {
-          type     = "http"
+          type     = "tcp"
           path     = "/"
           interval = "2s"
           timeout  = "2s"

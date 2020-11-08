@@ -10,6 +10,7 @@
     * [Traefik](services/traefik.md)
     * [Docker Registry](services/docker-registry.md)
     * [Nextcloud](services/nextcloud.md)
+    * [Gitea](services/gitea.md)
 * [Smart Home](smart-home.md)
 * [Monitoring](monitoring.md)
 * [AI](ai.md)
