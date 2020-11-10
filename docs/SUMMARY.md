@@ -12,6 +12,7 @@
     * [Nextcloud](services/nextcloud.md)
     * [Gitea](services/gitea.md)
     * [Drone](services/drone.md)
+* [Authentication](authentication.md)
 * [Smart Home](smart-home.md)
 * [Monitoring](monitoring.md)
 * [AI](ai.md)
