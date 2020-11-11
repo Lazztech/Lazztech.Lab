@@ -1,6 +1,8 @@
 # Authentication
 
-There are many technologies that exist to fulfill authentication, user access management and the like. It can be difficult to parse through all the options and technologies. There's SAML(Security Assertion Markup Language), OAuth(open-standard authorization protocol), LDAP(Lightweight Directory Access Protocol), AD(Active Directory), SSO(Single Sign On), OIDC(OpenID Connect), MFA(Multi Factor Authentication) and many others. Then there are services that implement these technologies to put it all together into a cohesive system. There's Azure AD, Okta, JumpCloud, Auth0, Keycloak, Authelia, FreeIPA, Gluu, Anvil and many others.
+There are many technologies that exist to fulfill authentication, user access management and the like. It can be difficult to parse through all the options and technologies. There's SAML(Security Assertion Markup Language), OAuth(open-standard authorization protocol), LDAP(Lightweight Directory Access Protocol), AD(Active Directory), IAM(Identity Access Management) SSO(Single Sign On), OIDC(OpenID Connect), MFA(Multi Factor Authentication) and many others. Then there are services that implement these technologies to put it all together into a cohesive system. There's Azure AD, Okta, JumpCloud, Auth0, Keycloak, Authelia, FreeIPA, Gluu, Anvil and many others.
+
+> "The problem with providing "an answer" is because OAuth2, OpenID Connect, and all of the surrounding protocols do a great job of breaking security protocols down to single-responsibilities. That turns the modelling process into a five-dimensional chess game." [1.]
 
 This document seeks to address and work through the challenge of setting up a manageable system to provision user accounts and user access groups in a free, open source & self hostable way. Additionally I'd like to touch on implementing support for this authentication and user account management infrastructure into newly developed services.
 
@@ -16,9 +18,38 @@ Paid/Closed Source:
 - Okta
 - Auth0
 
+Grey Area Inbetween:
+- [FusionAuth](https://fusionauth.io/)
+- [Pritunl](https://pritunl.com/)
+
 Open Source/Self Hostable:
-- Keycloak
-- Authelia
-- FreeIPA
-- Gluu
-- Anvil
+- [Keycloak](https://www.keycloak.org/)
+- [Authelia](https://github.com/authelia/authelia)
+- [FreeIPA](https://www.freeipa.org/page/Main_Page)
+- [Gluu](https://www.gluu.org/)
+- [Anvil](https://anvil.io/)
+- [ORY](https://www.ory.sh/)
+- [dex](https://dexidp.io/)
+
+So immediately we can go ahead and rule out the paid/closed source options as we've already asserted we want an open source self hostable solution. So we'll go ahead and work through the open source/self hostable options. 
+
+Anvil looks like a compelling feature full option however this one is easy to rule out as it's no longer maintained.
+
+Authelia receives frequent mention on the r/selfhosted & r/homelab when searching this topic. It works natively with the traefik reverse proxy we're using. It supports 2FA via google duo and other methods. However as far as I can tell this doesn't provide a solution to manage users accounts and instead works as a gateway auth to the service, where you will then still need to sign in/register an account for each. [6.]
+
+FreeIPA appears to be an identity management service and be provided as a backing service for solutions like Keycloak to achieve SSO. It is open source and sponsored by Redhat. [7.]
+
+Gluu seems to get mentioned though I have yet to see a positive review or account of it actually being used on r/selfhosted or r/homelab. It mostly comes up as an alternative to Keycloak, though not as a primary recommendation. [2.]
+
+FusionAuth & ORY both similarly come up in the same light as Gluu in that they're mentioned as alternatives to Keycloak. The discussions I've seen have yet to say much beyond that. Though there was one account of a user giving up on setting up ORY as they were unable to get it working. [3.]
+
+Keycloak, as far as I saw appears as the most consistently recommended solution, right above Authelia. It appears that if you simply want auth in front of your services, setup with an external service such as Google for OAuth then Authelia is the way to go. However Keycloak can handle the entire process on your own machine. [4.] [5.] It's typically deployed via docker and provides a web ui for managing users, & permission groups. It also gets mentioned as integrating with Traefik with is a positive sign. It's also open source and sponsored by Redhat. Keycloak appears to be able to work stand alone or in conjunction with FreeIPA or other backing services for identity management/AD.
+
+# References
+1. https://www.reddit.com/r/selfhosted/comments/dr7dan/customer_identity_and_access_management/f6hsvht?utm_source=share&utm_medium=web2x&context=3
+2. https://www.reddit.com/r/selfhosted/comments/fxotbi/experiences_with_keycloak_alternatives/fn1u3p4?utm_source=share&utm_medium=web2x&context=3
+3. https://www.reddit.com/r/selfhosted/comments/hzesur/keycloak_as_okta_universal_directory_alternative/fzk3kxa?utm_source=share&utm_medium=web2x&context=3
+4. https://www.reddit.com/r/selfhosted/comments/hrcb66/sso_on_multiple_selfhosted_services/fy38lkx?utm_source=share&utm_medium=web2x&context=3
+5. https://www.reddit.com/r/selfhosted/comments/hrcb66/sso_on_multiple_selfhosted_services/fy3tuk2?utm_source=share&utm_medium=web2x&context=3
+6. https://www.reddit.com/r/selfhosted/comments/e0sfl4/seamless_login_and_accounts_across_services/fb6s3qr?utm_source=share&utm_medium=web2x&context=3
+7. https://www.reddit.com/r/linuxadmin/comments/gdegxl/keycloak_freeipa_openldap_proscons/fph06mz?utm_source=share&utm_medium=web2x&context=3

@@ -188,12 +188,12 @@ services:
         tag: "community"
         url: "http://docker.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-      - name: "Code Server"
-        icon: "fas fa-laptop-code"
-        subtitle: "VSCode web server"
-        tag: "community"
-        url: "http://code.lazz.tech/"
-        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+#      - name: "Code Server"
+#        icon: "fas fa-laptop-code"
+#        subtitle: "VSCode web server"
+#        tag: "community"
+#        url: "http://code.lazz.tech/"
+#        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
   - name: "Monitoring"
     icon: "fas fa-heartbeat"
@@ -259,13 +259,6 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://traefik.lazz.tech/"
-      - name: "Unifi"
-        logo: "assets/tools/sample2.png"
-        subtitle: "Network Management"
-        tag: "sysadmin"
-        # Optional tagstyle
-        tagstyle: "is-success"
-        url: "http://unifi/"
       - name: "Wireguard"
         logo: "assets/tools/sample2.png"
         subtitle: "Wireguard VPN Management"
@@ -273,6 +266,20 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://wireguard.lazz.tech/"
+      - name: "Keycloak"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Identity Management"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://keycloak.lazz.tech/"
+      - name: "Unifi"
+        logo: "assets/tools/sample2.png"
+        subtitle: "Network Management"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://unifi/"
 EOF
         destination = "homer/assets/config.yml"
       }
