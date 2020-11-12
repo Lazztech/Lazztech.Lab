@@ -8,7 +8,25 @@ This document seeks to address and work through the challenge of setting up a ma
 
 This document will likely change and evolve as time goes on and the setup evolves though, it should be used as the starting point of reference to dive deeper into the setup and reasoning behind the technologies selected to make this happen.
 
-# Open Source/Self Hostable VS. Paid Solutions
+## Why
+
+At the time of writing this we're managing a couple dozen services, most of which have their own account registration process. This quickly becomes untenable and a barrier to productivity. Not to mention the challenges of managing access & security when introducing multiple users. We need a centralized source of truth for credentials/accounts. This way jumping between different services becomes seamless. This is especially the case when services are all located under different subdomains of the same domain name, which results in browsers suggesting the same credential between each service anyways.
+
+These are the services at the time of writing this that we would like to manage the identity/credentials for:
+- Nextcloud
+- Homeassistant
+- Prometheus
+- Grafana
+- Wiki
+- Gitea
+- Drone
+- Docker Registry
+- Statping
+- Wireguard
+- Unifi
+- Any custom developed service
+
+## Open Source/Self Hostable VS. Paid Solutions
 
 The Paid/Closed source solutions can be seen as the state of the art and generally offer the greatest support and ease of use though we've already stated that our desire is to go with self hostable & open source solution to limit cost and maintain ownership of the solution. The paid/closed source solutions are however a helpful point of reference for what can be achieved.
 
@@ -44,6 +62,12 @@ Gluu seems to get mentioned though I have yet to see a positive review or accoun
 FusionAuth & ORY both similarly come up in the same light as Gluu in that they're mentioned as alternatives to Keycloak. The discussions I've seen have yet to say much beyond that. Though there was one account of a user giving up on setting up ORY as they were unable to get it working. [3.]
 
 Keycloak, as far as I saw appears as the most consistently recommended solution, right above Authelia. It appears that if you simply want auth in front of your services, setup with an external service such as Google for OAuth then Authelia is the way to go. However Keycloak can handle the entire process on your own machine. [4.] [5.] It's typically deployed via docker and provides a web ui for managing users, & permission groups. It also gets mentioned as integrating with Traefik with is a positive sign. It's also open source and sponsored by Redhat. Keycloak appears to be able to work stand alone or in conjunction with FreeIPA or other backing services for identity management/AD.
+
+## Keycloak
+
+As you may have guessed, Keycloak presents it's self as the strongest contender. There may be other options that would work well or better for our needs if further investigation was done but Keycloak appears as a strong option.
+
+One detail to note is that in our configuration you'll need the `PROXY_ADDRESS_FORWARDING="true"` environment variable to be able to get it working behind the traefik reverse proxy.
 
 # References
 1. https://www.reddit.com/r/selfhosted/comments/dr7dan/customer_identity_and_access_management/f6hsvht?utm_source=share&utm_medium=web2x&context=3

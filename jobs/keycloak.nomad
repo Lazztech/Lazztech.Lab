@@ -17,6 +17,7 @@ job "keycloak" {
       env {
         KEYCLOAK_USER="admin"
         KEYCLOAK_PASSWORD="admin"
+        PROXY_ADDRESS_FORWARDING="true"
       }
       config {
         image = "quay.io/keycloak/keycloak:11.0.3"
