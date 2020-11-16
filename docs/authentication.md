@@ -69,6 +69,45 @@ As you may have guessed, Keycloak presents it's self as the strongest contender.
 
 One detail to note is that in our configuration you'll need the `PROXY_ADDRESS_FORWARDING="true"` environment variable to be able to get it working behind the traefik reverse proxy.
 
+## Setup with Dokuwiki
+- https://rmm.li/wiki/doku.php?id=linux_server_manuals:dokuwiki_authentication_against_keycloak
+
+Add a new client with following settings:
+Client ID: dokuwiki
+Client Protocol: openid-connect
+
+Then edit the new adapter settings
+Access Type: confidential
+Valid Redirect URLS: https://example.com/* (Or wherever dokuwiki is stored)
+
+Save and then go to the newly appeard tab “credentials”.
+Set Client Authenticator to “Client id and secret” and copy the secret.
+
+If you want dokuwiki to know about the groups keycloak assigns to the users, go to the tab “Mappers”, then click “create”.
+Set following attributes:
+Name: groups
+Mapper Type: “group membership”
+Token Claim Name: “groups”
+Full group paths: off
+Add to id token: off
+Add to access token: off
+Add to userinfo: on
+
+- Go to extension manager page
+- Install authpdo plugin by  Andreas Gohr
+- Go to configuration settings page
+- Add the following configurations through the ui
+
+plugin»oauth»keycloak-key=dokuwiki
+plugin»oauth»keycloak-secret=PutTheSecretFromKeycloakHere
+plugin»oauth»keycloak-authurl=https://keycloak.lazz.tech/auth/realms/master/protocol/openid-connect/auth
+plugin»oauth»keycloak-tokenurl=https://keycloak.lazz.tech/auth/realms/master/protocol/openid-connect/token
+plugin»oauth»keycloak-userinfourl=https://keycloak.lazz.tech/auth/realms/master/protocol/openid-connect/userinfo
+plugin»oauth»singleService=Keycloak
+
+Then save.
+
+
 # References
 1. https://www.reddit.com/r/selfhosted/comments/dr7dan/customer_identity_and_access_management/f6hsvht?utm_source=share&utm_medium=web2x&context=3
 2. https://www.reddit.com/r/selfhosted/comments/fxotbi/experiences_with_keycloak_alternatives/fn1u3p4?utm_source=share&utm_medium=web2x&context=3
