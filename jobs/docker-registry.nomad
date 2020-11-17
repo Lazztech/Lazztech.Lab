@@ -1,3 +1,11 @@
+// https://docs.docker.com/registry/deploying/
+// docker run -d \
+//   -p 5000:5000 \
+//   --restart=always \
+//   --name registry \
+//   -v /mnt/registry:/var/lib/registry \
+//   registry:2
+
 job "docker-registry" {
   datacenters = ["dc1"]
   type = "service"
@@ -16,6 +24,9 @@ job "docker-registry" {
         port_map {
           http = 5000
         }
+        volumes = [
+          "/opt/docker-registry/registry:/var/lib/registry"
+        ]
       }
       resources {
         cpu    = 250 # 250 MHz
@@ -34,7 +45,6 @@ job "docker-registry" {
           "traefik.enable=true",
           "traefik.http.routers.docker-registry.rule=HostRegexp(`registry.lazz.tech`)",
           "traefik.http.routers.docker-registry.tls.certresolver=cloudflare"
-
         ]
 
         check {
