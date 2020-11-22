@@ -24,6 +24,7 @@ These are the services at the time of writing this that we would like to manage 
 - Statping
 - Wireguard
 - Unifi
+- Vault
 - Any custom developed service
 
 ## Open Source/Self Hostable VS. Paid Solutions
@@ -106,6 +107,9 @@ plugin»oauth»keycloak-userinfourl=https://keycloak.lazz.tech/auth/realms/maste
 plugin»oauth»singleService=Keycloak
 
 Then save.
+
+## Hashicorp Vault
+- https://www.vaultproject.io/docs/auth/jwt_oidc_providers.html#keycloak
 
 
 # References

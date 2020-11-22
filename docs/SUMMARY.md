@@ -8,6 +8,7 @@
     * [Cameras](on-prem/cameras.md)
 * [Services](services/README.md)
     * [Traefik](services/traefik.md)
+    * [Vault](services/vault.md)
     * [Docker Registry](services/docker-registry.md)
     * [Nextcloud](services/nextcloud.md)
     * [Gitea](services/gitea.md)
@@ -16,4 +17,3 @@
 * [Smart Home](smart-home.md)
 * [Monitoring](monitoring.md)
 * [AI](ai.md)
-
