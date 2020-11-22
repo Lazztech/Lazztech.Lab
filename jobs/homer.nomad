@@ -198,6 +198,13 @@ services:
   - name: "Monitoring"
     icon: "fas fa-heartbeat"
     items:
+      - name: "Netdata"
+        logo: "assets/tools/sample2.png"
+        subtitle: "performance and health monitoring"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://192.168.1.11:19999/"
       - name: "Statping"
         logo: "assets/tools/sample2.png"
         subtitle: "Uptime status and notifications"
