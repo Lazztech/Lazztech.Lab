@@ -193,6 +193,7 @@ sudo service avahi-daemon restart
 
 ## Casting
 - https://cast.home-assistant.io/
+- https://www.home-assistant.io/blog/2019/08/06/home-assistant-cast/
 
 ## Inspiration
 - https://github.com/basnijholt/home-assistant-config/

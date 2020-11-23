@@ -9,6 +9,7 @@
 * [Services](services/README.md)
     * [Traefik](services/traefik.md)
     * [Vault](services/vault.md)
+    * [Wireguard](services/wireguard.md)
     * [Docker Registry](services/docker-registry.md)
     * [Nextcloud](services/nextcloud.md)
     * [Gitea](services/gitea.md)
