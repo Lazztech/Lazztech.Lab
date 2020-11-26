@@ -23,6 +23,7 @@ $ sudo nano /etc/hosts
 192.168.1.11    cicd.lazz.tech
 192.168.1.11    prometheus.lazz.tech
 192.168.1.11    keycloak.lazz.tech
+192.168.1.11    jellyfin.lazz.tech
 
 192.168.1.11    nextcloud.lazz.tech
 192.168.1.11    code.lazz.tech

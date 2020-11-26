@@ -156,6 +156,12 @@ services:
         tag: "community"
         url: "http://home-assistant.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Jellyfin"
+        icon: "fas fa-photo-video"
+        subtitle: "Media server"
+        tag: "community"
+        url: "http://jellyfin.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
   - name: "Lazztech Development"
     icon: "fas fa-code"
