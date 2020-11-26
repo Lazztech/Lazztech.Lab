@@ -6,7 +6,9 @@ Configuration of the host operating system(s) is automated with Ansible for repe
 - [Ansible Linux Automation Video](https://www.youtube.com/watch?v=5hycyr-8EKs&t=126s)
 - [Ansible Network Automation](https://www.youtube.com/watch?v=OWKPxAgh9DU)
 
-```
+## Installing Ansible
+
+```bash
 # Debian/Ubuntu:
 apt-get install python-pip
 
@@ -19,50 +21,53 @@ sudo easy_install pip
 # Windows: Unfortunately Ansible does not work on Windows, but you can easily setup an Linux virtual machine with Vagrant and SSH into it.
 ```
 
-```
+```bash
 # install ansible
 pip install ansible
 ansible --help
 ```
 
-```
-sudo mkdir /etc/ansible
-```
-
 ```bash
-# setup ansible hosts/inventory file
-sudo tee /etc/ansible/hosts <<EOF
-[localhost]
-127.0.0.1
-
-[micro8]
-192.168.1.11
-
-[udm]
-192.168.1.1
-EOF
-```
-
-```bash
-# setup ansible config file
-sudo tee ~/ansible.cfg <<EOF
-[defaults]
-inventory = hosts
-remote_user = root
-host_key_checking = False
-ansible_user=root
-EOF
-```
-
-```bash
-# configure UDM
-cd playbooks/
-ansible-playbook udm.yml
+# very installation
+ansible --version
 ```
 
 ```bash
 # install sshpass
 brew install hudochenkov/sshpass/sshpass
+```
+
+## Deploying Ansible Playbooks
+
+Ansible by convention looks in a set of directories for configuration files. We'll be working of the ansible behavior of checking the current directory for picking up configuration details.
+
+> Changes can be made and used in a configuration file which will be processed in the following order:
+> 
+> - ANSIBLE_CONFIG (an environment variable)
+> - ansible.cfg (in the current directory)
+> - .ansible.cfg (in the home directory)
+> - /etc/ansible/ansible.cfg
+
+```bash
+# verify ansible picks up configuration files
+
+# from within this repo
+cd ansible/
+# verify that ansible then picks up the configurations in the working directory it's run from
+ansible --version
+WARNING: Executing a script that is loading libcrypto in an unsafe way. This will fail in a future version of macOS. Set the LIBRESSL_REDIRECT_STUB_ABORT=1 in the environment to force this into an error.
+ansible 2.7.0.dev0
+  config file = /Users/gianlazzarini/Documents/Development/Lazztech.Infrastructure/ansible/ansible.cfg
+  configured module search path = [u'/Users/gianlazzarini/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /Library/Python/2.7/site-packages/ansible
+  executable location = /usr/local/bin/ansible
+  python version = 2.7.16 (default, Apr 17 2020, 18:29:03) [GCC 4.2.1 Compatible Apple LLVM 11.0.3 (clang-1103.0.29.20) (-macos10.15-objc-
+```
+
+```bash
+# deploy nomad jobs
+cd ansible/
+ansible-playbook playbooks/nomad-jobs.yml
 ```
 
 # ansible / unifi
