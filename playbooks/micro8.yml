@@ -1,6 +1,0 @@
----
-    - hosts: micro8
-      remote_user: gian
-      tasks:
-       - debug: msg="Hello World!"
-       - ping:

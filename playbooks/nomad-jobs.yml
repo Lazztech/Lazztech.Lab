@@ -1,0 +1,21 @@
+- hosts: micro8
+  become: true
+  become_user: root
+  tasks:
+  - name: Deploy Homer
+    block:
+      - name: Copy Nomad Job
+        copy:
+          src: /jobs/homer.nomad
+          dest: /tmp/homer.nomad
+      - name: Run Nomad Job
+        command: nomad job run /tmp/homer.nomad
+  - name: Deploy Traefik
+    block:
+      - name: Copy Nomad Job
+        copy:
+          src: /jobs/traefik.nomad
+          dest: /tmp/traefik.nomad
+      - name: Run Nomad Job
+        command: nomad job run /tmp/traefik.nomad
+     

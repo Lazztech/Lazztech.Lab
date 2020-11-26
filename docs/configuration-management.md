@@ -60,6 +60,11 @@ cd playbooks/
 ansible-playbook udm.yml
 ```
 
+```bash
+# install sshpass
+brew install hudochenkov/sshpass/sshpass
+```
+
 # ansible / unifi
 - https://www.reddit.com/r/ansible/comments/9ghaak/ubiquiti_unifi_controller_facts_new_ansible_module/
 - https://fiercesw.com/blog/giving-back-contributing-to-open-source-software
