@@ -44,7 +44,7 @@ $ sudo killall -HUP mDNSResponder
 chrome://net-internals/#dns
 ```
 
-## WIP: Local Setup -- Working
+## WIP: Local Setup
 *For Mac*
 
 First install Docker for Mac:
@@ -102,7 +102,7 @@ $ open http://localhost:8080/myapp3
 $ open http://myapp.localhost:8080/
 ```
 
-## WIP: Local Vagrant VM Setup -- Working
+## WIP: Local Vagrant VM Setup
 *For Mac*
 
 ```bash
@@ -115,59 +115,39 @@ MacBook:Lazztech.Infrastructure me$ brew cask install vagrant
 ```
 
 ```bash
-# https://learn.hashicorp.com/tutorials/nomad/get-started-install?in=nomad/get-started#vagrant-setup-optional
-
 # start development vm
 MacBook:Lazztech.Infrastructure me$ vagrant up
-# ssh into vm
-MacBook:Lazztech.Infrastructure me$ vagrant ssh
-# from vm, start nomad in dev mod
-vagrant@nomad:~$ nomad agent -dev -bind 0.0.0.0
 ```
 
 ```bash
-# test nomad ui
-MacBook:Lazztech.Infrastructure me$ nomad ui
-# start traefik job
-MacBook:Lazztech.Infrastructure me$ nomad job run jobs/traefik.nomad
-
-# start example job 1
-MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp1.nomad
-# start example job 2
-MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp2.nomad
-# start example job 3
-MacBook:Lazztech.Infrastructure me$ nomad job run jobs/examples/webapp3.nomad
-
-# open traefik ui
-MacBook:Lazztech.Infrastructure me$ open http://localhost:8081
-
-# open traefik route to example job 1
-MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp1
-# open traefik route to example job 2
-MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp2
-# open traefik route to example job 3
-MacBook:Lazztech.Infrastructure me$ open http://localhost:8080/myapp3
+# install ansible
+brew install ansible
 ```
-
-## WIP: On-Prem
-*For Mac*
 
 ```bash
-# start nomad server agent
-$ nomad agent -config on-prem/server.hcl
-# start nomad client agent 1
-$ sudo nomad agent -config on-prem/client1.hcl
-# start nomad client agent 2
-$ sudo nomad agent -config on-prem/client2.hcl
-
-# run nomad node status to verify the clients are up
-$ nomad node status
-ID        DC   Name     Class   Drain  Eligibility  Status
-fca62612  dc1  client1  <none>  false  eligible     ready
-c887deef  dc1  client2  <none>  false  eligible     ready
+# cd to the ansible directory in this repo
+MacBook:Lazztech.Infrastructure me$ cd ansible
 ```
 
-## Soon: Azure
+```bash
+# run apt-get update upgrade
+MacBook:ansible me$ ansible-playbook apt-update-upgrade.yml
+```
+
+```bash
+# install roles listed in the requirements.yml from Ansible galaxy
+MacBook:ansible me$ ansible-galaxy install --roles-path roles -r requirements.yml
+```
+
+```bash
+# deploy infrastructure
+MacBook:ansible me$ ansible-playbook playbooks/infrastructure.yml 
+```
+
+```bash
+# deploy nomad jobs
+MacBook:ansible me$ ansible-playbook playbooks/nomad-jobs.yml
+```
 
 ## Resources
 

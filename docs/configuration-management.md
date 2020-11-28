@@ -9,27 +9,8 @@ Configuration of the host operating system(s) is automated with Ansible for repe
 ## Installing Ansible
 
 ```bash
-# Debian/Ubuntu:
-apt-get install python-pip
-
-# RedHat/CentOS/Fedora:
-yum install python-pip
-
-# MacOSX (more info):
-sudo easy_install pip
-
-# Windows: Unfortunately Ansible does not work on Windows, but you can easily setup an Linux virtual machine with Vagrant and SSH into it.
-```
-
-```bash
 # install ansible
-pip install ansible
-ansible --help
-```
-
-```bash
-# very installation
-ansible --version
+brew install ansible
 ```
 
 ```bash
@@ -68,6 +49,17 @@ ansible 2.7.0.dev0
 # deploy nomad jobs
 cd ansible/
 ansible-playbook playbooks/nomad-jobs.yml
+```
+
+## Hashistack
+
+Install roles listed in the requirements.yml from Ansible galaxy
+```bash
+ansible gianlazzarini$ ansible-galaxy install --roles-path roles -r requirements.yml
+```
+
+```bash
+ansible gianlazzarini$ ansible-playbook playbooks/hashistack.yml
 ```
 
 # ansible / unifi

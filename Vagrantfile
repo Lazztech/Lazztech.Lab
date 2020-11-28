@@ -15,4 +15,7 @@ Vagrant.configure("2") do |config|
               vb.name = "node-1"
           end
       end
+
+      config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "/home/vagrant/.ssh/id_rsa.pub"
+      config.vm.provision :shell, :inline => "cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys", run: "always"
 end
