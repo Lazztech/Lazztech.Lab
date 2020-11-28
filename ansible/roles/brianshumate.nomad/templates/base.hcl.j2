@@ -1,0 +1,84 @@
+name = "{{ nomad_node_name }}"
+region = "{{ nomad_region }}"
+datacenter = "{{ nomad_datacenter }}"
+
+enable_debug = {{ nomad_debug | bool | lower }}
+disable_update_check = {{ nomad_disable_update_check | bool | lower }}
+
+
+bind_addr = "{{ nomad_bind_address }}"
+advertise {
+    http = "{{ nomad_advertise_address }}:{{ nomad_ports.http }}"
+    rpc = "{{ nomad_advertise_address }}:{{ nomad_ports.rpc }}"
+    serf = "{{ nomad_advertise_address }}:{{ nomad_ports.serf }}"
+}
+ports {
+    http = {{ nomad_ports['http'] }}
+    rpc = {{ nomad_ports['rpc'] }}
+    serf = {{ nomad_ports['serf'] }}
+}
+
+{% if nomad_use_consul | bool == True %}
+consul {
+    # The address to the Consul agent.
+    address = "{{ nomad_consul_address }}"
+    token = "{{ nomad_consul_token }}"
+    # The service name to register the server and client with Consul.
+    server_service_name = "{{ nomad_consul_servers_service_name }}"
+    client_service_name = "{{ nomad_consul_clients_service_name }}"
+    tags = {{ nomad_consul_tags | to_json }}
+
+    # Enables automatically registering the services.
+    auto_advertise = true
+
+    # Enabling the server and client to bootstrap using Consul.
+    server_auto_join = true
+    client_auto_join = true
+}
+{% endif %}
+
+data_dir = "{{ nomad_data_dir }}"
+
+log_level = "{{ nomad_log_level }}"
+enable_syslog = {{ nomad_syslog_enable | bool | lower }}
+
+leave_on_terminate = {{ nomad_leave_on_terminate | bool | lower }}
+leave_on_interrupt = {{ nomad_leave_on_interrupt | bool | lower }}
+
+
+{% if ( nomad_ca_file ) and
+      ( nomad_cert_file ) and
+      ( nomad_key_file )
+%}
+tls {
+    http = true
+    rpc = true
+    ca_file = "{{ nomad_ca_file }}"
+    cert_file = "{{ nomad_cert_file }}"
+    key_file = "{{ nomad_key_file }}"
+    verify_server_hostname = "{{ nomad_verify_server_hostname }}"
+    verify_https_client = "{{ nomad_verify_https_client }}"
+}
+{% endif %}
+
+acl {
+    enabled = {{ nomad_acl_enabled | bool | lower }}
+    token_ttl = "{{ nomad_acl_token_ttl }}"
+    policy_ttl = "{{ nomad_acl_policy_ttl }}"
+    replication_token = "{{ nomad_acl_replication_token }}"
+}
+
+vault {
+    enabled = {{ nomad_vault_enabled | bool | lower }}
+    address = "{{ nomad_vault_address }}"
+    allow_unauthenticated = {{ nomad_vault_allow_unauthenticated | bool | lower }}
+    create_from_role = "{{ nomad_vault_create_from_role }}"
+    task_token_ttl = "{{ nomad_vault_task_token_ttl }}"
+    ca_file = "{{ nomad_vault_ca_file }}"
+    ca_path = "{{ nomad_vault_ca_path }}"
+    cert_file = "{{ nomad_vault_cert_file }}"
+    key_file = "{{ nomad_vault_key_file }}"
+    tls_server_name = "{{ nomad_vault_tls_server_name }}"
+    tls_skip_verify = {{ nomad_vault_tls_skip_verify | bool | lower }}
+    token = "{{ nomad_vault_token }}"
+}
