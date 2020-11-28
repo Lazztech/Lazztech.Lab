@@ -28,26 +28,23 @@ job "frigate" {
       config {
         image = "blakeblackshear/frigate:stable-amd64"
         port_map {
-          http = 8123
+          http = 5000
         }
         volumes = [
-          "local/config/config.yml:/config/config.yml", # Contains all relevant configuration files.
+          "local:/config", # Contains all relevant configuration files.
           "/opt/frigate/clips:/clips",
           "/etc/localtime:/etc/localtime:ro",
         ]
         devices = [
           {
-            host_path = "/dev/ttyUSB0"
-            container_path = "/dev/ttyUSB0"
+            host_path = "/dev/bus/usb"
+            container_path = "/dev/bus/usb"
           },
-          {
-            host_path = "/dev/ttyUSB1"
-            container_path = "/dev/ttyUSB1"
-          }
         ]
-        template {
-        destination = "local/config/config.yml"
-        data = <<EOH
+      }
+      template {
+      destination = "local/config.yml"
+      data = <<EOH
 # Optional: port for http server (default: shown below)
 web_port: 5000
 
@@ -65,9 +62,9 @@ detectors:
 # Required: mqtt configuration
 mqtt:
   # Required: host name
-  host: mqtt.server.com
+  host: 192.168.1.11
   # Optional: port (default: shown below)
-  port: 1883
+  port: 25170
   # Optional: topic prefix (default: shown below)
   # WARNING: must be unique if you are running multiple instances
   topic_prefix: frigate
@@ -75,11 +72,11 @@ mqtt:
   # WARNING: must be unique if you are running multiple instances
   client_id: frigate
   # Optional: user
-  user: mqtt_user
+#  user: mqtt_user
   # Optional: password
   # NOTE: Environment variables that begin with 'FRIGATE_' may be referenced in {}. 
   #       eg. password: '{FRIGATE_MQTT_PASSWORD}'
-  password: password
+#  password: password
 
 # Optional: Global configuration for saving clips
 save_clips:
@@ -103,7 +100,7 @@ ffmpeg:
     - panic
   # Optional: global hwaccel args (default: shown below)
   # NOTE: See hardware acceleration docs for your specific device
-  hwaccel_args: []
+#  hwaccel_args: []
   # Optional: global input args (default: shown below)
   input_args:
     - -avoid_negative_ts
@@ -155,22 +152,22 @@ cameras:
     ffmpeg:
       # Required: Source passed to ffmpeg after the -i parameter.
       # NOTE: Environment variables that begin with 'FRIGATE_' may be referenced in {}
-      input: rtsp://viewer:{FRIGATE_RTSP_PASSWORD}@10.0.10.10:554/cam/realmonitor?channel=1&subtype=2
+      input: rtsp://admin:password@192.168.1.166/live
       # Optional: camera specific global args (default: inherit)
-      global_args:
+#      global_args:
       # Optional: camera specific hwaccel args (default: inherit)
-      hwaccel_args:
+#      hwaccel_args:
       # Optional: camera specific input args (default: inherit)
-      input_args:
+#      input_args:
       # Optional: camera specific output args (default: inherit)
-      output_args:
+#      output_args:
     
     # Optional: height of the frame
     # NOTE: Recommended to set this value, but frigate will attempt to autodetect.
-    height: 720
+    height: 1080
     # Optional: width of the frame
     # NOTE: Recommended to set this value, but frigate will attempt to autodetect.
-    width: 1280
+    width: 1920
     # Optional: desired fps for your camera
     # NOTE: Recommended value of 5. Ideally, try and reduce your FPS on the camera.
     #       Frigate will attempt to autodetect if not specified.
@@ -178,7 +175,7 @@ cameras:
 
     # Optional: motion mask
     # NOTE: see docs for more detailed info on creating masks
-    mask: poly,0,900,1080,900,1080,1920,0,1920
+#    mask: poly,0,900,1080,900,1080,1920,0,1920
 
     # Optional: timeout for highest scoring image before allowing it
     # to be replaced by a newer image. (default: shown below)
@@ -192,21 +189,21 @@ cameras:
       snapshot_height: 300
 
     # Optional: zones for this camera
-    zones:
-      # Required: name of the zone
-      # NOTE: This must be different than any camera names, but can match with another zone on another
-      #       camera.
-      front_steps:
-        # Required: List of x,y coordinates to define the polygon of the zone.
-        # NOTE: Coordinates can be generated at https://www.image-map.net/
-        coordinates: 545,1077,747,939,788,805
-        # Optional: Zone level object filters.
-        # NOTE: The global and camera filters are applied upstream.
-        filters:
-          person:
-            min_area: 5000
-            max_area: 100000
-            threshold: 0.8
+#    zones:
+#      # Required: name of the zone
+#      # NOTE: This must be different than any camera names, but can match with another zone on another
+#      #       camera.
+#      front_steps:
+#        # Required: List of x,y coordinates to define the polygon of the zone.
+#        # NOTE: Coordinates can be generated at https://www.image-map.net/
+#        coordinates: 545,1077,747,939,788,805
+#        # Optional: Zone level object filters.
+#        # NOTE: The global and camera filters are applied upstream.
+#        filters:
+#          person:
+#            min_area: 5000
+#            max_area: 100000
+#            threshold: 0.8
 
     # Optional: save clips configuration
     # NOTE: This feature does not work if you have added "-vsync drop" in your input params. 
@@ -242,8 +239,8 @@ cameras:
           min_score: 0.5
           threshold: 0.85
 EOH
-        }
       }
+
       resources {
         cpu    = 250 # 250 MHz
         memory = 256 # 256MB

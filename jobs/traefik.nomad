@@ -42,6 +42,8 @@ job "traefik" {
     address = ":80"
     [entryPoints.https]
     address = ":443"
+    [entryPoints.mqtt]
+    address = ":1883"
     [entryPoints.traefik]
     address = ":8081"
 
