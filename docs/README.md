@@ -131,7 +131,7 @@ MacBook:Lazztech.Infrastructure me$ cd ansible
 
 ```bash
 # run apt-get update upgrade
-MacBook:ansible me$ ansible-playbook apt-update-upgrade.yml
+MacBook:ansible me$ ansible-playbook playbooks/apt-update-upgrade.yml
 ```
 
 ```bash

@@ -46,6 +46,11 @@
     group: "{{ nomad_group }}"
   with_items:
     - "{{ nomad_data_dir }}"
+    - "{{ nomad_plugin_dir }}"
+
+- name: Install Podman plugin
+  include: install_podman.yml
+  when: nomad_podman_enable | bool
 
 - name: Create config directory
   file:
@@ -100,6 +105,9 @@
     - nomad_config_custom is defined
   notify:
     - restart nomad
+
+- name: Host volume
+  include: host_volume.yml
 
 - name: SYSV init script
   template:

@@ -15,8 +15,8 @@ job "traefik" {
     task "traefik" {
       driver = "docker"
       env {
+        CF_API_KEY="***REMOVED***"
         CF_API_EMAIL="gianlazzarini@gmail.com"
-        CF_API_KEY=""
       }
       // volume_mount {
       //   volume      = "acme"

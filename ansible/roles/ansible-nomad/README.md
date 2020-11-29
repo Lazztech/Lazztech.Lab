@@ -1,16 +1,19 @@
-# Nomad
+# Ansible-Nomad
 
-[![Build Status](https://travis-ci.org/brianshumate/ansible-nomad.svg?branch=master)](https://travis-ci.org/brianshumate/ansible-nomad)
-[![Ansible Galaxy](https://img.shields.io/badge/galaxy-brianshumate.nomad-blue.svg)](https://galaxy.ansible.com/brianshumate/nomad/)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/brianshumate/ansible-nomad.svg)](http://isitmaintained.com/project/brianshumate/ansible-nomad "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/brianshumate/ansible-nomad.svg)](http://isitmaintained.com/project/brianshumate/ansible-nomad "Percentage of issues still open")
+----
+
+This role was previously maintained by Brian Shumate and is now curated by [@ansible-community/hashicorp-tools](https://github.com/ansible-community).
+
+----
+
+
 
 This Ansible role performs basic [Nomad](https://nomadproject.io/)
 installation, including filesystem structure, and example configuration.
 
 It will also bootstrap a minimal cluster of 3 server nodes, and can do this
 in a development environment based on Vagrant and VirtualBox. See
-[README_VAGRANT.md](https://github.com/brianshumate/ansible-nomad/blob/master/examples/README_VAGRANT.md) for more details about the Vagrant setup.
+[README_VAGRANT.md](https://github.com/ansible-community/ansible-nomad/blob/master/examples/README_VAGRANT.md) for more details about the Vagrant setup.
 
 ## Requirements
 
@@ -18,12 +21,13 @@ This role requires an Arch Linux, Debian, RHEL, or Ubuntu distribution; the role
 with the following specific software versions:
 
 * Ansible: 2.7.10
-* nomad: 0.10.3
+* nomad: 0.12.1
 * Arch Linux
 * CentOS: 7
 * Debian: 8
 * RHEL: 7
 * Ubuntu: 16.04
+* unzip for [unarchive module](https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#notes)
 
 ## Role Variables
 
@@ -36,7 +40,7 @@ The role defines most of its variables in `defaults/main.yml`:
 ### `nomad_version`
 
 - Nomad version to install
-- Default value: **0.10.3**
+- Default value: **0.12.0**
 
 ### `nomad_architecture_map`
 
@@ -205,9 +209,24 @@ The role defines most of its variables in `defaults/main.yml`:
 - Eval garbage collection threshold
 - Default value: **1h**
 
+### `nomad_deployment_gc_threshold`
+
+- Deployment garbage collection threshold
+- Default value: **1h**
+
 ### `nomad_encrypt`
 
 - Encryption secret for gossip communication
+- Default value: **""**
+
+### `nomad_raft_protocol`
+
+- Specifies the version of raft protocal, which used by nomad servers for communication
+- Default value: **2**
+
+### `nomad_authoritative_region`
+
+- Specifies the authoritative region, which provides a single source of truth for global configurations such as ACL Policies and global ACL tokens.
 - Default value: **""**
 
 ### `nomad_node_class`
@@ -285,6 +304,28 @@ The role defines most of its variables in `defaults/main.yml`:
 - Reserved client ports
 - Default value: **22**
 
+### `nomad_host_volumes`
+
+- List host_volume is used to make volumes available to jobs (Stateful Workloads).
+- Default value: **[]**
+- Example:
+
+```yaml
+nomad_host_volumes:
+  - name: data
+    path: /var/data
+    owner: root
+    group: bin
+    mode: 0755
+    read_only: false
+  - name: config
+    path: /etc/conf
+    owner: root
+    group: bin
+    mode: 0644
+    read_only: false
+```
+
 ### `nomad_options`
 
 - Driver options
@@ -306,12 +347,12 @@ The role defines most of its variables in `defaults/main.yml`:
 ### `nomad_bind_address`
 
 - Bind interface address
-- Default value: `{{ hostvars[inventory_hostname]['ansible_'+ nomad_iface ]['ipv4']['address'] }}` 
+- Default value: `{{ hostvars[inventory_hostname]['ansible_'+ nomad_iface ]['ipv4']['address'] }}`
 
 ### `nomad_advertise_address`
 
 - Network interface address to advertise to other nodes
-- Default value: `{{ hostvars[inventory_hostname]['ansible_'+ nomad_iface ]['ipv4']['address'] }}` 
+- Default value: `{{ hostvars[inventory_hostname]['ansible_'+ nomad_iface ]['ipv4']['address'] }}`
 
 ### `nomad_ports`
 
@@ -333,10 +374,31 @@ The role defines most of its variables in `defaults/main.yml`:
 - Serf port
 - Default value: **4648**
 
+### `nomad_podman_enable`
+
+- Installs the podman plugin
+- Default value: **false**
+
 ### `nomad_docker_enable`
 
 - Install Docker subsystem on nodes?
 - Default value: **false**
+
+### `nomad_plugins`
+- Allow you configure nomad plugins.
+- Default: {}
+
+Example:
+
+```yaml
+nomad_plugins:
+  nomad-driver-podman:
+    config:
+      volumes:
+        enabled: true
+        selinuxlabel: z
+      recover_stopped: true
+```
 
 ### `nomad_group_name`
 
@@ -466,7 +528,12 @@ in many Ansible versions, so this feature might not always work.
 
 ### `nomad_vault_token`
 
-- Vault token used by nomad
+- Vault token used by nomad. Will only be installed on servers.
+- Default value: **""**
+
+### `nomad_vault_namespace`
+
+- Vault namespace used by nomad
 - Default value: **""**
 
 ### `nomad_docker_enable`
@@ -478,6 +545,11 @@ in many Ansible versions, so this feature might not always work.
 
 - Run dmsetup on ubuntu (only if docker is enabled)
 - Default value: **yes**
+
+### `nomad_tls_enable`
+
+- Enable TLS
+- Default value: false
 
 ### `nomad_ca_file`
 
@@ -493,6 +565,192 @@ in many Ansible versions, so this feature might not always work.
 
 - Use a key for tls connection, nomad_cert_file and nomad_key_file are needed
 - Default value: **""**
+
+### `nomad_rpc_upgrade_mode`
+
+- Use a certificate for tls connection, nomad_ca_file and nomad_key_file are needed, used only when the cluster is being upgraded to TLS, and removed after the migration is complete. This allows the agent to accept both TLS and plaintext traffic.
+- Default value: **false**
+
+### `nomad_verify_server_hostname`
+
+- Use a key for tls connection, nomad_cert_file and nomad_key_file are needed. Specifies if outgoing TLS connections should verify the server's hostname.
+- Default value: **true**
+
+### `nomad_verify_https_client`
+
+- Use a key for tls connection, nomad_cert_file and nomad_key_file are needed. Specifies agents should require client certificates for all incoming HTTPS requests. The client certificates must be signed by the same CA as Nomad.
+- Default value: **true**
+
+### `nomad_telemetry`
+
+- Specifies whether to enable Nomad's telemetry configuration.
+- Default value: **false**
+
+### `nomad_telemetry_disable_hostname`
+
+- Specifies if gauge values should be prefixed with the local hostname.
+- Default value: "false"
+
+### `nomad_telemetry_collection_interval`
+
+- Specifies the time interval at which the Nomad agent collects telemetry data.
+- Default value: "1s"
+
+### `nomad_telemetry_use_node_name`
+
+- Specifies if gauge values should be prefixed with the name of the node, instead of the hostname. If set it will override disable_hostname value.
+- Default value: "false"
+
+### `nomad_telemetry_publish_allocation_metrics`
+
+- Specifies if Nomad should publish runtime metrics of allocations.
+- Default value: "false"
+
+### `nomad_telemetry_publish_node_metrics`
+
+- Specifies if Nomad should publish runtime metrics of nodes.
+- Default value: "false"
+
+### `nomad_telemetry_backwards_compatible_metrics`
+
+- Specifies if Nomad should publish metrics that are backwards compatible with versions below 0.7, as post version 0.7, Nomad emits tagged metrics. All new metrics will only be added to tagged metrics. Note that this option is used to transition monitoring to tagged metrics and will eventually be deprecated.
+- Default value: "false"
+
+### `nomad_telemetry_disable_tagged_metrics`
+
+- Specifies if Nomad should not emit tagged metrics and only emit metrics compatible with versions below Nomad 0.7. Note that this option is used to transition monitoring to tagged metrics and will eventually be deprecated.
+- Default value: "false"
+
+### `nomad_telemetry_filter_default`
+
+- This controls whether to allow metrics that have not been specified by the filter. Defaults to true, which will allow all metrics when no filters are provided. When set to false with no filters, no metrics will be sent.
+- Default value: "true"
+
+### `nomad_telemetry_prefix_filter`
+
+- This is a list of filter rules to apply for allowing/blocking metrics by prefix. A leading "+" will enable any metrics with the given prefix, and a leading "-" will block them. If there is overlap between two rules, the more specific rule will take precedence. Blocking will take priority if the same prefix is listed multiple times.
+- Default value: []
+
+### `nomad_telemetry_disable_dispatched_job_summary_metrics`
+
+- Specifies if Nomad should ignore jobs dispatched from a parameterized job when publishing job summary statistics. Since each job has a small memory overhead for tracking summary statistics, it is sometimes desired to trade these statistics for more memory when dispatching high volumes of jobs.
+- Default value: "false"
+
+### `nomad_telemetry_statsite_address`
+
+- Specifies the address of a statsite server to forward metrics data to.
+- Default value: ""
+
+### `nomad_telemetry_statsd_address`
+
+- Specifies the address of a statsd server to forward metrics to.
+- Default value: ""
+
+### `nomad_telemetry_datadog_address`
+
+- Specifies the address of a DataDog statsd server to forward metrics to.
+- Default value: ""
+
+### `nomad_telemetry_datadog_tags`
+
+- Specifies a list of global tags that will be added to all telemetry packets sent to DogStatsD. It is a list of strings, where each string looks like "my_tag_name:my_tag_value".
+- Default value: []
+
+### `nomad_telemetry_prometheus_metrics`
+
+-  Specifies whether the agent should make Prometheus formatted metrics available at /v1/metrics?format=prometheus.
+- Default value: "false"
+
+### `nomad_telemetry_circonus_api_token`
+
+- Specifies a valid Circonus API Token used to create/manage check. If provided, metric management is enabled.
+- Default value: ""
+
+### `nomad_telemetry_circonus_api_app`
+
+- Specifies a valid app name associated with the API token.
+- Default value: "nomad"
+
+### `nomad_telemetry_circonus_api_url`
+
+- Specifies the base URL to use for contacting the Circonus API.
+- Default value: "https://api.circonus.com/v2"
+
+### `nomad_telemetry_circonus_submission_interval`
+
+- Specifies the interval at which metrics are submitted to Circonus.
+- Default value: "10s"
+
+### `nomad_telemetry_circonus_submission_url`
+
+- Specifies the check.config.submission_url field, of a Check API object, from a previously created HTTPTRAP check.
+- Default value: ""
+
+### `nomad_telemetry_circonus_check_id`
+
+- Specifies the Check ID (not check bundle) from a previously created HTTPTRAP check. The numeric portion of the check._cid field in the Check API object.
+- Default value: ""
+
+### `nomad_telemetry_circonus_check_force_metric_activation`
+
+- Specifies if force activation of metrics which already exist and are not currently active. If check management is enabled, the default behavior is to add new metrics as they are encountered. If the metric already exists in the check, it will not be activated. This setting overrides that behavior.
+- Default value: "false"
+
+### `nomad_telemetry_circonus_check_instance_id`
+
+- Serves to uniquely identify the metrics coming from this instance. It can be used to maintain metric continuity with transient or ephemeral instances as they move around within an infrastructure. By default, this is set to hostname:application name (e.g. "host123:nomad").
+- Default value: ""
+
+### `nomad_telemetry_circonus_check_search_tag`
+
+- Specifies a special tag which, when coupled with the instance id, helps to narrow down the search results when neither a Submission URL or Check ID is provided. By default, this is set to service:app (e.g. "service:nomad").
+- Default value: ""
+
+### `nomad_telemetry_circonus_check_display_name`
+
+- Specifies a name to give a check when it is created. This name is displayed in the Circonus UI Checks list.
+- Default value: ""
+
+### `nomad_telemetry_circonus_check_tags`
+
+- Comma separated list of additional tags to add to a check when it is created.
+- Default value: ""
+
+### `nomad_telemetry_circonus_broker_id`
+
+- Specifies the ID of a specific Circonus Broker to use when creating a new check. The numeric portion of broker._cid field in a Broker API object. If metric management is enabled and neither a Submission URL nor Check ID is provided, an attempt will be made to search for an existing check using Instance ID and Search Tag. If one is not found, a new HTTPTRAP check will be created. By default, this is a random Enterprise Broker is selected, or, the default Circonus Public Broker.
+- Default value: ""
+
+### `nomad_telemetry_circonus_broker_select_tag`
+
+- Specifies a special tag which will be used to select a Circonus Broker when a Broker ID is not provided. The best use of this is to as a hint for which broker should be used based on where this particular instance is running (e.g. a specific geographic location or datacenter, dc:sfo).
+- Default value: ""
+
+### `nomad_autopilot`
+
+- Enable Nomad Autopilot
+- To enable Autopilot features (with the exception of dead server cleanup), the raft_protocol setting in the server stanza must be set to 3 on all servers, see parameter nomad_raft_protocol
+- Default value: **false**
+
+### `nomad_autopilot_cleanup_dead_servers`
+
+- Specifies automatic removal of dead server nodes periodically and whenever a new server is added to the cluster.
+- Default value: **true**
+
+### `nomad_autopilot_last_contact_threshold`
+
+- Specifies the maximum amount of time a server can go without contact from the leader before being considered unhealthy.
+- Default value: **200ms**
+
+### `nomad_autopilot_max_trailing_logs`
+
+- Specifies the maximum number of log entries that a server can trail the leader by before being considered unhealthy.
+- Default value: **250**
+
+### `nomad_autopilot_server_stabilization_time`
+
+-  Specifies the minimum amount of time a server must be stable in the 'healthy' state before being added to the cluster. Only takes effect if all servers are running Raft protocol version 3 or higher.
+- Default value: **10s**
 
 #### Custom Configuration Section
 
@@ -551,8 +809,8 @@ BSD
 
 ## Contributors
 
-Special thanks to the folks listed in [CONTRIBUTORS.md](https://github.com/brianshumate/ansible-nomad/blob/master/CONTRIBUTORS.md) for their
+Special thanks to the folks listed in [CONTRIBUTORS.md](https://github.com/ansible-community/ansible-nomad/blob/master/CONTRIBUTORS.md) for their
 contributions to this project.
 
 Contributions are welcome, provided that you can agree to the terms outlined
-in [CONTRIBUTING.md](https://github.com/brianshumate/ansible-nomad/blob/master/CONTRIBUTING.md)
+in [CONTRIBUTING.md](https://github.com/ansible-community/ansible-nomad/blob/master/CONTRIBUTING.md)

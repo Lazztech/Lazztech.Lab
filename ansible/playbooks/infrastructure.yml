@@ -3,3 +3,6 @@
   become_user: root
   roles:
     - geerlingguy.docker
+    - ansible-nomad
+  vars:
+    nomad_group_name: "vagrant"
