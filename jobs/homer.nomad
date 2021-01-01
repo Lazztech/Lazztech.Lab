@@ -286,6 +286,13 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://keycloak.lazz.tech/"
+      - name: "PiHole"
+        logo: "assets/tools/sample2.png"
+        subtitle: "DNS & Ad blocking"
+        tag: "sysadmin"
+        # Optional tagstyle
+        tagstyle: "is-success"
+        url: "http://pihole.lazz.tech/"
       - name: "Unifi"
         logo: "assets/tools/sample2.png"
         subtitle: "Network Management"
