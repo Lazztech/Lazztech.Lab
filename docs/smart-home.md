@@ -138,6 +138,33 @@ UI card for adaptive lighting:
 ## HomeKit
 - https://www.home-assistant.io/integrations/homekit/
 - https://community.home-assistant.io/t/using-homekit-component-inside-docker/45409/25
+- https://community.home-assistant.io/t/unable-to-setup-homekit-bridge/235520/12
+- https://community.home-assistant.io/t/homekit-no-response/170974/4
+
+Ensure Multicast DNS is allowed in Unifi gateway.
+- Disable Auto-Optimimize Network
+  - This setting blocks multicast dns
+- Enable Multicast DNS
+- Disable Multicast and Broadcast Filtering
+- Enable multicast enhancement
+
+Ensure the docker container is set to host mode with the following entries in the nomad job:
+
+```
+config {
+  image = "homeassistant/home-assistant:stable"
+  network_mode = "host"
+  ...
+
+network {
+  mbits = 10
+  mode = "host"
+  port "http" {
+    static = 8123
+  }
+}
+```
+
 
 Add the following to the home-assistant configuration.yml
 
@@ -152,43 +179,15 @@ logger:
     pyhap: debug
 
 homekit:
-  safe_mode: true
-  advertise_ip: "STATIC_IP_OF_YOUR_DOCKER_HOST"
 ```
 
-```
-sudo touch /etc/avahi/services/homeassistant.service
-sudo nano /etc/avahi/services/homeassistant.service
-```
+Reboot home assistant and you should receive a notification with a qr code you can scan in the homekit app.
 
-Find the homekit mac address. Your file will be named differently though will look similar.
-
+**troubleshooting**
 ```
-cat /opt/home-assistant/config/.storage/homekit.76612d3d555b4fc3b4b26e7d1c546822.state
-```
-
-Add the following to /etc/avahi/services/homeassistant.service using the macc address from the step above.
-
-```
-<service-group>
-  <name>Home Assistant Bridge</name>
-  <service>
-    <type>_hap._tcp</type>
-    <port>51827</port>
-    <txt-record>md=Bridge</txt-record>            <!-- friendly name                 -->
-
-    <!-- the following appear to be mandatory -->
-    <txt-record>pv=1.0</txt-record>               <!-- HAP version                   -->
-    <txt-record>id=65:5A:74:1B:97:A9</txt-record> <!-- MAC (from `.homekit.state`)   -->
-    <txt-record>c#=2</txt-record>                 <!-- config version                -->
-  </service>
-</service-group>
-```
-
-Restart avahi daemon
-
-```
-sudo service avahi-daemon restart
+# delete homekit state & restart home-assistant
+ls /opt/home-assistant/config/.storage/
+sudo rm /opt/home-assistant/config/.storage/homekit.XXXXXXXXXXXX.state
 ```
 
 ## Casting

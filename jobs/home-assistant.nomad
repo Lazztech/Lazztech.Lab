@@ -24,6 +24,7 @@ job "home-assistant" {
       }
       config {
         image = "homeassistant/home-assistant:stable"
+        network_mode = "host"
         port_map {
           http = 8123
         }
@@ -42,61 +43,17 @@ job "home-assistant" {
           }
         ]
       }
-//       template {
-//         data = <<EOF
-// # Configure a default setup of Home Assistant (frontend, api, etc)
-// default_config:
 
-// # Text to speech
-// tts:
-//   - platform: google_translate
-
-// #group: !include groups.yaml
-// automation: !include automations.yaml
-// #script: !include scripts.yaml
-// #scene: !include scenes.yaml
-
-// zwave:
-//   usb_path: /dev/ttyUSB0
-
-// zha:
-//   usb_path: /dev/ttyUSB1
-//   database_path: /config/zigbee.db
-// EOF
-//         destination = "home-assistant/config/configuration.yaml"
-//       }
-//       template {
-//         data = <<EOF
-// - id: '1601861363140'
-//   alias: Clothes Washer Active
-//   description: Clothes Washer sustained motion
-//   trigger:
-//   - device_id: 9799f5f871154f01ba6ac7ee2a84a8e4
-//     domain: binary_sensor
-//     entity_id: binary_sensor.dishwasher_accelerometer
-//     for:
-//       hours: 0
-//       minutes: 3
-//       seconds: 0
-//     platform: device
-//     type: moving
-//   condition: []
-//   action:
-//   - data:
-//       message: Active
-//       title: Clothes Washer
-//     service: notify.notify
-//   mode: single
-// EOF
-//         destination = "home-assistant/config/automations.yaml"
-//       }
       resources {
-        cpu    = 250 # 250 MHz
-        memory = 256 # 256MB
+        cpu    = 500 # 500 MHz
+        memory = 512 # 512MB
 
         network {
           mbits = 10
-          port "http" {}
+          mode = "host"
+          port "http" {
+            static = 8123
+          }
         }
       }
 
