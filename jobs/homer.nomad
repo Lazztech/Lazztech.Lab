@@ -286,13 +286,6 @@ services:
         # Optional tagstyle
         tagstyle: "is-success"
         url: "http://keycloak.lazz.tech/"
-      - name: "PiHole"
-        logo: "assets/tools/sample2.png"
-        subtitle: "DNS & Ad blocking"
-        tag: "sysadmin"
-        # Optional tagstyle
-        tagstyle: "is-success"
-        url: "http://pihole.lazz.tech/"
       - name: "Unifi"
         logo: "assets/tools/sample2.png"
         subtitle: "Network Management"
@@ -319,7 +312,8 @@ EOF
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.homer.rule=Host(`homer.lazz.tech`, `home`)"
+          "traefik.http.routers.homer.rule=Host(`home.lazz.tech`)",
+          "traefik.http.routers.homer.tls.certresolver=cloudflare"
         ]
 
         check {
