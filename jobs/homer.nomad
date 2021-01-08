@@ -194,6 +194,12 @@ services:
         tag: "community"
         url: "http://docker.lazz.tech/"
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+      - name: "Minio"
+        icon: "fas fa-hdd"
+        subtitle: "Object file storage"
+        tag: "community"
+        url: "http://objects.lazz.tech/"
+        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 #      - name: "Code Server"
 #        icon: "fas fa-laptop-code"
 #        subtitle: "VSCode web server"

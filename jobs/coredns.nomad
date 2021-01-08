@@ -80,6 +80,7 @@ prometheus          IN A     {{ env "NOMAD_IP_http"}}
 scrutiny            IN A     {{ env "NOMAD_IP_http"}}
 wireguard           IN A     {{ env "NOMAD_IP_http"}}
 keycloak            IN A     {{ env "NOMAD_IP_http"}}
+objects      IN A     {{ env "NOMAD_IP_http"}}
 EOF
         destination = "local/coredns/zones/db.lazz.tech.zone"
       }
