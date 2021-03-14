@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dokuwiki-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dokuwiki
+  template:
+    metadata:
+      labels:
+        app: dokuwiki
+    spec:
+      containers:
+        - name: dokuwiki
+          image: linuxserver/dokuwiki
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dokuwiki-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: dokuwiki
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: dokuwiki-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: wiki.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: dokuwiki-service
+          servicePort: 80

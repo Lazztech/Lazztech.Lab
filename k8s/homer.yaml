@@ -58,10 +58,10 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - http:
+  - host: home.lazz.tech
+    http:
       paths:
-      - path: /
-        backend:
+      - backend:
           serviceName: homer-service
           servicePort: 80
 ---
