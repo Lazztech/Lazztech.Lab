@@ -25,7 +25,16 @@ spec:
               cpu: "500m"
           ports:
           - containerPort: 80
+          volumeMounts:
+          - mountPath: /config
+            name: dokuwiki-config
           imagePullPolicy: IfNotPresent
+      volumes:
+      - name: dokuwiki-config
+        hostPath:
+          # directory location on host
+          path: /opt/dokuwiki
+          type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
