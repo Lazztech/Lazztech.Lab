@@ -1,0 +1,109 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wg-access-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wg-access-server
+  template:
+    metadata:
+      labels:
+        app: wg-access-server
+    spec:
+      containers:
+        - name: wg-access-server
+          image: place1/wg-access-server:v0.4.6
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["NET_ADMIN"]
+          env:
+          - name: WG_WIREGUARD_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: wireguard
+                key: private-key
+          - name: WG_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wireguard
+                key: admin-password
+          - name: WG_EXTERNAL_HOST
+            valueFrom:
+              secretKeyRef:
+                name: wireguard
+                key: external-host
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - mountPath: /data
+            name: wg-access-server-data
+          - mountPath: /config.yaml
+            name: wg-access-server-config
+            subPath: config.yaml
+          - mountPath: /dev/net/tun
+            name: tun
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: wg-access-server-data
+          hostPath:
+            # directory location on host
+            path: /opt/wg-access-server-data
+            type: DirectoryOrCreate
+        - name: wg-access-server-config
+          configMap:
+            name: wg-access-server-config
+            items:
+              - key: config.yaml
+                path: config.yaml
+        - name: tun
+          hostPath:
+            path: /dev/net/tun
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wg-access-server-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8000
+    name: tcp
+  - port: 51820
+    targetPort: 51820
+    name: udp
+  selector:
+    app: wg-access-server
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: wg-access-server-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: wireguard.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: wg-access-server-service
+          servicePort: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wg-access-server-config
+data:
+  config.yaml: |
+    loglevel: info
