@@ -286,35 +286,6 @@ data:
       - name: "SysAdmin"
         icon: "fa fa-server"
         items:
-          - name: "Nomad"
-            logo: "assets/tools/sample.png"
-            # Alternatively a fa icon can be provided:
-            # icon: "fab fa-jenkins"
-            subtitle: "Workload Orchestrator"
-            tag: "sysadmin"
-            url: "http://nomad.lazz.tech/"
-            # target: "_blank" # optional html tag target attribute
-          - name: "Consul"
-            logo: "assets/tools/sample2.png"
-            subtitle: "Service Discovery"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "http://consul.lazz.tech/"
-          - name: "Vault"
-            logo: "assets/tools/sample2.png"
-            subtitle: "Secrets Management"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "http://vault-ui.lazz.tech/"
-          - name: "Traefik"
-            logo: "assets/tools/sample2.png"
-            subtitle: "Reverse Proxy & Load Balancer"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "http://traefik.lazz.tech/"
           - name: "Wireguard"
             logo: "assets/tools/sample2.png"
             subtitle: "Wireguard VPN Management"
