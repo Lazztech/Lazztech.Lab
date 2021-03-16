@@ -1,0 +1,82 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:11.0.3
+          env:
+          - name: KEYCLOAK_USER
+            valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: keycloak-user
+          - name: KEYCLOAK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: keycloak-password
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8080
+          volumeMounts:
+          - mountPath: /config
+            name: keycloak-data
+          - mountPath: /etc/localtime
+            name: localtime
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: keycloak-data
+          hostPath:
+            # directory location on host
+            path: /opt/keycloak/config
+            type: DirectoryOrCreate
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: tcp
+  selector:
+    app: keycloak
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: keycloak-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: keycloak.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: keycloak-service
+          servicePort: 80
