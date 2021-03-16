@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scrutiny-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrutiny
+  template:
+    metadata:
+      labels:
+        app: scrutiny
+    spec:
+      containers:
+        - name: scrutiny
+          image: analogj/scrutiny
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_RAWIO"]
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8080
+          volumeMounts:
+          - mountPath: /dev/sda
+            name: sda
+          - mountPath: /run/udev
+            name: udev
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: sda
+          hostPath:
+            path: /dev/sda
+        - name: udev
+          hostPath:
+            path: /run/udev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scrutiny-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: tcp
+  selector:
+    app: scrutiny
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: scrutiny-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: scrutiny.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: scrutiny-service
+          servicePort: 80
