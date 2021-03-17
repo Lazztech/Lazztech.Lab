@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - name: jellyfin
+          image: linuxserver/jellyfin
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8096
+          volumeMounts:
+          - mountPath: /config
+            name: jellyfin-config
+          - mountPath: /data/tvshows
+            name: jellyfin-tvshows
+          - mountPath: /data/movies
+            name: jellyfin-tvshows
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: jellyfin-config
+        hostPath:
+          # directory location on host
+          path: /opt/jellyfin/library
+          type: DirectoryOrCreate
+      - name: jellyfin-tvshows
+        hostPath:
+          # directory location on host
+          path: /opt/jellyfin/tvseries
+          type: DirectoryOrCreate
+      - name: jellyfin-movies
+        hostPath:
+          # directory location on host
+          path: /opt/jellyfin/movies
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8096
+    name: tcp
+  selector:
+    app: jellyfin
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: jellyfin-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: jellyfin.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: jellyfin-service
+          servicePort: 80
