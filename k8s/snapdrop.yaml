@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snapdrop-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snapdrop
+  template:
+    metadata:
+      labels:
+        app: snapdrop
+    spec:
+      containers:
+        - name: snapdrop
+          image: linuxserver/snapdrop
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - mountPath: /config
+            name: snapdrop-config
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: snapdrop-config
+        hostPath:
+          # directory location on host
+          path: /opt/snapdrop/config
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: snapdrop-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: snapdrop
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: snapdrop-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: share.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: snapdrop-service
+          servicePort: 80
