@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitea-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitea
+  template:
+    metadata:
+      labels:
+        app: gitea
+    spec:
+      containers:
+        - name: gitea
+          image: gitea/gitea:latest
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 3000
+          volumeMounts:
+          - mountPath: /data
+            name: gitea-data
+          - mountPath: /etc/timezone
+            name: gitea-timezone
+          - mountPath: /etc/localtime
+            name: gitea-localtime         
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: gitea-data
+        hostPath:
+          # directory location on host
+          path: /opt/gitea
+          type: DirectoryOrCreate
+      - name: gitea-timezone
+        hostPath:
+          # directory location on host
+          path: /etc/timezone
+      - name: gitea-localtime
+        hostPath:
+          # directory location on host
+          path: /etc/localtime
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitea-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+    name: tcp
+  selector:
+    app: gitea
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: gitea-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: git.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: gitea-service
+          servicePort: 80
