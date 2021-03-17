@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio:RELEASE.2021-01-05T05-22-38Z
+          args:
+            - "server"
+            - "/data"
+          env:
+          - name: MINIO_ROOT_USER
+            valueFrom:
+              secretKeyRef:
+                name: minio
+                key: minio-user
+          - name: MINIO_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: minio
+                key: minio-password
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 9000
+          volumeMounts:
+          - mountPath: /data
+            name: minio-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: minio-data
+          hostPath:
+            # directory location on host
+            path: /opt/minio
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 9000
+    name: tcp
+  selector:
+    app: minio
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: objects.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: minio-service
+          servicePort: 80
