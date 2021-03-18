@@ -13,6 +13,8 @@ spec:
       labels:
         app: home-assistant
     spec:
+      # needed for mdns device discover & homekit
+      hostNetwork: true
       containers:
         - name: home-assistant
           image: homeassistant/home-assistant:stable
@@ -28,8 +30,6 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-          ports:
-          - containerPort: 8123
           volumeMounts:
           - mountPath: /config
             name: home-assistant-config
