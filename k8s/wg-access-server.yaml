@@ -45,6 +45,9 @@ spec:
               cpu: "500m"
           ports:
           - containerPort: 80
+          - name: wireguard
+            containerPort: 51820
+            protocol: UDP
           volumeMounts:
           - mountPath: /data
             name: wg-access-server-data
@@ -81,7 +84,8 @@ spec:
     name: tcp
   - port: 51820
     targetPort: 51820
-    name: udp
+    name: wireguard
+    protocol: UDP
   selector:
     app: wg-access-server
 ---
@@ -93,7 +97,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: wireguard.lazz.tech
+  - host: wireguard.homelab.lazz.tech
     http:
       paths:
       - backend:

@@ -63,7 +63,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: scrutiny.lazz.tech
+  - host: scrutiny.homelab.lazz.tech
     http:
       paths:
       - backend:
