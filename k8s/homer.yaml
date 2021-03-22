@@ -29,6 +29,8 @@ spec:
             - mountPath: www/assets/config.yml
               name: homer-config
               subPath: config.yml
+            - mountPath: www/assets/icons
+              name: homer-icons
           imagePullPolicy: IfNotPresent
       volumes:
         - name: homer-config
@@ -37,6 +39,11 @@ spec:
             items:
               - key: config.yml
                 path: config.yml
+        - name: homer-icons
+          hostPath:
+            # directory location on host
+            path: /opt/homer/icons
+            type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
@@ -165,37 +172,37 @@ data:
         icon: "fas fa-building"
         items:
           - name: "Nextcloud"
-            icon: "fas fa-cloud"
+            logo: "assets/icons/nextcloud.png"
             subtitle: "Files, Chat, Productivity & Collaboration"
             tag: "community"
             url: "http://nextcloud.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Wiki"
-            icon: "fab fa-wikipedia-w"
+            logo: "assets/icons/dokuwiki.svg"
             subtitle: "Community Wiki"
             tag: "community"
             url: "http://wiki.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "EBook Library"
-            icon: "fas fa-book"
+            logo: "assets/icons/calibre.png"
             subtitle: "Community Ebook Libary & Reader"
             tag: "community"
             url: "http://read.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Snapdrop"
-            icon: "fas fa-satellite-dish"
+            logo: "assets/icons/snapdrop.png"
             subtitle: "The easiest way to transfer data across devices"
             tag: "community"
             url: "http://share.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Home Assistant"
-            icon: "fas fa-laptop-house"
+            logo: "assets/icons/home-assistant.png"
             subtitle: "Home Automation"
             tag: "community"
             url: "http://home-assistant.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Jellyfin"
-            icon: "fas fa-photo-video"
+            logo: "assets/icons/jellyfin.png"
             subtitle: "Media server"
             tag: "community"
             url: "http://jellyfin.homelab.lazz.tech/"
@@ -215,69 +222,69 @@ data:
         icon: "fas fa-code"
         items:
           - name: "Gitea"
-            icon: "fab fa-git-alt"
+            logo: "assets/icons/gitea.png"
             subtitle: "Local Git mirror"
             tag: "community"
             url: "http://git.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Drone"
-            icon: "fas fa-truck-loading"
+            logo: "assets/icons/drone.png"
             subtitle: "Container native Continous Integration /Continous Delivery"
             tag: "community"
             url: "http://cicd.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Docker Registry"
-            icon: "fab fa-docker"
+            logo: "assets/icons/docker.png"
             subtitle: "minimal registry:2 frontend"
             tag: "community"
             url: "http://docker.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Minio"
-            icon: "fas fa-hdd"
+            logo: "assets/icons/minio.png"
             subtitle: "Object file storage"
             tag: "community"
             url: "http://objects.homelab.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-    #      - name: "Code Server"
-    #        icon: "fas fa-laptop-code"
-    #        subtitle: "VSCode web server"
-    #        tag: "community"
-    #        url: "http://code.homelab.lazz.tech/"
-    #        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Code Server"
+            logo: "assets/icons/code-server.png"
+            subtitle: "VSCode web server"
+            tag: "community"
+            url: "http://code.homelab.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Monitoring"
         icon: "fas fa-heartbeat"
         items:
           - name: "Netdata"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/netdata.png"
             subtitle: "performance and health monitoring"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://192.168.1.11:19999/"
           - name: "Statping"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/statping.png"
             subtitle: "Uptime status and notifications"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://status.homelab.lazz.tech/"
           - name: "Grafana"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/grafana.png"
             subtitle: "Monitoring & Visibility"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://grafana.homelab.lazz.tech/"
           - name: "Prometheus"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/prometheus.png"
             subtitle: "Records real-time metrics"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://prometheus.homelab.lazz.tech/"
           - name: "Scrutiny"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/scrutiny.svg"
             subtitle: "Hard Drive S.M.A.R.T Monitoring"
             tag: "sysadmin"
             # Optional tagstyle
@@ -288,21 +295,21 @@ data:
         icon: "fa fa-server"
         items:
           - name: "Wireguard"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/wireguard.png"
             subtitle: "Wireguard VPN Management"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://wireguard.homelab.lazz.tech/"
           - name: "Keycloak"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/keycloak.png"
             subtitle: "Identity Management"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://keycloak.homelab.lazz.tech/"
           - name: "Unifi"
-            logo: "assets/tools/sample2.png"
+            logo: "assets/icons/unifi.jpg"
             subtitle: "Network Management"
             tag: "sysadmin"
             # Optional tagstyle
