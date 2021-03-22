@@ -41,8 +41,8 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: keycloak-data
-          - mountPath: /etc/localtime
-            name: localtime
+          # - mountPath: /etc/localtime
+          #   name: localtime
           imagePullPolicy: IfNotPresent
       volumes:
         - name: keycloak-data
@@ -50,9 +50,9 @@ spec:
             # directory location on host
             path: /opt/keycloak/config
             type: DirectoryOrCreate
-        - name: localtime
-          hostPath:
-            path: /etc/localtime
+        # - name: localtime
+        #   hostPath:
+        #     path: /etc/localtime
 ---
 apiVersion: v1
 kind: Service

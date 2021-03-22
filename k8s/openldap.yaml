@@ -1,0 +1,154 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openldap-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openldap
+  template:
+    metadata:
+      labels:
+        app: openldap
+    spec:
+      containers:
+        - name: openldap
+          image: osixia/openldap:1.5.0
+          env:
+            - name: LDAP_ORGANISATION
+              value: Lazztech
+            - name: LDAP_DOMAIN
+              value: lazz.tech
+            - name: LDAP_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: openldap
+                  key: adminpassword
+          # resources:
+          #   requests:
+          #     memory: "64Mi"
+          #     cpu: "100m"
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          ports:
+          - containerPort: 389
+            name: tcp-ldap1
+          - containerPort: 636
+            name: tcp-ldap2
+          volumeMounts:
+          - mountPath: /var/lib/ldap
+            name: openldap-config
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: openldap-config
+        hostPath:
+          # directory location on host
+          path: /opt/openldap
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openldap-service
+spec:
+  ports:
+  - port: 389
+    targetPort: 389
+    name: tcp-ldap1
+  - port: 636
+    targetPort: 636
+    name: tcp-ldap2
+  selector:
+    app: openldap
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ldap-user-manager-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ldap-user-manager
+  template:
+    metadata:
+      labels:
+        app: ldap-user-manager
+    spec:
+      containers:
+        - name: ldap-user-manager
+          image: wheelybird/ldap-user-manager:v1.5
+          env:
+            - name: SERVER_HOSTNAME
+              value: ldap.homelab.lazz.tech
+            - name: LDAP_URI
+              value: ldap://192.168.1.11
+            - name: LDAP_REQUIRE_STARTTLS
+              value: "FALSE"
+            - name: LDAP_ADMINS_GROUP
+              value: admins
+            - name: LDAP_ADMIN_BIND_DN
+              value: cn=admin,dc=lazz,dc=tech
+            - name: LDAP_ADMIN_BIND_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: openldap
+                  key: adminpassword
+            - name: LDAP_IGNORE_CERT_ERRORS
+              value: "true"
+            - name: EMAIL_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: openldap
+                  key: emaildomain
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+          # volumeMounts:
+          # - mountPath: /config
+          #   name: ldap-user-manager-config
+          imagePullPolicy: IfNotPresent
+      # volumes:
+      # - name: ldap-user-manager-config
+      #   hostPath:
+      #     # directory location on host
+      #     path: /opt/ldap-user-manager
+      #     type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ldap-user-manager-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: ldap-user-manager
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ldap-user-manager-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: ldap.homelab.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: ldap-user-manager-service
+          servicePort: 80
