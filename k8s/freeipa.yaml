@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freeipa-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freeipa
+  template:
+    metadata:
+      labels:
+        app: freeipa
+    spec:
+      containers:
+        - name: freeipa
+          image: freeipa/freeipa-server:fedora-30
+          env:
+          - name: IPA_SERVER_HOSTNAME
+            value: ipa.homelab.lazz.tech
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: freeipa
+                key: admin.password
+          - name: IPA_SERVER_INSTALL_OPTS
+            value: "-U -r LAZZ.TECH --setup-dns --no-forwarders --no-ntp"
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "100m"
+            limits:
+              memory: "1200Mi"
+              cpu: "500m"
+          # readinessProbe:
+          #   exec:
+          #     command: [ "/usr/bin/systemctl", "status", "ipa" ]
+          #   initialDelaySeconds: 60
+          #   timeoutSeconds: 10
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          - containerPort: 443
+            protocol: TCP
+          - containerPort: 53
+            protocol: UDP
+          - containerPort: 88
+            protocol: TCP
+          - containerPort: 88
+            protocol: UDP
+          volumeMounts:
+          - mountPath: /data
+            name: freeipa-data
+          - name: cgroups
+            mountPath: /sys/fs/cgroup
+            readOnly: true
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: freeipa-data
+        hostPath:
+          # directory location on host
+          path: /opt/freeipa
+          type: DirectoryOrCreate
+      - name: cgroups
+        hostPath:
+          path: /sys/fs/cgroup
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: freeipa-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: freeipa
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: freeipa-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: ipa.homelab.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: freeipa-service
+          servicePort: 80
