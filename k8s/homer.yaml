@@ -294,13 +294,20 @@ data:
       - name: "SysAdmin"
         icon: "fa fa-server"
         items:
-          - name: "Wireguard"
-            logo: "assets/icons/wireguard.png"
-            subtitle: "Wireguard VPN Management"
+          # - name: "Wireguard"
+          #   logo: "assets/icons/wireguard.png"
+          #   subtitle: "Wireguard VPN Management"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "http://wireguard.homelab.lazz.tech/"
+          - name: "FreeIPA"
+            logo: "assets/icons/freeipa.png"
+            subtitle: "Identity Management"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://wireguard.homelab.lazz.tech/"
+            url: "https://ipa.homelab.lazz.tech/"
           - name: "Keycloak"
             logo: "assets/icons/keycloak.png"
             subtitle: "Identity Management"
@@ -315,3 +322,11 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "http://unifi/"
+          - name: "Frigate"
+            logo: "assets/icons/frigate.png"
+            subtitle: "Security camera object detection"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "http://frigate.homelab.lazz.tech/"
+          

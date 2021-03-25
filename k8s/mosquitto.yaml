@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+        - name: mosquitto
+          image: toke/mosquitto
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 1883
+          volumeMounts:
+            - mountPath: /mqtt/config/mosquitto.conf
+              name: mosquitto-config
+              subPath: mosquitto.conf
+            - mountPath: /mqtt/data
+              name: mosquitto-data
+            - mountPath: /mqtt/log
+              name: mosquitto-log
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: mosquitto-config
+          configMap:
+            name: mosquitto-config
+            items:
+              - key: mosquitto.conf
+                path: mosquitto.conf
+        - name: mosquitto-data
+          hostPath:
+            # directory location on host
+            path: /opt/mosquitto/data
+            type: DirectoryOrCreate
+        - name: mosquitto-log
+          hostPath:
+            # directory location on host
+            path: /opt/mosquitto/log
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto-service
+spec:
+  ports:
+  - port: 1883
+    targetPort: 1883
+    name: tcp
+  selector:
+    app: mosquitto
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+data:
+  mosquitto.conf: |
+    # Place your local configuration in /mqtt/config/conf.d/
+
+    pid_file /var/run/mosquitto.pid
+
+    persistence true
+    persistence_location /mqtt/data/
+
+    # user mosquitto
+    allow_anonymous true
+
+    # Port to use for the default listener.
+    port 1883
+
+
+    # log_dest file /mqtt/log/mosquitto.log
+    log_dest stdout
+
+    #include_dir /mqtt/config/conf.d
