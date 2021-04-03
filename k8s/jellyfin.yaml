@@ -73,7 +73,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: jellyfin.homelab.lazz.tech
+  - host: jellyfin.internal.lazz.tech
     http:
       paths:
       - backend:

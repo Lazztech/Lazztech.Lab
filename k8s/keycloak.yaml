@@ -74,7 +74,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: keycloak.homelab.lazz.tech
+  - host: keycloak.internal.lazz.tech
     http:
       paths:
       - backend:

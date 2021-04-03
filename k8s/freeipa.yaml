@@ -18,7 +18,7 @@ spec:
           image: freeipa/freeipa-server:fedora-30
           env:
           - name: IPA_SERVER_HOSTNAME
-            value: ipa.homelab.lazz.tech
+            value: ipa.internal.lazz.tech
           - name: PASSWORD
             valueFrom:
               secretKeyRef:
@@ -98,7 +98,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: ipa.homelab.lazz.tech
+  - host: ipa.internal.lazz.tech
     http:
       paths:
       - backend:

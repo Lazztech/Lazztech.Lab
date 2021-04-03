@@ -64,14 +64,17 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
   rules:
-  - host: home.homelab.lazz.tech
+  - host: home.internal.lazz.tech
     http:
       paths:
       - backend:
           serviceName: homer-service
           servicePort: 80
-          
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -149,7 +152,7 @@ data:
     links:
       - name: "Lazztech Status"
         icon: "fas fa-heartbeat"
-        url: "https://status.homelab.lazz.tech/"
+        url: "https://status.internal.lazz.tech/"
         target: "_blank" # optional html tag target attribute
       - name: "Lazztech Blog"
         icon: "fas fa-blog"
@@ -175,37 +178,37 @@ data:
             logo: "assets/icons/nextcloud.png"
             subtitle: "Files, Chat, Productivity & Collaboration"
             tag: "community"
-            url: "http://nextcloud.homelab.lazz.tech/"
+            url: "http://nextcloud.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Wiki"
             logo: "assets/icons/dokuwiki.svg"
             subtitle: "Community Wiki"
             tag: "community"
-            url: "http://wiki.homelab.lazz.tech/"
+            url: "http://wiki.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "EBook Library"
             logo: "assets/icons/calibre.png"
             subtitle: "Community Ebook Libary & Reader"
             tag: "community"
-            url: "http://read.homelab.lazz.tech/"
+            url: "http://read.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Snapdrop"
             logo: "assets/icons/snapdrop.png"
             subtitle: "The easiest way to transfer data across devices"
             tag: "community"
-            url: "http://share.homelab.lazz.tech/"
+            url: "http://share.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Home Assistant"
             logo: "assets/icons/home-assistant.png"
             subtitle: "Home Automation"
             tag: "community"
-            url: "http://home-assistant.homelab.lazz.tech/"
+            url: "http://home-assistant.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Jellyfin"
             logo: "assets/icons/jellyfin.png"
             subtitle: "Media server"
             tag: "community"
-            url: "http://jellyfin.homelab.lazz.tech/"
+            url: "http://jellyfin.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Lazztech Development"
@@ -215,7 +218,7 @@ data:
             icon: "fab fa-git-alt"
             subtitle: "Local development deployment"
             tag: "community"
-            url: "http://dev-lazztechhub.homelab.lazz.tech/graphql"
+            url: "http://dev-lazztechhub.internal.lazz.tech/graphql"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Development Resources"
@@ -225,31 +228,31 @@ data:
             logo: "assets/icons/gitea.png"
             subtitle: "Local Git mirror"
             tag: "community"
-            url: "http://git.homelab.lazz.tech/"
+            url: "http://git.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Drone"
             logo: "assets/icons/drone.png"
             subtitle: "Container native Continous Integration /Continous Delivery"
             tag: "community"
-            url: "http://cicd.homelab.lazz.tech/"
+            url: "http://cicd.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Docker Registry"
             logo: "assets/icons/docker.png"
             subtitle: "minimal registry:2 frontend"
             tag: "community"
-            url: "http://docker.homelab.lazz.tech/"
+            url: "http://docker.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Minio"
             logo: "assets/icons/minio.png"
             subtitle: "Object file storage"
             tag: "community"
-            url: "http://objects.homelab.lazz.tech/"
+            url: "http://objects.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Code Server"
             logo: "assets/icons/code-server.png"
             subtitle: "VSCode web server"
             tag: "community"
-            url: "http://code.homelab.lazz.tech/"
+            url: "http://code.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Monitoring"
@@ -268,28 +271,28 @@ data:
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://status.homelab.lazz.tech/"
+            url: "http://status.internal.lazz.tech/"
           - name: "Grafana"
             logo: "assets/icons/grafana.png"
             subtitle: "Monitoring & Visibility"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://grafana.homelab.lazz.tech/"
+            url: "http://grafana.internal.lazz.tech/"
           - name: "Prometheus"
             logo: "assets/icons/prometheus.png"
             subtitle: "Records real-time metrics"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://prometheus.homelab.lazz.tech/"
+            url: "http://prometheus.internal.lazz.tech/"
           - name: "Scrutiny"
             logo: "assets/icons/scrutiny.svg"
             subtitle: "Hard Drive S.M.A.R.T Monitoring"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://scrutiny.homelab.lazz.tech/"
+            url: "http://scrutiny.internal.lazz.tech/"
 
       - name: "SysAdmin"
         icon: "fa fa-server"
@@ -300,21 +303,21 @@ data:
           #   tag: "sysadmin"
           #   # Optional tagstyle
           #   tagstyle: "is-success"
-          #   url: "http://wireguard.homelab.lazz.tech/"
+          #   url: "http://wireguard.internal.lazz.tech/"
           - name: "FreeIPA"
             logo: "assets/icons/freeipa.png"
             subtitle: "Identity Management"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "https://ipa.homelab.lazz.tech/"
+            url: "https://ipa.internal.lazz.tech/"
           - name: "Keycloak"
             logo: "assets/icons/keycloak.png"
             subtitle: "Identity Management"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://keycloak.homelab.lazz.tech/"
+            url: "http://keycloak.internal.lazz.tech/"
           - name: "Unifi"
             logo: "assets/icons/unifi.jpg"
             subtitle: "Network Management"
@@ -328,5 +331,5 @@ data:
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://frigate.homelab.lazz.tech/"
+            url: "http://frigate.internal.lazz.tech/"
           

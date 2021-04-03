@@ -56,7 +56,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: share.homelab.lazz.tech
+  - host: share.internal.lazz.tech
     http:
       paths:
       - backend:

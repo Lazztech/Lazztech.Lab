@@ -75,7 +75,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: nextcloud.homelab.lazz.tech
+  - host: nextcloud.internal.lazz.tech
     http:
       paths:
       - backend:
