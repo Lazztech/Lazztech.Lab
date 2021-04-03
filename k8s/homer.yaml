@@ -67,9 +67,9 @@ spec:
   tls:
     - secretName: internal-acme-crt-secret
       hosts:
-        - '*.internal.lazz.tech'
+        - 'internal.lazz.tech'
   rules:
-  - host: home.internal.lazz.tech
+  - host: internal.lazz.tech
     http:
       paths:
       - backend:
