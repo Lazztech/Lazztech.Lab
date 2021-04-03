@@ -97,6 +97,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
   rules:
   - host: ipa.internal.lazz.tech
     http:

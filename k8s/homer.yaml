@@ -178,37 +178,37 @@ data:
             logo: "assets/icons/nextcloud.png"
             subtitle: "Files, Chat, Productivity & Collaboration"
             tag: "community"
-            url: "http://nextcloud.internal.lazz.tech/"
+            url: "https://nextcloud.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Wiki"
             logo: "assets/icons/dokuwiki.svg"
             subtitle: "Community Wiki"
             tag: "community"
-            url: "http://wiki.internal.lazz.tech/"
+            url: "https://wiki.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "EBook Library"
             logo: "assets/icons/calibre.png"
             subtitle: "Community Ebook Libary & Reader"
             tag: "community"
-            url: "http://read.internal.lazz.tech/"
+            url: "https://read.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Snapdrop"
             logo: "assets/icons/snapdrop.png"
             subtitle: "The easiest way to transfer data across devices"
             tag: "community"
-            url: "http://share.internal.lazz.tech/"
+            url: "https://share.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Home Assistant"
             logo: "assets/icons/home-assistant.png"
             subtitle: "Home Automation"
             tag: "community"
-            url: "http://home-assistant.internal.lazz.tech/"
+            url: "https://home-assistant.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Jellyfin"
             logo: "assets/icons/jellyfin.png"
             subtitle: "Media server"
             tag: "community"
-            url: "http://jellyfin.internal.lazz.tech/"
+            url: "https://jellyfin.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Lazztech Development"
@@ -218,7 +218,7 @@ data:
             icon: "fab fa-git-alt"
             subtitle: "Local development deployment"
             tag: "community"
-            url: "http://dev-lazztechhub.internal.lazz.tech/graphql"
+            url: "https://dev-lazztechhub.internal.lazz.tech/graphql"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Development Resources"
@@ -228,31 +228,31 @@ data:
             logo: "assets/icons/gitea.png"
             subtitle: "Local Git mirror"
             tag: "community"
-            url: "http://git.internal.lazz.tech/"
+            url: "https://git.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Drone"
             logo: "assets/icons/drone.png"
             subtitle: "Container native Continous Integration /Continous Delivery"
             tag: "community"
-            url: "http://cicd.internal.lazz.tech/"
+            url: "https://cicd.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Docker Registry"
             logo: "assets/icons/docker.png"
             subtitle: "minimal registry:2 frontend"
             tag: "community"
-            url: "http://docker.internal.lazz.tech/"
+            url: "https://docker.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Minio"
             logo: "assets/icons/minio.png"
             subtitle: "Object file storage"
             tag: "community"
-            url: "http://objects.internal.lazz.tech/"
+            url: "https://objects.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Code Server"
             logo: "assets/icons/code-server.png"
             subtitle: "VSCode web server"
             tag: "community"
-            url: "http://code.internal.lazz.tech/"
+            url: "https://code.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Monitoring"
@@ -264,35 +264,35 @@ data:
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://192.168.1.11:19999/"
+            url: "https://192.168.1.11:19999/"
           - name: "Statping"
             logo: "assets/icons/statping.png"
             subtitle: "Uptime status and notifications"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://status.internal.lazz.tech/"
+            url: "https://status.internal.lazz.tech/"
           - name: "Grafana"
             logo: "assets/icons/grafana.png"
             subtitle: "Monitoring & Visibility"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://grafana.internal.lazz.tech/"
+            url: "https://grafana.internal.lazz.tech/"
           - name: "Prometheus"
             logo: "assets/icons/prometheus.png"
             subtitle: "Records real-time metrics"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://prometheus.internal.lazz.tech/"
+            url: "https://prometheus.internal.lazz.tech/"
           - name: "Scrutiny"
             logo: "assets/icons/scrutiny.svg"
             subtitle: "Hard Drive S.M.A.R.T Monitoring"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://scrutiny.internal.lazz.tech/"
+            url: "https://scrutiny.internal.lazz.tech/"
 
       - name: "SysAdmin"
         icon: "fa fa-server"
@@ -303,7 +303,7 @@ data:
           #   tag: "sysadmin"
           #   # Optional tagstyle
           #   tagstyle: "is-success"
-          #   url: "http://wireguard.internal.lazz.tech/"
+          #   url: "https://wireguard.internal.lazz.tech/"
           - name: "FreeIPA"
             logo: "assets/icons/freeipa.png"
             subtitle: "Identity Management"
@@ -317,19 +317,19 @@ data:
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://keycloak.internal.lazz.tech/"
+            url: "https://keycloak.internal.lazz.tech/"
           - name: "Unifi"
             logo: "assets/icons/unifi.jpg"
             subtitle: "Network Management"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://unifi/"
+            url: "https://unifi/"
           - name: "Frigate"
             logo: "assets/icons/frigate.png"
             subtitle: "Security camera object detection"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://frigate.internal.lazz.tech/"
+            url: "https://frigate.internal.lazz.tech/"
           
