@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drone
+  template:
+    metadata:
+      labels:
+        app: drone
+    spec:
+      containers:
+        - name: drone
+          image: drone/drone:1
+          env:
+          - name: DRONE_GITEA_SERVER
+            value: "https://git.internal.lazz.tech"
+          - name: DRONE_GITEA_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: drone
+                key: gitea-client-id
+          - name: DRONE_GITEA_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: drone
+                key: gitea-client-secret
+          - name: DRONE_RPC_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: drone
+                key: drone-rpc-secret
+          - name: DRONE_SERVER_HOST
+            value: "cicd.internal.lazz.tech"
+          - name: DRONE_SERVER_PROTO
+            value: "http"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - mountPath: /data
+            name: drone-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: drone-data
+          hostPath:
+            # directory location on host
+            path: /opt/drone
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drone-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: drone
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: drone-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: cicd.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: drone-service
+          servicePort: 80
