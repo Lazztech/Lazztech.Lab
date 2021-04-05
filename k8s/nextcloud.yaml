@@ -24,8 +24,13 @@ spec:
               memory: "128Mi"
               cpu: "500m"
           ports:
-          - containerPort: 8080
+          - containerPort: 80
+          - containerPort: 443
           env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
             - name: TZ
               value: America/Los_Angeles
           volumeMounts:
@@ -63,7 +68,10 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    name: tcp
+    name: http
+  - port: 443
+    targetPort: 443
+    name: https
   selector:
     app: nextcloud
 ---
