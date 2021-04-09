@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-internal-ddns-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-internal-ddns
+  template:
+    metadata:
+      labels:
+        app: cloudflare-internal-ddns
+    spec:
+      # needed for access to eth0 network device to get LAN IP address
+      hostNetwork: true
+      containers:
+        - name: cloudflare-internal-ddns
+          image: oznu/cloudflare-ddns
+          env:
+            - name: ZONE
+              value: lazz.tech
+            - name: SUBDOMAIN
+              value: "*.internal"
+            # use first host ethernet network device to get LAN IP address
+            - name: INTERFACE
+              value: eth0
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: ddns-api-key
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
