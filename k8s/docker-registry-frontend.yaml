@@ -21,8 +21,10 @@ spec:
               value: "docker-registry-service.default.svc.cluster.local"
             - name: ENV_DOCKER_REGISTRY_PORT
               value: "5000"
-            - name: ENV_DOCKER_REGISTRY_USE_SSL
-              value: "1"
+            - name: ENV_REGISTRY_PROXY_FQDN
+              value: "registry.internal.lazz.tech"
+            - name: ENV_REGISTRY_PROXY_PORT
+              value: "443"
           resources:
             requests:
               memory: "64Mi"
