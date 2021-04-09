@@ -18,7 +18,7 @@ spec:
           image: konradkleine/docker-registry-frontend:v2
           env:
             - name: ENV_DOCKER_REGISTRY_HOST
-              value: "registry.internal.lazz.tech"
+              value: "docker-registry-service.default.svc.cluster.local"
             - name: ENV_DOCKER_REGISTRY_PORT
               value: "5000"
             - name: ENV_DOCKER_REGISTRY_USE_SSL

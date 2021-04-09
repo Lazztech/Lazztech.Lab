@@ -42,7 +42,7 @@ metadata:
   name: docker-registry-service
 spec:
   ports:
-  - port: 80
+  - port: 5000
     targetPort: 5000
     name: tcp
   selector:
@@ -65,4 +65,4 @@ spec:
       paths:
       - backend:
           serviceName: docker-registry-service
-          servicePort: 80
+          servicePort: 5000
