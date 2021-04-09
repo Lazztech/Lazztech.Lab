@@ -224,6 +224,12 @@ data:
       - name: "Development Resources"
         icon: "fas fa-code"
         items:
+          - name: "Adminer"
+            logo: "assets/icons/adminer.png"
+            subtitle: "Database Management"
+            tag: "community"
+            url: "https://adminer.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Gitea"
             logo: "assets/icons/gitea.png"
             subtitle: "Local Git mirror"

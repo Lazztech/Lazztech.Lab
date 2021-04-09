@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adminer
+  template:
+    metadata:
+      labels:
+        app: adminer
+    spec:
+      containers:
+        - name: adminer
+          image: adminer
+          env:
+            - name: ADMINER_DESIGN
+              value: "galkaev"
+            # - name: ADMINER_PLUGINS
+            #   value: "login-ssl"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8080
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: tcp
+  selector:
+    app: adminer
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: adminer-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: adminer.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: adminer-service
+          servicePort: 80
