@@ -91,9 +91,9 @@ data:
     title: "App dashboard"
     subtitle: "Lazztech"
     # documentTitle: "Welcome" # Customize the browser tab text
-    # logo: "assets/logo.png"
+    logo: "assets/icons/lazztech.png"
     # Alternatively a fa icon can be provided:
-    icon: "fas fa-skull-crossbones"
+    # icon: "fas fa-skull-crossbones"
 
     header: true # Set to false to hide the header
     footer: false # '<p>Created with <span class="has-text-danger">❤</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
@@ -215,7 +215,7 @@ data:
         icon: "fas fa-code"
         items:
           - name: "dev-lazztechhub-service"
-            icon: "fab fa-git-alt"
+            logo: "assets/icons/lazztech.png"
             subtitle: "Local development deployment"
             tag: "community"
             url: "https://dev-lazztechhub.internal.lazz.tech/graphql"
@@ -224,12 +224,6 @@ data:
       - name: "Development Resources"
         icon: "fas fa-code"
         items:
-          - name: "Adminer"
-            logo: "assets/icons/adminer.png"
-            subtitle: "Database Management"
-            tag: "community"
-            url: "https://adminer.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Gitea"
             logo: "assets/icons/gitea.png"
             subtitle: "Local Git mirror"
@@ -260,6 +254,23 @@ data:
             tag: "community"
             url: "https://code.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+      - name: "Database Administration"
+        icon: "fas fa-code"
+        items:
+          - name: "Adminer"
+            logo: "assets/icons/adminer.png"
+            subtitle: "Database Management"
+            tag: "community"
+            url: "https://adminer.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "pgweb"
+            logo: "assets/icons/pgweb.png"
+            subtitle: "A web-based frontend to your Postgres database."
+            tag: "community"
+            url: "https://pgweb.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
 
       - name: "Monitoring"
         icon: "fas fa-heartbeat"
