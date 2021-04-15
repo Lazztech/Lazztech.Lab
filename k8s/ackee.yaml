@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ackee-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ackee
+  template:
+    metadata:
+      labels:
+        app: ackee
+    spec:
+      containers:
+        - name: ackee
+          image: electerious/ackee
+          env:
+            - name: ACKEE_MONGODB
+              value: mongodb://mongo-service.default.svc.cluster.local:27017/ackee
+            - name: ACKEE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ackee
+                  key: username
+            - name: ACKEE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ackee
+                  key: password
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 3000
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ackee-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+    name: tcp
+  selector:
+    app: ackee
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ackee-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: ackee.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: ackee-service
+          servicePort: 80
