@@ -1,0 +1,56 @@
+# default db and user is 'postgres', password is set via secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 5432
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: postgres-data
+        hostPath:
+          # directory location on host
+          path: /opt/postgres
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    name: tcp
+  selector:
+    app: postgres
