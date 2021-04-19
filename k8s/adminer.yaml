@@ -16,11 +16,6 @@ spec:
       containers:
         - name: adminer
           image: adminer
-          env:
-            - name: ADMINER_DESIGN
-              value: "galkaev"
-            # - name: ADMINER_PLUGINS
-            #   value: "login-ssl"
           resources:
             requests:
               memory: "64Mi"
