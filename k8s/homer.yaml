@@ -275,6 +275,13 @@ data:
       - name: "Monitoring"
         icon: "fas fa-heartbeat"
         items:
+          - name: "Ackee"
+            logo: "assets/icons/ackee.png"
+            subtitle: "Site analytics"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://ackee.internal.lazz.tech/"
           - name: "Netdata"
             logo: "assets/icons/netdata.png"
             subtitle: "performance and health monitoring"
@@ -328,13 +335,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://ipa.internal.lazz.tech/"
-          - name: "Keycloak"
-            logo: "assets/icons/keycloak.png"
-            subtitle: "Identity Management"
+          - name: "Authentik"
+            logo: "assets/icons/authentik.svg"
+            subtitle: "SSO Identity Provider"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "https://keycloak.internal.lazz.tech/"
+            url: "https://authentik.internal.lazz.tech/"
           - name: "Unifi"
             logo: "assets/icons/unifi.jpg"
             subtitle: "Network Management"

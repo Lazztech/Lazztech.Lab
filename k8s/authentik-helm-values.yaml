@@ -1,0 +1,31 @@
+# Helm setup:
+# helm repo add authentik https://docker.beryju.org/chartrepo/authentik
+# helm repo update
+#
+# Generate passwords/secretkey values with:
+# openssl rand -base64 36
+#
+# Install:
+# helm install authentik/authentik -f authentik-helm-values.yaml --generate-name
+#
+# Uninstall:
+# helm uninstall authentik-WhaterverTheGeneratedNameIs
+
+postgresql:
+  postgresqlPassword: ""
+redis:
+  password: ""
+config:
+  secretKey: ""
+# used to allow k3s with master node only to work
+pvc:
+  mode: ReadWriteOnce
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+  hosts:
+    - authentik.internal.lazz.tech
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'

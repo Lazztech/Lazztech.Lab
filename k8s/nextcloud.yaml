@@ -24,6 +24,9 @@ spec:
               memory: "512Mi"
               cpu: "500m"
           env:
+            # needed to ensure saml requests to authentik are from https
+            - name: OVERWRITEPROTOCOL
+              value: https
             - name: NEXTCLOUD_TRUSTED_DOMAINS
               value: nextcloud.internal.lazz.tech
             - name: POSTGRES_DB
