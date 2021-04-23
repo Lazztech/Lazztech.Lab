@@ -1,0 +1,88 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost:alpine
+          env:
+            - name: url
+              value: https://gian.lazz.tech
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /var/lib/ghost/content
+            name: ghost-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: ghost-data
+        hostPath:
+          # directory location on host
+          path: /opt/ghost
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghost-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 2368
+    name: tcp
+  selector:
+    app: ghost
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ghost-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: blog.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: ghost-service
+          servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ghost-lazztech-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: lazztech-acme-crt-secret
+      hosts:
+        - '*.lazz.tech'
+  rules:
+  - host: gian.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: ghost-service
+          servicePort: 80

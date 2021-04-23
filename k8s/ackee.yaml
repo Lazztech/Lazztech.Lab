@@ -17,6 +17,10 @@ spec:
         - name: ackee
           image: electerious/ackee
           env:
+            - name: ACKEE_TRACKER
+              value: analytics
+            - name: ACKEE_ALLOW_ORIGIN
+              value: https://gian.lazz.tech
             - name: ACKEE_MONGODB
               value: mongodb://mongo-service.default.svc.cluster.local:27017/ackee
             - name: ACKEE_USERNAME
@@ -65,6 +69,25 @@ spec:
         - '*.internal.lazz.tech'
   rules:
   - host: ackee.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: ackee-service
+          servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ackee-lazztech-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.lazz.tech'
+  rules:
+  - host: analytics.lazz.tech
     http:
       paths:
       - backend:
