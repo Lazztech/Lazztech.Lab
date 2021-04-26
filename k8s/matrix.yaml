@@ -1,0 +1,116 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix
+  template:
+    metadata:
+      labels:
+        app: matrix
+    spec:
+      containers:
+        - name: matrix
+          image: matrixdotorg/synapse:v1.32.2
+          # args: ["generate"]
+          # env:
+          # - name: SYNAPSE_SERVER_NAME
+          #   value: "matrix.internal.lazz.tech"
+          # - name: SYNAPSE_REPORT_STATS
+          #   value: "no"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /data
+            name: matrix-data
+          imagePullPolicy: IfNotPresent
+        - name: matrix-element-web
+          image: vectorim/element-web
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /data
+            name: matrix-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: matrix-data
+        hostPath:
+          # directory location on host
+          path: /opt/matrix
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8008
+    name: http
+  selector:
+    app: matrix
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-element-web-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  selector:
+    app: matrix
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: matrix-synapse-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: synapse.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: matrix-service
+          servicePort: http
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: matrix-element-web-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: matrix.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: matrix-element-web-service
+          servicePort: http
