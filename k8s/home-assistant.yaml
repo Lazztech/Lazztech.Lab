@@ -15,6 +15,8 @@ spec:
     spec:
       # needed for mdns device discover & homekit
       hostNetwork: true
+      # needed to allow access to cluster's internal dns for services
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: home-assistant
           image: homeassistant/home-assistant:stable
