@@ -1,4 +1,0 @@
-- src: geerlingguy.docker
-- src: https://github.com/ansible-community/ansible-consul.git
-- src: https://github.com/ansible-community/ansible-vault.git
-- src: https://github.com/ansible-community/ansible-nomad.git
