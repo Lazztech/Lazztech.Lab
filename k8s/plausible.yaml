@@ -1,0 +1,180 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plausible-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plausible
+  template:
+    metadata:
+      labels:
+        app: plausible
+    spec:
+      containers:
+        - name: plausible
+          image: plausible/analytics:latest
+          arg: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh db init-admin && /entrypoint.sh run"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ADMIN_USER_EMAIL
+              value: gianlazzarini@gmail.com
+            - name: ADMIN_USER_NAME
+              value: admin
+            - name: ADMIN_USER_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: admin
+                  key: password
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: plausible
+                  key: secret-key
+            - name: SIGNING_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: plausible
+                  key: signing-salt
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: plausible
+                  key: database-url
+            - name: DISABLE_REGISTRATION
+              value: "true"
+            - name: DISABLE_SUBSCRIPTION
+              value: "true"
+            - name: CLICKHOUSE_DATABASE_HOST
+              value: plausible-clickhouse-service.default.svc.cluster.local
+            - name: CLICKHOUSE_DATABASE_NAME
+              value: plausible
+            - name: CLICKHOUSE_DATABASE_USER
+              value: default
+            - name: CLICKHOUSE_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: plausible
+                  key: clickhouse-database-password
+            - name: DATABASE_POOL_SIZE
+              value: "20"
+            - name: CLICKHOUSE_DATABASE_POOLSIZE
+              value: "20"
+            - name: HOST
+              value: plausible.lazz.tech
+            - name: SCHEME
+              value: https
+      # - MAILER_ADAPTER=Bamboo.SMTPAdapter
+      # - MAILER_EMAIL=no-reply@yourdomain # Change this to reflect the address where emails are going to come from
+      # - SMTP_HOST_ADDR=mail.yourdomain # Change this to your server, you can use mailgun, or google smtp
+      # - SMTP_HOST_PORT=465 # Change to fit your server
+      # - SMTP_USER_NAME=username # This can be, user@gmail.com if you are using Google SMTP
+      # - SMTP_USER_PWD=you-pass # Change with your SMTP password
+      # - SMTP_HOST_SSL_ENABLED=true
+            - name: GEOLITE2_COUNTRY_DB
+              value: /geoip/GeoLite2-Country.mmdb
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 8000
+          volumeMounts:
+          - mountPath: /geoip
+            name: /plausible-geoip
+            readOnly: true
+        - name: plausible_events_db
+          image: yandex/clickhouse-server:21.3.2.5
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /var/lib/clickhouse
+            name: /plausible-event-data
+        - name: geoip
+          image: maxmindinc/geoipupdate
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GEOIPUPDATE_ACCOUNT_ID
+              value: ""
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: plausible
+                  key: secret-key
+            - name: GEOIPUPDATE_EDITION_IDS
+              value: GeoLite2-Country
+            # update every 7 days
+            - name: GEOIPUPDATE_FREQUENCY
+              value: "168"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /usr/share/GeoIP
+            name: /plausible-geoip
+      volumes:
+      - name: /plausible-event-data
+        hostPath:
+          path: /opt/plausible/event-data
+          type: DirectoryOrCreate
+      - name: /plausible-geoip
+        hostPath:
+          path: /opt/plausible/geoip
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plausible-clickhouse-service
+spec:
+  ports:
+  - port: 8123
+    targetPort: 8123
+  selector:
+    app: plausible
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plausible-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8000
+    name: http
+  selector:
+    app: plausible
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: plausible-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: lazztech-acme-crt-secret
+      hosts:
+        - '*.lazz.tech'
+  rules:
+  - host: plausible.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: plausible-service
+          servicePort: http
