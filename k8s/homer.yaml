@@ -171,6 +171,29 @@ data:
     # First level array represent a group.
     # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
     services:
+      - name: "Home Automation"
+        icon: "fas fa-building"
+        items:
+          - name: "Home Assistant"
+            logo: "assets/icons/home-assistant.png"
+            subtitle: "Home Automation"
+            tag: "community"
+            url: "https://home-assistant.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Node Red"
+            logo: "assets/icons/node-red.png"
+            subtitle: "Event Automations"
+            tag: "community"
+            url: "https://node-red.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Frigate"
+            logo: "assets/icons/frigate.png"
+            subtitle: "Security camera object detection"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://frigate.internal.lazz.tech/"
+
       - name: "Community"
         icon: "fas fa-building"
         items:
@@ -210,67 +233,6 @@ data:
             tag: "community"
             url: "https://jellyfin.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-
-      - name: "Lazztech Development"
-        icon: "fas fa-code"
-        items:
-          - name: "dev-lazztechhub-service"
-            logo: "assets/icons/lazztech.png"
-            subtitle: "Local development deployment"
-            tag: "community"
-            url: "https://dev-lazztechhub.internal.lazz.tech/graphql"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-
-      - name: "Development Resources"
-        icon: "fas fa-code"
-        items:
-          - name: "Gitea"
-            logo: "assets/icons/gitea.png"
-            subtitle: "Local Git mirror"
-            tag: "community"
-            url: "https://git.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Drone"
-            logo: "assets/icons/drone.png"
-            subtitle: "Container native Continous Integration /Continous Delivery"
-            tag: "community"
-            url: "https://cicd.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Docker Registry"
-            logo: "assets/icons/docker.png"
-            subtitle: "minimal registry:2 frontend"
-            tag: "community"
-            url: "https://docker.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Minio"
-            logo: "assets/icons/minio.png"
-            subtitle: "Object file storage"
-            tag: "community"
-            url: "https://objects.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Code Server"
-            logo: "assets/icons/code-server.png"
-            subtitle: "VSCode web server"
-            tag: "community"
-            url: "https://code.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-
-      - name: "Database Administration"
-        icon: "fas fa-code"
-        items:
-          - name: "Adminer"
-            logo: "assets/icons/adminer.png"
-            subtitle: "Database Management"
-            tag: "community"
-            url: "https://adminer.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "pgweb"
-            logo: "assets/icons/pgweb.png"
-            subtitle: "A web-based frontend to your Postgres database."
-            tag: "community"
-            url: "https://pgweb.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-
 
       - name: "Monitoring"
         icon: "fas fa-heartbeat"
@@ -318,6 +280,50 @@ data:
             tagstyle: "is-success"
             url: "https://scrutiny.internal.lazz.tech/"
 
+      - name: "Lazztech"
+        icon: "fas fa-code"
+        items:
+          - name: "dev-lazztechhub-service"
+            logo: "assets/icons/lazztech.png"
+            subtitle: "Local development deployment"
+            tag: "community"
+            url: "https://dev-lazztechhub.internal.lazz.tech/graphql"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+      - name: "Development Resources"
+        icon: "fas fa-code"
+        items:
+          - name: "Gitea"
+            logo: "assets/icons/gitea.png"
+            subtitle: "Local Git mirror"
+            tag: "community"
+            url: "https://git.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Drone"
+            logo: "assets/icons/drone.png"
+            subtitle: "Container native Continous Integration /Continous Delivery"
+            tag: "community"
+            url: "https://cicd.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Docker Registry"
+            logo: "assets/icons/docker.png"
+            subtitle: "minimal registry:2 frontend"
+            tag: "community"
+            url: "https://docker.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Minio"
+            logo: "assets/icons/minio.png"
+            subtitle: "Object file storage"
+            tag: "community"
+            url: "https://objects.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Code Server"
+            logo: "assets/icons/code-server.png"
+            subtitle: "VSCode web server"
+            tag: "community"
+            url: "https://code.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
       - name: "SysAdmin"
         icon: "fa fa-server"
         items:
@@ -349,11 +355,16 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://unifi/"
-          - name: "Frigate"
-            logo: "assets/icons/frigate.png"
-            subtitle: "Security camera object detection"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://frigate.internal.lazz.tech/"
+          - name: "Adminer"
+            logo: "assets/icons/adminer.png"
+            subtitle: "Database Management"
+            tag: "community"
+            url: "https://adminer.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "pgweb"
+            logo: "assets/icons/pgweb.png"
+            subtitle: "A web-based frontend to your Postgres database."
+            tag: "community"
+            url: "https://pgweb.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           

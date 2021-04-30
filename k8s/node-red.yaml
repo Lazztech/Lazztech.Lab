@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-red-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-red
+  template:
+    metadata:
+      labels:
+        app: node-red
+    spec:
+      containers:
+        - name: node-red
+          image: nodered/node-red
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /config
+            name: node-red-config
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: node-red-config
+        hostPath:
+          # directory location on host
+          path: /opt/node-red
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-red-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 1880
+    name: http
+  selector:
+    app: node-red
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: node-red-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: node-red.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: node-red-service
+          servicePort: http
