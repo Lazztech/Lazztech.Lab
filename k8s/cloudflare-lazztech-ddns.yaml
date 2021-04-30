@@ -2,25 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloudflare-public-ddns-deployment
+  name: cloudflare-lazztech-ddns-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cloudflare-public-ddns
+      app: cloudflare-lazztech-ddns
   template:
     metadata:
       labels:
-        app: cloudflare-public-ddns
+        app: cloudflare-lazztech-ddns
     spec:
       containers:
-        - name: cloudflare-public-ddns
+        - name: cloudflare-lazztech-ddns
           image: oznu/cloudflare-ddns
           env:
             - name: ZONE
               value: lazz.tech
-            - name: SUBDOMAIN
-              value: "*.public"
             - name: API_KEY
               valueFrom:
                 secretKeyRef:

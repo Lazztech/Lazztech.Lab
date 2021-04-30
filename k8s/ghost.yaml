@@ -18,7 +18,7 @@ spec:
           image: ghost:alpine
           env:
             - name: url
-              value: https://gian.lazz.tech
+              value: https://lazz.tech
           resources:
             requests:
               memory: "256Mi"
@@ -80,7 +80,7 @@ spec:
       hosts:
         - '*.lazz.tech'
   rules:
-  - host: gian.lazz.tech
+  - host: lazz.tech
     http:
       paths:
       - backend:

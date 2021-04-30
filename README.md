@@ -17,8 +17,7 @@ Documentation:
 | ✅ | Internal Cert | Internal SSL | Uses DNS01 via cert-manager helm |
 | ✅ | Internal DDNS | *.internal subdomain to LAN IP | Works great |
 | ✅ | Lazztech Cert | External SSL | Needs cert-manager helm |
-| ✅ | Public Cert | Issues SSL | Needs cert-manager helm |
-| ✅ | Public DDNS | *.public domains to WAN IP | Needs cert-manager helm |
+| ✅ | Lazztech DDNS | *.lazz.tech domains to WAN IP | Needs cert-manager helm |
 | ✅ | Code-Server | VSCode Web Server | Needs more recourses |
 | 🚧 | Deepstack | AI web interface | Various uses |
 | 🚧 | Docker-Registry-Frontend | Registry Frontend | Basic and works |
