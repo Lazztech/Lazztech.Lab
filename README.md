@@ -28,6 +28,7 @@ Documentation:
 | 🛑 | Drone-runner | CICD runner | WIP |
 | 🛑 | Drone | CICD Frontend | WIP |
 | 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
+| 🚧 | Gitea | Git server | Works well for mirrors |
 | ✅ | Ghost | Wordpress alternative | Works great behind CDN |
 | 🚧 | Grafana | Metric UI | WIP |
 | ✅ | Home Assistant | Home Automation | Assumes usb zigbee |

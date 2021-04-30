@@ -18,10 +18,10 @@ spec:
           image: gitea/gitea:latest
           resources:
             requests:
-              memory: "64Mi"
+              memory: "512Mi"
               cpu: "100m"
             limits:
-              memory: "128Mi"
+              memory: "1024Mi"
               cpu: "500m"
           ports:
           - containerPort: 3000
