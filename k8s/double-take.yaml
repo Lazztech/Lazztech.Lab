@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: double-take-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: double-take
+  template:
+    metadata:
+      labels:
+        app: double-take
+    spec:
+      containers:
+        - name: double-take
+          image: jakowenko/double-take
+          env:
+            - name: DETECTORS
+              value: deepstack
+            - name: FRIGATE_URL
+              value: frigate-service.default.svc.cluster.local
+            - name: DEEPSTACK_URL
+              value: deepstack-service.default.svc.cluster.local
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /.storage
+            name: double-take-config
+            subPath: .storage
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: double-take-config
+        hostPath:
+          # directory location on host
+          path: /opt/double-take
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: double-take-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+    name: tcp
+  selector:
+    app: double-take
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: double-take-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: double-take.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: double-take-service
+          servicePort: 80

@@ -193,6 +193,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://frigate.internal.lazz.tech/"
+          - name: "Double Take"
+            icon: "fas fa-user-tag"
+            subtitle: "Facial recognition"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://double-take.internal.lazz.tech/"
 
       - name: "Community"
         icon: "fas fa-building"

@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deepstack-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deepstack
+  template:
+    metadata:
+      labels:
+        app: deepstack
+    spec:
+      containers:
+        - name: deepstack
+          image: deepquestai/deepstack
+          env:
+            - name: VISION-SCENE
+              value: "true"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /datastore
+            name: deepstack-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: deepstack-data
+        hostPath:
+          # directory location on host
+          path: /opt/deepstack
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deepstack-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+    name: http
+  selector:
+    app: deepstack
