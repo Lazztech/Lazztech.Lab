@@ -43,6 +43,7 @@ Documentation:
 | ✅ | PGWeb | DB Admin | Simple though low on features |
 | 🛑 | Plausible | Analytics | Needs work |
 | ✅ | Postgres | SQL DB | Works well |
+| ✅ | QuakeJS | WASM Quake3 | Free for all! |
 | 🚧 | Redis | Key value & cache | Handy |
 | ✅ | Snapdrop | Airdrop alternative | Handy |
 | 🛑 | Wg-access-server | Wireguard & UI | Needs work or replacement |

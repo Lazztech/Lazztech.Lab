@@ -240,6 +240,12 @@ data:
             tag: "community"
             url: "https://jellyfin.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "QuakeJS"
+            logo: "assets/icons/quakejs.png"
+            subtitle: "WASM Quake3 in the browser"
+            tag: "community"
+            url: "https://quake.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Monitoring"
         icon: "fas fa-heartbeat"

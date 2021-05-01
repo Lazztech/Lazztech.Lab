@@ -1,0 +1,140 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quakejs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quakejs
+  template:
+    metadata:
+      labels:
+        app: quakejs
+    spec:
+      containers:
+        - name: quakejs-server
+          image: docker.io/criticalstack/quake:latest
+          command:
+          - q3
+          - server
+          - --config=/config/config.yaml
+          - --content-server=http://localhost:9090
+          - --agree-eula
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          volumeMounts:
+          - mountPath: /config
+            name: quake3-server-config
+          - mountPath: /assets
+            name: quake3-content
+          imagePullPolicy: IfNotPresent
+        - name: content-server
+          image: docker.io/criticalstack/quake:latest
+          command:
+          - q3
+          - content
+          - --seed-content-url=http://content.quakejs.com
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /assets
+            name: quake3-content
+      volumes:
+      - name: quake3-server-config
+        configMap:
+          name: quake3-server-config
+      - name: quake3-content
+        hostPath:
+          # directory location on host
+          path: /opt/quakejs/
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quakejs-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8888
+    targetPort: 8080
+    name: http
+  selector:
+    app: quakejs
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: quakejs-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: quake.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: quakejs-service
+          servicePort: http
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quake3-server-config
+data:
+  config.yaml: |
+    fragLimit: 25
+    timeLimit: 15m
+    bot:
+      minPlayers: 3
+    game:
+      motd: "Welcome to Critical Stack"
+      type: FreeForAll
+      forceRespawn: false
+      inactivity: 10m
+      quadFactor: 3
+      weaponRespawn: 3
+    server:
+      hostname: "Lazz"
+      maxClients: 12
+      password: "changeme"
+    commands:
+      - addbot sarge 2
+    maps:
+    - name: q3dm7
+      type: FreeForAll
+      timeLimit: 10m
+    - name: q3dm17
+      type: FreeForAll
+    - name: q3wctf1
+      type: CaptureTheFlag
+      captureLimit: 8
+    - name: q3tourney2
+      type: Tournament
+    - name: q3wctf3
+      type: CaptureTheFlag
+      captureLimit: 8
+    - name: ztn3tourney1
+      type: Tournament
