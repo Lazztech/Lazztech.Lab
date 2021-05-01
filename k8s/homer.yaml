@@ -361,7 +361,7 @@ data:
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "https://unifi/"
+            url: "https://unifi.ui.com/"
           - name: "Adminer"
             logo: "assets/icons/adminer.png"
             subtitle: "Database Management"

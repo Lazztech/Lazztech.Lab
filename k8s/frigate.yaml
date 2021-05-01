@@ -1,0 +1,141 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frigate-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frigate
+  template:
+    metadata:
+      labels:
+        app: frigate
+    spec:
+      containers:
+        - name: frigate
+          image: blakeblackshear/frigate:0.8.4-amd64
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: FRIGATE_ENTRY_RTSP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: frigate
+                  key: entry-rtsp-password
+            - name: FRIGATE_DRIVEWAY_RTSP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: frigate
+                  key: driveway-rtsp-password
+            - name: FRIGATE_PATIO_RTSP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: frigate
+                  key: patio-rtsp-password
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+          - mountPath: /config/config.yml
+            name: frigate-config
+            subPath: config.yml
+          - mountPath: /clips
+            name: frigate-clips
+          - mountPath: /dev/bus/usb
+            name: tpu
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: frigate-config
+          configMap:
+            name: frigate-config
+            items:
+              - key: config.yml
+                path: config.yml
+        - name: frigate-clips
+          hostPath:
+            path: /opt/frigate/clips
+            type: DirectoryOrCreate
+        - name: tpu
+          hostPath:
+            path: /dev/bus/usb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frigate-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+    name: tcp
+  selector:
+    app: frigate
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: frigate-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: frigate.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: frigate-service
+          servicePort: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frigate-config
+data:
+  config.yml: |
+    mqtt:
+      host: mosquitto-service.default.svc.cluster.local
+    cameras:
+      entry:
+        ffmpeg:
+          inputs:
+            - path: rtsp://192.168.1.110:7447/{FRIGATE_ENTRY_RTSP_PASSWORD}
+              roles:
+                - detect
+                - rtmp
+        width: 1024
+        height: 576
+        fps: 5
+      driveway:
+        ffmpeg:
+          inputs:
+            - path: rtsp://192.168.1.110:7447/{FRIGATE_DRIVEWAY_RTSP_PASSWORD}
+              roles:
+                - detect
+                - rtmp
+        width: 1024
+        height: 576
+        fps: 5
+      patio:
+        ffmpeg:
+          inputs:
+            - path: rtsp://192.168.1.110:7447/{FRIGATE_PATIO_RTSP_PASSWORD}
+              roles:
+                - detect
+                - rtmp
+        width: 1024
+        height: 576
+        fps: 5
