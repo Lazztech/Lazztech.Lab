@@ -211,7 +211,7 @@ data:
             url: "https://nextcloud.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Wiki"
-            logo: "assets/icons/dokuwiki.svg"
+            logo: "assets/icons/wikijs.png"
             subtitle: "Community Wiki"
             tag: "community"
             url: "https://wiki.internal.lazz.tech/"
@@ -227,12 +227,6 @@ data:
             subtitle: "The easiest way to transfer data across devices"
             tag: "community"
             url: "https://share.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Home Assistant"
-            logo: "assets/icons/home-assistant.png"
-            subtitle: "Home Automation"
-            tag: "community"
-            url: "https://home-assistant.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Jellyfin"
             logo: "assets/icons/jellyfin.png"

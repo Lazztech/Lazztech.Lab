@@ -60,7 +60,7 @@ spec:
       hosts:
         - '*.internal.lazz.tech'
   rules:
-  - host: wiki.internal.lazz.tech
+  - host: dokuwiki.internal.lazz.tech
     http:
       paths:
       - backend:

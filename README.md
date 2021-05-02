@@ -22,7 +22,6 @@ Documentation:
 | 🚧 | Deepstack | AI web interface | Various uses |
 | 🚧 | Docker-Registry-Frontend | Registry Frontend | Basic and works |
 | 🚧 | Docker-Registry | Registry for containers | works |
-| ✅ | Dokuwiki | Wiki | Easy to maintain |
 | 🚧 | Double-take | Facial Recognition | WIP |
 | 🛑 | Drone-runner | CICD runner | WIP |
 | 🛑 | Drone | CICD Frontend | WIP |
@@ -47,6 +46,7 @@ Documentation:
 | 🚧 | Redis | Key value & cache | Handy |
 | ✅ | Snapdrop | Airdrop alternative | Handy |
 | 🛑 | Wg-access-server | Wireguard & UI | Needs work or replacement |
+| ✅ | Wikijs | Wiki | Switching from Dokuwiki |
 
 
 
