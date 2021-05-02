@@ -80,7 +80,7 @@ spec:
   tls:
     - secretName: lazztech-acme-crt-secret
       hosts:
-        - '*.lazz.tech'
+        - 'lazz.tech'
   rules:
   - host: lazz.tech
     http:
