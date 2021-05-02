@@ -55,6 +55,7 @@ metadata:
   name: ghost-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
 spec:
   tls:
     - secretName: internal-acme-crt-secret
@@ -74,6 +75,7 @@ metadata:
   name: ghost-lazztech-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
 spec:
   tls:
     - secretName: lazztech-acme-crt-secret

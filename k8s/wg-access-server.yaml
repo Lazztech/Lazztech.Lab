@@ -95,6 +95,7 @@ metadata:
   name: wg-access-server-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
 spec:
   tls:
     - secretName: internal-acme-crt-secret
