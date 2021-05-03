@@ -27,14 +27,26 @@ spec:
           - containerPort: 3000
           volumeMounts:
           - mountPath: /config
-            name: grafana-config
+            name: grafana-data
+            subPath: config
           imagePullPolicy: IfNotPresent
       volumes:
-      - name: grafana-config
-        hostPath:
-          # directory location on host
-          path: /opt/grafana/config
-          type: DirectoryOrCreate
+      - name: grafana-data
+        persistentVolumeClaim:
+          claimName: grafana-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

@@ -50,7 +50,8 @@ spec:
             name: frigate-config
             subPath: config.yml
           - mountPath: /media/frigate
-            name: frigate-media
+            name: frigate-data
+            subPath: media/frigate
           - mountPath: /dev/bus/usb
             name: tpu
           imagePullPolicy: IfNotPresent
@@ -61,13 +62,25 @@ spec:
             items:
               - key: config.yml
                 path: config.yml
-        - name: frigate-media
-          hostPath:
-            path: /opt/frigate/
-            type: DirectoryOrCreate
+        - name: frigate-data
+          persistentVolumeClaim:
+            claimName: frigate-pvc
         - name: tpu
           hostPath:
             path: /dev/bus/usb
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frigate-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

@@ -27,14 +27,26 @@ spec:
           - containerPort: 80
           volumeMounts:
           - mountPath: /config
-            name: snapdrop-config
+            name: snapdrop-data
+            subPath: config
           imagePullPolicy: IfNotPresent
       volumes:
-      - name: snapdrop-config
-        hostPath:
-          # directory location on host
-          path: /opt/snapdrop/config
-          type: DirectoryOrCreate
+      - name: snapdrop-data
+        persistentVolumeClaim:
+          claimName: snapdrop-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: snapdrop-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

@@ -49,6 +49,13 @@ Documentation:
 | 🛑 | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |
 
+# Storage
+Default k3s local-path persistent volume claims are used and can be found in `/var/lib/rancher/k3s/storage`
+
+- https://rancher.com/docs/k3s/latest/en/storage/
+# Backup
+
+TBD
 
 
 

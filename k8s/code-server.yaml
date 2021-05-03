@@ -32,14 +32,26 @@ spec:
               cpu: "1000m"
           volumeMounts:
             - mountPath: /config
-              name: code-server-config
+              name: code-server-data
+              subPath: config
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: code-server-config
-          hostPath:
-            # directory location on host
-            path: /opt/code-server/config
-            type: DirectoryOrCreate
+      - name: code-server-data
+        persistentVolumeClaim:
+          claimName: code-server-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: code-server-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

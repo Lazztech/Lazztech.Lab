@@ -28,6 +28,7 @@ spec:
           volumeMounts:
           - mountPath: /data
             name: gitea-data
+            subPath: data
           - mountPath: /etc/timezone
             name: gitea-timezone
           - mountPath: /etc/localtime
@@ -35,10 +36,8 @@ spec:
           imagePullPolicy: IfNotPresent
       volumes:
       - name: gitea-data
-        hostPath:
-          # directory location on host
-          path: /opt/gitea
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: gitea-pvc
       - name: gitea-timezone
         hostPath:
           # directory location on host
@@ -47,6 +46,19 @@ spec:
         hostPath:
           # directory location on host
           path: /etc/localtime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitea-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

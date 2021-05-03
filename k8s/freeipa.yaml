@@ -55,6 +55,7 @@ spec:
           volumeMounts:
           - mountPath: /data
             name: freeipa-data
+            subPath: data
           - name: cgroups
             mountPath: /sys/fs/cgroup
             readOnly: true
@@ -65,9 +66,8 @@ spec:
       volumes:
       - name: freeipa-data
         hostPath:
-          # directory location on host
-          path: /opt/freeipa
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: freeipa-pvc
       - name: cgroups
         hostPath:
           path: /sys/fs/cgroup
@@ -77,6 +77,19 @@ spec:
             items:
               - key: ipa-rewrite.conf.template
                 path: ipa-rewrite.conf.template
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: freeipa-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

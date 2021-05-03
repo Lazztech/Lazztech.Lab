@@ -32,15 +32,26 @@ spec:
               cpu: "500m"
           volumeMounts:
           - mountPath: /.storage
-            name: double-take-config
+            name: double-take-data
             subPath: .storage
           imagePullPolicy: IfNotPresent
       volumes:
-      - name: double-take-config
-        hostPath:
-          # directory location on host
-          path: /opt/double-take
-          type: DirectoryOrCreate
+      - name: double-take-data
+        persistentVolumeClaim:
+          claimName: double-take-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: double-take-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

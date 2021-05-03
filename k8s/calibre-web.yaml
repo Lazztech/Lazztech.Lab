@@ -27,24 +27,32 @@ spec:
           - containerPort: 8083
           volumeMounts:
           - mountPath: /config
-            name: calibre-web-config
+            name: calibre-web-data
+            subPath: config
           - mountPath: /books
-            name: calibre-web-library
+            name: calibre-web-data
+            subPath: books
           imagePullPolicy: IfNotPresent
           env:
             - name: DOCKER_MODS
               value: linuxserver/calibre-web:calibre
       volumes:
-      - name: calibre-web-config
-        hostPath:
-          # directory location on host
-          path: /opt/calibre/config
-          type: DirectoryOrCreate
-      - name: calibre-web-library
-        hostPath:
-          # directory location on host
-          path: /opt/calibre/library
-          type: DirectoryOrCreate
+      - name: calibre-web-data
+        persistentVolumeClaim:
+          claimName: calibre-web-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-web-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

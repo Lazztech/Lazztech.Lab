@@ -42,13 +42,25 @@ spec:
           volumeMounts:
           - mountPath: /data
             name: minio-data
+            subPath: data
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: minio-data
-          hostPath:
-            # directory location on host
-            path: /opt/minio
-            type: DirectoryOrCreate
+      - name: minio-data
+        persistentVolumeClaim:
+          claimName: minio-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

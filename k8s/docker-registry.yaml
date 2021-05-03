@@ -28,13 +28,25 @@ spec:
           volumeMounts:
           - mountPath: /var/lib/registry
             name: docker-registry-data
+            subPath: var/lib/registry
           imagePullPolicy: IfNotPresent
       volumes:
       - name: docker-registry-data
-        hostPath:
-          # directory location on host
-          path: /opt/docker-registry/registry
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: docker-registry-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docker-registry-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

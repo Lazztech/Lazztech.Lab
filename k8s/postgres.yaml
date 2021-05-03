@@ -38,10 +38,21 @@ spec:
           imagePullPolicy: IfNotPresent
       volumes:
       - name: postgres-data
-        hostPath:
-          # directory location on host
-          path: /opt/postgres
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

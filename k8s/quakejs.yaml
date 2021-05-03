@@ -39,6 +39,7 @@ spec:
             name: quake3-server-config
           - mountPath: /assets
             name: quake3-content
+            subPath: assets
           imagePullPolicy: IfNotPresent
         - name: content-server
           image: docker.io/criticalstack/quake:latest
@@ -56,15 +57,27 @@ spec:
           volumeMounts:
           - mountPath: /assets
             name: quake3-content
+            subPath: assets
       volumes:
       - name: quake3-server-config
         configMap:
           name: quake3-server-config
       - name: quake3-content
-        hostPath:
-          # directory location on host
-          path: /opt/quakejs/
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: quakejs-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: quakejs-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

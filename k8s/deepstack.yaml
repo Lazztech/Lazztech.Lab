@@ -29,13 +29,25 @@ spec:
           volumeMounts:
           - mountPath: /datastore
             name: deepstack-data
+            subPath: datastore
           imagePullPolicy: IfNotPresent
       volumes:
       - name: deepstack-data
-        hostPath:
-          # directory location on host
-          path: /opt/deepstack
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: deepstack-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deepstack-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

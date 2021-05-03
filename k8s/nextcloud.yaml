@@ -50,13 +50,25 @@ spec:
           volumeMounts:
             - mountPath: /var/www/html
               name: nextcloud-data
+              subPath: var/www/html
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: nextcloud-data
-          hostPath:
-            # directory location on host
-            path: /opt/nextcloud/
-            type: DirectoryOrCreate
+      - name: nextcloud-data
+        persistentVolumeClaim:
+          claimName: nextcloud-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

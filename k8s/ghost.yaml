@@ -29,13 +29,25 @@ spec:
           volumeMounts:
           - mountPath: /var/lib/ghost/content
             name: ghost-data
+            subPath: var/lib/ghost/content
           imagePullPolicy: IfNotPresent
       volumes:
       - name: ghost-data
-        hostPath:
-          # directory location on host
-          path: /opt/ghost
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: ghost-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

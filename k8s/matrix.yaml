@@ -32,6 +32,7 @@ spec:
           volumeMounts:
           - mountPath: /data
             name: matrix-data
+            subPath: data
           imagePullPolicy: IfNotPresent
         - name: matrix-element-web
           image: vectorim/element-web
@@ -48,10 +49,21 @@ spec:
           imagePullPolicy: IfNotPresent
       volumes:
       - name: matrix-data
-        hostPath:
-          # directory location on host
-          path: /opt/matrix
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: matrix-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matrix-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

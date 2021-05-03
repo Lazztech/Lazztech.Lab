@@ -30,28 +30,32 @@ spec:
           - containerPort: 8096
           volumeMounts:
           - mountPath: /config
-            name: jellyfin-config
+            name: jellyfin-data
+            subPath: config
           - mountPath: /data/tvshows
-            name: jellyfin-tvshows
+            name: jellyfin-data
+            subPath: data/tvshows
           - mountPath: /data/movies
-            name: jellyfin-tvshows
+            name: jellyfin-data
+            subPath: data/movies
           imagePullPolicy: IfNotPresent
       volumes:
-      - name: jellyfin-config
-        hostPath:
-          # directory location on host
-          path: /opt/jellyfin/library
-          type: DirectoryOrCreate
-      - name: jellyfin-tvshows
-        hostPath:
-          # directory location on host
-          path: /opt/jellyfin/tvseries
-          type: DirectoryOrCreate
-      - name: jellyfin-movies
-        hostPath:
-          # directory location on host
-          path: /opt/jellyfin/movies
-          type: DirectoryOrCreate
+      - name: jellyfin-data
+        persistentVolumeClaim:
+          claimName: jellyfin-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

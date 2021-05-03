@@ -25,14 +25,26 @@ spec:
               cpu: "500m"
           volumeMounts:
           - mountPath: /config
-            name: node-red-config
+            name: node-red-data
+            subPath: config
           imagePullPolicy: IfNotPresent
       volumes:
-      - name: node-red-config
-        hostPath:
-          # directory location on host
-          path: /opt/node-red
-          type: DirectoryOrCreate
+      - name: node-red-data
+        persistentVolumeClaim:
+          claimName: node-red-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: node-red-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

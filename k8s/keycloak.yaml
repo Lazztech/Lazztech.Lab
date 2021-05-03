@@ -41,18 +41,30 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: keycloak-data
+            subPath: config
           # - mountPath: /etc/localtime
           #   name: localtime
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: keycloak-data
-          hostPath:
-            # directory location on host
-            path: /opt/keycloak/config
-            type: DirectoryOrCreate
-        # - name: localtime
-        #   hostPath:
-        #     path: /etc/localtime
+      - name: keycloak-data
+        persistentVolumeClaim:
+          claimName: keycloak-pvc
+      # - name: localtime
+      #   hostPath:
+      #     path: /etc/localtime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloak-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service
