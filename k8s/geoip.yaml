@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geoip-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: geoip
+  template:
+    metadata:
+      labels:
+        app: geoip
+    spec:
+      containers:
+        - name: geoip
+          image: maxmindinc/geoipupdate
+          env:
+            - name: GEOIPUPDATE_EDITION_IDS
+              value: GeoLite2-Country
+            - name: GEOIPUPDATE_FREQUENCY
+              value: "168" # update every 7 days
+            - name: GEOIPUPDATE_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: geoip
+                  key: account-id
+            - name: GEOIPUPDATE_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: geoip
+                  key: license-key
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+          volumeMounts:
+          - mountPath: /usr/share/GeoIP
+            name: geoip-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: geoip-data
+        persistentVolumeClaim:
+          claimName: geoip-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: geoip-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi

@@ -28,6 +28,7 @@ Documentation:
 | 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
 | 🚧 | Gitea | Git server | Works well for mirrors |
 | 🚧 | Frigate | Object detection NVR | Uses Google Coral USB TPU |
+| 🚧 | Geoip | geoip | For analytics |
 | ✅ | Ghost | Wordpress alternative | Works great behind CDN |
 | 🚧 | Grafana | Metric UI | WIP |
 | ✅ | Home Assistant | Home Automation | Assumes usb zigbee |
