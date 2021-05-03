@@ -31,8 +31,10 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: wikijs-data
+            subPath: config
           - mountPath: /data
             name: wikijs-data
+            subPath: data
           imagePullPolicy: IfNotPresent
       volumes:
       - name: wikijs-data
