@@ -31,26 +31,34 @@ spec:
               subPath: mosquitto.conf
             - mountPath: /mqtt/data
               name: mosquitto-data
+              subPath: mqtt/data
             - mountPath: /mqtt/log
-              name: mosquitto-log
+              name: mosquitto-data
+              subPath: mqtt/log
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: mosquitto-config
-          configMap:
-            name: mosquitto-config
-            items:
-              - key: mosquitto.conf
-                path: mosquitto.conf
-        - name: mosquitto-data
-          hostPath:
-            # directory location on host
-            path: /opt/mosquitto/data
-            type: DirectoryOrCreate
-        - name: mosquitto-log
-          hostPath:
-            # directory location on host
-            path: /opt/mosquitto/log
-            type: DirectoryOrCreate
+      - name: mosquitto-config
+        configMap:
+          name: mosquitto-config
+          items:
+            - key: mosquitto.conf
+              path: mosquitto.conf
+      - name: mosquitto-data
+        persistentVolumeClaim:
+          claimName: mosquitto-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mosquitto-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

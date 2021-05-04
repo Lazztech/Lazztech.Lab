@@ -34,7 +34,8 @@ spec:
               cpu: "500m"
           volumeMounts:
           - mountPath: /config
-            name: home-assistant-config
+            name: home-assistant-data
+            subPath: config
           - mountPath: /dev/ttyUSB0
             name: tty-usb0
           - mountPath: /dev/ttyUSB1
@@ -43,19 +44,31 @@ spec:
             name: localtime
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: tty-usb0
-          hostPath:
-            path: /dev/ttyUSB0
-        - name: tty-usb1
-          hostPath:
-            path: /dev/ttyUSB1
-        - name: localtime
-          hostPath:
-            path: /etc/localtime
-        - name: home-assistant-config
-          hostPath:
-            path: /opt/home-assistant/config
-            type: DirectoryOrCreate
+      - name: tty-usb0
+        hostPath:
+          path: /dev/ttyUSB0
+      - name: tty-usb1
+        hostPath:
+          path: /dev/ttyUSB1
+      - name: localtime
+        hostPath:
+          path: /etc/localtime
+      - name: home-assistant-data
+        persistentVolumeClaim:
+          claimName: home-assistant-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

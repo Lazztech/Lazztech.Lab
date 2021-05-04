@@ -30,20 +30,32 @@ spec:
               name: homer-config
               subPath: config.yml
             - mountPath: www/assets/icons
-              name: homer-icons
+              name: homer-data
+              subPath: www/assets/icons
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: homer-config
-          configMap:
-            name: homer-config
-            items:
-              - key: config.yml
-                path: config.yml
-        - name: homer-icons
-          hostPath:
-            # directory location on host
-            path: /opt/homer/icons
-            type: DirectoryOrCreate
+      - name: homer-config
+        configMap:
+          name: homer-config
+          items:
+            - key: config.yml
+              path: config.yml
+      - name: homer-data
+        persistentVolumeClaim:
+          claimName: homer-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homer-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service

@@ -65,7 +65,6 @@ spec:
           imagePullPolicy: IfNotPresent
       volumes:
       - name: freeipa-data
-        hostPath:
         persistentVolumeClaim:
           claimName: freeipa-pvc
       - name: cgroups
