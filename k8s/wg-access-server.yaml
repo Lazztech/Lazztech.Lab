@@ -51,6 +51,7 @@ spec:
           volumeMounts:
           - mountPath: /data
             name: wg-access-server-data
+            subPath: data
           - mountPath: /config.yaml
             name: wg-access-server-config
             subPath: config.yaml
@@ -58,20 +59,31 @@ spec:
             name: tun
           imagePullPolicy: IfNotPresent
       volumes:
-        - name: wg-access-server-data
-          hostPath:
-            # directory location on host
-            path: /opt/wg-access-server-data
-            type: DirectoryOrCreate
-        - name: wg-access-server-config
-          configMap:
-            name: wg-access-server-config
-            items:
-              - key: config.yaml
-                path: config.yaml
-        - name: tun
-          hostPath:
-            path: /dev/net/tun
+      - name: wg-access-server-data
+        persistentVolumeClaim:
+          claimName: wg-access-server-pvc
+      - name: wg-access-server-config
+        configMap:
+          name: wg-access-server-config
+          items:
+            - key: config.yaml
+              path: config.yaml
+      - name: tun
+        hostPath:
+          path: /dev/net/tun
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wg-access-server-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: v1
 kind: Service
