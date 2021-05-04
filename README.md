@@ -23,8 +23,7 @@ Documentation:
 | 🚧 | Docker-Registry-Frontend | Registry Frontend | Basic and works |
 | 🚧 | Docker-Registry | Registry for containers | works |
 | 🚧 | Double-take | Facial Recognition | WIP |
-| 🛑 | Drone-runner | CICD runner | WIP |
-| 🛑 | Drone | CICD Frontend | WIP |
+| 🛑 | Drone | CICD | WIP |
 | 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
 | 🚧 | Gitea | Git server | Works well for mirrors |
 | 🚧 | Frigate | Object detection NVR | Uses Google Coral USB TPU |
