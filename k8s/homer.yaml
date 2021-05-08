@@ -264,20 +264,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://ackee.internal.lazz.tech/"
-          - name: "Netdata"
-            logo: "assets/icons/netdata.png"
-            subtitle: "performance and health monitoring"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://192.168.1.11:19999/"
-          - name: "Statping"
-            logo: "assets/icons/statping.png"
-            subtitle: "Uptime status and notifications"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://status.internal.lazz.tech/"
+          # - name: "Netdata"
+          #   logo: "assets/icons/netdata.png"
+          #   subtitle: "performance and health monitoring"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "https://192.168.1.11:19999/"
           - name: "Grafana"
             logo: "assets/icons/grafana.png"
             subtitle: "Monitoring & Visibility"
@@ -285,13 +278,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://grafana.internal.lazz.tech/"
-          - name: "Prometheus"
-            logo: "assets/icons/prometheus.png"
-            subtitle: "Records real-time metrics"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://prometheus.internal.lazz.tech/"
+          # - name: "Prometheus"
+          #   logo: "assets/icons/prometheus.png"
+          #   subtitle: "Records real-time metrics"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "https://prometheus.internal.lazz.tech/"
           - name: "Scrutiny"
             logo: "assets/icons/scrutiny.svg"
             subtitle: "Hard Drive S.M.A.R.T Monitoring"
