@@ -3,6 +3,51 @@
 Documentation:
 - https://lazztech-infrastructure.netlify.app/
 
+## SSL
+
+https://cert-manager.io/docs/installation/kubernetes/
+
+```bash
+# install cert-manager
+$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
+
+# uninstall command if needed
+$ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
+```
+
+## Storage
+Default k3s local-path persistent volume claims are used and can be found in `/var/lib/rancher/k3s/storage`
+
+- https://rancher.com/docs/k3s/latest/en/storage/
+## Backup
+
+TBD
+
+## Monitoring
+
+Kube prometheus stack via helm installs prometheus, alertmanager & grafana.
+
+```bash
+# add helm repo
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+# install kube-prometheus-stack
+$ helm install prometheus prometheus-community/kube-prometheus-stack
+
+# apply grafana ingress
+$ kubectl apply -f helm/grafana-ingress.yaml
+
+# uninstall command if needed
+$ helm uninstall prometheus
+```
+
+> Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+
+Grafana:
+- https://grafana.internal.lazz.tech/
+- default username: admin
+- default password: prom-operator
+
 ## Services
 - ✅ : runs stably
 - 🚧 : needs work though runs
@@ -46,39 +91,6 @@ Documentation:
 | ✅ | Snapdrop | Airdrop alternative | Handy |
 | 🛑 | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |
-
-## Storage
-Default k3s local-path persistent volume claims are used and can be found in `/var/lib/rancher/k3s/storage`
-
-- https://rancher.com/docs/k3s/latest/en/storage/
-## Backup
-
-TBD
-
-## Monitoring
-
-Kube prometheus stack via helm installs prometheus, alertmanager & grafana.
-
-```bash
-# add helm repo
-$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-
-# install kube-prometheus-stack
-$ helm install prometheus prometheus-community/kube-prometheus-stack
-
-# apply grafana ingress
-$ kubectl apply -f helm/grafana-ingress.yaml
-
-# uninstall command if needed
-$ helm uninstall prometheus
-```
-
-> Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
-
-Grafana:
-- https://grafana.internal.lazz.tech/
-- default username: admin
-- default password: prom-operator
 
 
 
