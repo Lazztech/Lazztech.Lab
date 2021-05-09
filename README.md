@@ -48,6 +48,23 @@ Grafana:
 - default username: admin
 - default password: prom-operator
 
+## Logging
+
+Loki is used in conjunction with the prometheus stack for monitoring logging.
+
+```bash
+# add helm repo
+$ helm repo add loki https://grafana.github.io/loki/charts
+
+# install loki
+$ helm upgrade --install loki loki/loki-stack
+```
+
+> Loki can now be added as a datasource in Grafana.
+> See http://docs.grafana.org/features/datasources/loki/ for more detail.
+
+Add loki as a data source in grafana with `http://loki:3100` as the url.
+
 ## Services
 - ✅ : runs stably
 - 🚧 : needs work though runs
