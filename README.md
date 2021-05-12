@@ -21,7 +21,57 @@ Default k3s local-path persistent volume claims are used and can be found in `/v
 - https://rancher.com/docs/k3s/latest/en/storage/
 ## Backup
 
-TBD
+Velero is recommended for backups.
+
+- https://velero.io/docs/v1.6/
+
+```bash
+# install the client cli
+$ brew install velero
+```
+
+```bash
+# create file for s3 compatible object storage credentials
+$ touch ~/.lab-backup-credentials
+# manually add contents with the following format:
+[default]
+aws_access_key_id=<AWS_ACCESS_KEY_ID>
+aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
+```
+
+```bash
+# install server side support via the client cli
+$ velero install \
+  --provider velero.io/aws \
+  --bucket lazztech-lab \
+  --plugins velero/velero-plugin-for-aws:v1.0.0 \
+  --backup-location-config s3Url=https://sfo3.digitaloceanspaces.com,region=sfo3 \
+  --secret-file ~/.lab-backup-credentials \
+  --use-restic \
+  --default-volumes-to-restic
+```
+
+```bash
+# run backup
+$ velero backup create homelab
+# check status of backup
+$ velero backup describe homelab
+# check logs from backup
+$ velero backup logs homelab
+```
+
+```bash
+# run restore
+$ velero restore create --from-backup BACKUP_NAME
+# status of backup
+$ velero restore describe YOUR_RESTORE_NAME
+```
+
+```bash
+# uninstall commands if needed
+$ kubectl delete namespace/velero clusterrolebinding/velero
+$ kubectl delete crds -l component=velero
+```
 
 ## Monitoring
 
