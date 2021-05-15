@@ -1,7 +1,13 @@
 # Lazztech.Infrastructure
 
-Documentation:
-- https://lazztech-infrastructure.netlify.app/
+k3s based infrastructure for homelab, smarthome, productivity, collaboration, education, or more.
+k3s was selected for its ease of deployment and repeatability of services deployed to it.
+
+k3OS can be used for a dedicated machine or k3d/k3s for local testing.
+
+- https://k3s.io/
+- https://k3os.io/
+- https://k3d.io/
 
 ## SSL
 
@@ -16,9 +22,31 @@ $ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v
 ```
 
 ## Storage
-Default k3s local-path persistent volume claims are used and can be found in `/var/lib/rancher/k3s/storage`
+Ranchers Longhorn CSI is recommended as the Container Storage Interface (CSI). The default k3s local-path Persistent Volume Claims (PVC) use hostPaths in `/var/lib/rancher/k3s/storage` and aren't supported by velero with automatic restic based volume backup. Longhorn is supported as a first class citizen of k3s.
 
 - https://rancher.com/docs/k3s/latest/en/storage/
+
+```bash
+# install longhorn
+$ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+
+# check that it's installed
+$ kubectl get storageclass
+NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  27d
+longhorn               driver.longhorn.io      Delete          Immediate              true                   37h
+
+# make longhorn default
+$ kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+$ kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+
+# verify that it's default
+$ kubectl get storageclass
+NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+longhorn (default)   driver.longhorn.io      Delete          Immediate              true                   37h
+local-path           rancher.io/local-path   Delete          WaitForFirstConsumer   false                  27d
+```
+
 ## Backup
 
 Velero is recommended for backups.
@@ -47,6 +75,7 @@ $ velero install \
   --plugins velero/velero-plugin-for-aws:v1.0.0 \
   --backup-location-config s3Url=https://sfo3.digitaloceanspaces.com,region=sfo3 \
   --secret-file ~/.lab-backup-credentials \
+  --use-volume-snapshots=false \
   --use-restic \
   --default-volumes-to-restic
 ```
