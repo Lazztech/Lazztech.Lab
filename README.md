@@ -1,4 +1,4 @@
-# Lazztech.Infrastructure
+# Lazztech.Lab
 
 k3s based infrastructure for homelab, smarthome, productivity, collaboration, education, or more.
 k3s was selected for its ease of deployment and repeatability of services deployed to it.
