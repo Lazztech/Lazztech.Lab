@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ghost-deployment
+  labels:
+    app: ghost
 spec:
   replicas: 1
   selector:
@@ -41,10 +43,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: ghost-pvc
   namespace: default
+  labels:
+    app: ghost
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
   resources:
     requests:
       storage: 2Gi
@@ -53,6 +56,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ghost-service
+  labels:
+    app: ghost
 spec:
   ports:
   - port: 80
@@ -65,6 +70,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: ghost-ingress
+  labels:
+    app: ghost
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
@@ -85,6 +92,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: ghost-lazztech-ingress
+  labels:
+    app: ghost
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https

@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: homer-deployment
+  labels:
+    app: homer
 spec:
   replicas: 1
   selector:
@@ -49,10 +51,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: homer-pvc
   namespace: default
+  labels:
+    app: homer
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
   resources:
     requests:
       storage: 2Gi
@@ -61,6 +64,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: homer-service
+  labels:
+    app: homer
 spec:
   ports:
   - port: 80
@@ -73,6 +78,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: homer-ingress
+  labels:
+    app: homer
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
@@ -93,6 +100,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: homer-config
+  labels:
+    app: homer
 data:
   config.yml: |
     # See https://fontawesome.com/icons for icons options
@@ -188,13 +197,13 @@ data:
         icon: "fas fa-building"
         items:
           - name: "Home Assistant"
-            logo: "assets/icons/home-assistant.png"
+            logo: "assets/icons/homeassistant.png"
             subtitle: "Home Automation"
             tag: "community"
             url: "https://home-assistant.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Node Red"
-            logo: "assets/icons/node-red.png"
+            logo: "assets/icons/nodered.png"
             subtitle: "Event Automations"
             tag: "community"
             url: "https://node-red.internal.lazz.tech/"
@@ -229,8 +238,8 @@ data:
             tag: "community"
             url: "https://wiki.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "EBook Library"
-            logo: "assets/icons/calibre.png"
+          - name: "Calibreweb"
+            logo: "assets/icons/calibreweb.png"
             subtitle: "Community Ebook Libary & Reader"
             tag: "community"
             url: "https://read.internal.lazz.tech/"
@@ -331,7 +340,7 @@ data:
             url: "https://objects.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Code Server"
-            logo: "assets/icons/code-server.png"
+            logo: "assets/icons/code.png"
             subtitle: "VSCode web server"
             tag: "community"
             url: "https://code.internal.lazz.tech/"
@@ -362,7 +371,7 @@ data:
             tagstyle: "is-success"
             url: "https://keycloak.internal.lazz.tech/"
           - name: "Unifi"
-            logo: "assets/icons/unifi.jpg"
+            logo: "assets/icons/unifi.png"
             subtitle: "Network Management"
             tag: "sysadmin"
             # Optional tagstyle
@@ -374,10 +383,10 @@ data:
             tag: "community"
             url: "https://adminer.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "pgweb"
-            logo: "assets/icons/pgweb.png"
-            subtitle: "A web-based frontend to your Postgres database."
-            tag: "community"
-            url: "https://pgweb.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          # - name: "pgweb"
+          #   logo: "assets/icons/pgweb.png"
+          #   subtitle: "A web-based frontend to your Postgres database."
+          #   tag: "community"
+          #   url: "https://pgweb.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           

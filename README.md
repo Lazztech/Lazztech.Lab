@@ -29,22 +29,33 @@ Ranchers Longhorn CSI is recommended as the Container Storage Interface (CSI). T
 ```bash
 # install longhorn
 $ kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+```
 
+```bash
 # check that it's installed
 $ kubectl get storageclass
 NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  27d
 longhorn               driver.longhorn.io      Delete          Immediate              true                   37h
+```
 
+```bash
 # make longhorn default
 $ kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 $ kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+```
 
+```bash
 # verify that it's default
 $ kubectl get storageclass
 NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 longhorn (default)   driver.longhorn.io      Delete          Immediate              true                   37h
 local-path           rancher.io/local-path   Delete          WaitForFirstConsumer   false                  27d
+```
+
+```bash
+# uninstall command if needed
+$ kubectl delete -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
 ```
 
 ## Backup
@@ -81,12 +92,21 @@ $ velero install \
 ```
 
 ```bash
-# run backup
+# run backup of everything
 $ velero backup create homelab
 # check status of backup
 $ velero backup describe homelab
 # check logs from backup
 $ velero backup logs homelab
+```
+
+```bash
+# run backup of a specific selector
+$ velero backup create ghost-backup --selector app=ghost
+# check status of backup
+$ velero backup describe ghost-backup
+# check logs from backup
+$ velero backup logs ghost-backup
 ```
 
 ```bash
