@@ -199,7 +199,6 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 | ✅ | Mosquitto | MQTT | Document db |
 | 🚧 | Nextcloud | GSuite Alternative | WIP |
 | 🚧 | Node-red | Low code automation | WIP |
-| ✅ | PGWeb | DB Admin | Simple though low on features |
 | 🛑 | Plausible | Analytics | Needs work |
 | ✅ | Postgres | SQL DB | Works well |
 | ✅ | QuakeJS | WASM Quake3 | Free for all! |

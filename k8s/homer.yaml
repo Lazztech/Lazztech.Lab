@@ -383,10 +383,4 @@ data:
             tag: "community"
             url: "https://adminer.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          # - name: "pgweb"
-          #   logo: "assets/icons/pgweb.png"
-          #   subtitle: "A web-based frontend to your Postgres database."
-          #   tag: "community"
-          #   url: "https://pgweb.internal.lazz.tech/"
-          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           
