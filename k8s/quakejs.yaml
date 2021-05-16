@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: quakejs-deployment
+  labels:
+    app: quakejs
 spec:
   replicas: 1
   selector:
@@ -71,10 +73,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: quakejs-pvc
   namespace: default
+  labels:
+    app: quakejs
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -83,6 +87,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: quakejs-service
+  labels:
+    app: quakejs
 spec:
   type: LoadBalancer
   ports:
@@ -96,6 +102,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: quakejs-ingress
+  labels:
+    app: quakejs
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
@@ -116,6 +124,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: quake3-server-config
+  labels:
+    app: quakejs
 data:
   config.yaml: |
     fragLimit: 25

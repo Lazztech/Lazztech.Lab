@@ -4,6 +4,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-deployment
+  labels:
+    app: postgres
 spec:
   replicas: 1
   selector:
@@ -46,10 +48,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-pvc
   namespace: default
+  labels:
+    app: postgres
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -58,6 +62,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
+  labels:
+    app: postgres
 spec:
   ports:
   - port: 5432

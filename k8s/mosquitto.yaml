@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mosquitto-deployment
+  labels:
+    app: mosquitto
 spec:
   replicas: 1
   selector:
@@ -52,10 +54,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: mosquitto-pvc
   namespace: default
+  labels:
+    app: mosquitto
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -64,6 +68,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mosquitto-service
+  labels:
+    app: mosquitto
 spec:
   ports:
   - port: 1883
@@ -76,6 +82,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mosquitto-config
+  labels:
+    app: mosquitto
 data:
   mosquitto.conf: |
     # Place your local configuration in /mqtt/config/conf.d/

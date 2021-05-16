@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: minio-deployment
+  labels:
+    app: minio
 spec:
   replicas: 1
   selector:
@@ -54,10 +56,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: minio-pvc
   namespace: default
+  labels:
+    app: minio
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -66,6 +70,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: minio-service
+  labels:
+    app: minio
 spec:
   ports:
   - port: 80
@@ -78,6 +84,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: minio-ingress
+  labels:
+    app: minio
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https

@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frigate-deployment
+  labels:
+    app: frigate
 spec:
   replicas: 1
   selector:
@@ -74,10 +76,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: frigate-pvc
   namespace: default
+  labels:
+    app: frigate
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -86,6 +90,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frigate-service
+  labels:
+    app: frigate
 spec:
   ports:
   - port: 80
@@ -98,6 +104,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: frigate-ingress
+  labels:
+    app: frigate
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
@@ -118,6 +126,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: frigate-config
+  labels:
+    app: frigate
 data:
   config.yml: |
     mqtt:

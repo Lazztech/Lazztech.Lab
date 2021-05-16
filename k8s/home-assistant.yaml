@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: home-assistant-deployment
+  labels:
+    app: home-assistant
 spec:
   replicas: 1
   selector:
@@ -62,6 +64,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: home-assistant-pvc
   namespace: default
+  labels:
+    app: home-assistant
 spec:
   accessModes:
     - ReadWriteOnce
@@ -74,6 +78,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: home-assistant-service
+  labels:
+    app: home-assistant
 spec:
   ports:
   - port: 80
@@ -86,6 +92,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: home-assistant-ingress
+  labels:
+    app: home-assistant
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https

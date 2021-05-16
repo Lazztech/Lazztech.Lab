@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deepstack-deployment
+  labels:
+    app: deepstack
 spec:
   replicas: 1
   selector:
@@ -41,10 +43,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: deepstack-pvc
   namespace: default
+  labels:
+    app: deepstack
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -53,6 +57,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: deepstack-service
+  labels:
+    app: deepstack
 spec:
   ports:
   - port: 80

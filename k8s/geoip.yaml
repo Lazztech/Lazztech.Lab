@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: geoip-deployment
+  labels:
+    app: geoip
 spec:
   replicas: 1
   selector:
@@ -52,10 +54,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: geoip-pvc
   namespace: default
+  labels:
+    app: geoip
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi

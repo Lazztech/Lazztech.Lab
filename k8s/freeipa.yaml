@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: freeipa-deployment
+  labels:
+    app: freeipa
 spec:
   replicas: 1
   selector:
@@ -82,10 +84,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: freeipa-pvc
   namespace: default
+  labels:
+    app: freeipa
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
@@ -94,6 +98,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: freeipa-service
+  labels:
+    app: freeipa
 spec:
   ports:
   - port: 80
@@ -106,6 +112,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: freeipa-ingress
+  labels:
+    app: freeipa
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
@@ -126,6 +134,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: freeipa-httpd-config
+  labels:
+    app: freeipa
 data:
   ipa-rewrite.conf.template: |
     # VERSION 6 - DO NOT REMOVE THIS LINE

@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wikijs-deployment
+  labels:
+    app: wikijs
 spec:
   replicas: 1
   selector:
@@ -46,6 +48,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: wikijs-pvc
   namespace: default
+  labels:
+    app: wikijs
 spec:
   accessModes:
     - ReadWriteOnce
@@ -58,6 +62,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: wikijs-service
+  labels:
+    app: wikijs
 spec:
   ports:
   - port: 80
@@ -70,6 +76,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: wikijs-ingress
+  labels:
+    app: wikijs
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
