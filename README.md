@@ -172,7 +172,7 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 
 | Status      | Service Name | Purpose | Comments     |
 | :---        |    :----:   | :----: |          ---: |
-| ❌ | Ackee | Analytics | Pretty stable |
+| 🚧 | Ackee | Analytics | Pretty stable |
 | ✅ | Adminer | DB Admin | Pretty stable |
 | ✅ | Cluster Issuer | Issues SSL | Needs cert-manager helm |
 | ✅ | Internal Cert | Internal SSL | Uses DNS01 via cert-manager helm |
@@ -199,7 +199,6 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 | ✅ | Mosquitto | MQTT | Document db |
 | 🚧 | Nextcloud | GSuite Alternative | WIP |
 | 🚧 | Node-red | Low code automation | WIP |
-| 🛑 | Plausible | Analytics | Needs work |
 | ✅ | Postgres | SQL DB | Works well |
 | ✅ | QuakeJS | WASM Quake3 | Free for all! |
 | 🚧 | Redis | Key value & cache | Handy |

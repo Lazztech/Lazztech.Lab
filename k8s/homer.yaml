@@ -209,7 +209,7 @@ data:
             url: "https://node-red.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Frigate"
-            logo: "assets/icons/frigate.png"
+            logo: "assets/icons/frigate.svg"
             subtitle: "Security camera object detection"
             tag: "sysadmin"
             # Optional tagstyle
@@ -223,7 +223,7 @@ data:
             tagstyle: "is-success"
             url: "https://double-take.internal.lazz.tech/"
 
-      - name: "Community"
+      - name: "Productivity"
         icon: "fas fa-building"
         items:
           - name: "Nextcloud"
@@ -238,17 +238,27 @@ data:
             tag: "community"
             url: "https://wiki.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Calibreweb"
-            logo: "assets/icons/calibreweb.png"
-            subtitle: "Community Ebook Libary & Reader"
+          - name: "Element"
+            logo: "assets/icons/element.png"
+            subtitle: "Matrix chat server"
             tag: "community"
-            url: "https://read.internal.lazz.tech/"
+            url: "https://matrix.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Snapdrop"
             logo: "assets/icons/snapdrop.png"
             subtitle: "The easiest way to transfer data across devices"
             tag: "community"
             url: "https://share.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+      - name: "Community"
+        icon: "fas fa-building"
+        items:
+          - name: "Calibreweb"
+            logo: "assets/icons/calibreweb.png"
+            subtitle: "Community Ebook Libary & Reader"
+            tag: "community"
+            url: "https://read.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Jellyfin"
             logo: "assets/icons/jellyfin.png"
@@ -263,48 +273,15 @@ data:
             url: "https://quake.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
-      - name: "Monitoring"
-        icon: "fas fa-heartbeat"
-        items:
-          - name: "Ackee"
-            logo: "assets/icons/ackee.png"
-            subtitle: "Site analytics"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://ackee.internal.lazz.tech/"
-          # - name: "Netdata"
-          #   logo: "assets/icons/netdata.png"
-          #   subtitle: "performance and health monitoring"
-          #   tag: "sysadmin"
-          #   # Optional tagstyle
-          #   tagstyle: "is-success"
-          #   url: "https://192.168.1.11:19999/"
-          - name: "Grafana"
-            logo: "assets/icons/grafana.png"
-            subtitle: "Monitoring & Visibility"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://grafana.internal.lazz.tech/"
-          # - name: "Prometheus"
-          #   logo: "assets/icons/prometheus.png"
-          #   subtitle: "Records real-time metrics"
-          #   tag: "sysadmin"
-          #   # Optional tagstyle
-          #   tagstyle: "is-success"
-          #   url: "https://prometheus.internal.lazz.tech/"
-          - name: "Scrutiny"
-            logo: "assets/icons/scrutiny.svg"
-            subtitle: "Hard Drive S.M.A.R.T Monitoring"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://scrutiny.internal.lazz.tech/"
-
       - name: "Lazztech"
         icon: "fas fa-code"
         items:
+          - name: "Lazz.tech Ghost"
+            logo: "assets/icons/ghost.png"
+            subtitle: "Ghost blog CMS"
+            tag: "community"
+            url: "https://lazz.tech/ghost"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "dev-lazztechhub-service"
             logo: "assets/icons/lazztech.png"
             subtitle: "Local development deployment"
@@ -345,6 +322,38 @@ data:
             tag: "community"
             url: "https://code.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+      - name: "Monitoring"
+        icon: "fas fa-heartbeat"
+        items:
+          - name: "Ackee"
+            logo: "assets/icons/ackee.png"
+            subtitle: "Site analytics"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://ackee.internal.lazz.tech/"
+          - name: "Grafana"
+            logo: "assets/icons/grafana.png"
+            subtitle: "Monitoring & Visibility"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://grafana.internal.lazz.tech/"
+          # - name: "Prometheus"
+          #   logo: "assets/icons/prometheus.png"
+          #   subtitle: "Records real-time metrics"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "https://prometheus.internal.lazz.tech/"
+          - name: "Scrutiny"
+            logo: "assets/icons/scrutiny.svg"
+            subtitle: "Hard Drive S.M.A.R.T Monitoring"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://scrutiny.internal.lazz.tech/"
 
       - name: "SysAdmin"
         icon: "fa fa-server"
