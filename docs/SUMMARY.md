@@ -1,7 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-* [Configuration Management](configuration-management.md)
 * [Authentication](authentication.md)
 * [Smart Home](smart-home.md)
 * [Monitoring](monitoring.md)
@@ -14,8 +13,9 @@
     * [Nextcloud](services/nextcloud.md)
     * [Gitea](services/gitea.md)
     * [Drone](services/drone.md)
-* [On Prem](on-prem/README.md)
-    * [HP MicroServer Gen8](on-prem/hp-microserver-gen8.md)
-    * [Networking](on-prem/networking.md)
-    * [Power](on-prem/power.md)
-    * [Cameras](on-prem/cameras.md)
+* [Homelab](homelab/README.md)
+    * [HP MicroServer Gen8](homelab/hp-microserver-gen8.md)
+    * [Networking](homelab/networking.md)
+    * [Power](homelab/power.md)
+    * [Cameras](homelab/cameras.md)
+* [Mobile](mobile.md)

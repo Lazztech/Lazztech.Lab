@@ -179,8 +179,9 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 
 | Status      | Service Name | Purpose | Comments     |
 | :---        |    :----:   | :----: |          ---: |
-| 🚧 | Ackee | Analytics | Pretty stable |
+| ✅ | Ackee | Analytics | Pretty stable |
 | ✅ | Adminer | DB Admin | Pretty stable |
+| ✅ | Calibre-web | Ebooks | Pretty stable |
 | ✅ | Cluster Issuer | Issues SSL | Needs cert-manager helm |
 | ✅ | Internal Cert | Internal SSL | Uses DNS01 via cert-manager helm |
 | ✅ | Internal DDNS | *.internal subdomain to LAN IP | Works great |
@@ -193,15 +194,16 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 | 🚧 | Double-take | Facial Recognition | WIP |
 | 🛑 | Drone | CICD | WIP |
 | 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
-| 🚧 | Gitea | Git server | Works well for mirrors |
 | 🚧 | Frigate | Object detection NVR | Uses Google Coral USB TPU |
 | 🚧 | Geoip | geoip | For analytics |
 | ✅ | Ghost | Wordpress alternative | Works great behind CDN |
+| ✅ | Gitea | Git server | Works well for mirrors |
 | ✅ | Home Assistant | Home Automation | Assumes usb zigbee |
-| 🚧 | Jellyfin | Media server | WIP |
 | ✅ | Homer | Start page | Works great |
+| 🚧 | Jellyfin | Media server | WIP |
 | 🚧 | Keycloak | SSO | Deploys though not yet documented |
 | 🚧 | Matrix | Chat | Needs work though seems good |
+| ✅ | Minio | Object Storage | Works nicely |
 | ✅ | MongoDB | NoSQL | Document db |
 | ✅ | Mosquitto | MQTT | Document db |
 | 🚧 | Nextcloud | GSuite Alternative | WIP |
@@ -209,6 +211,7 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 | ✅ | Postgres | SQL DB | Works well |
 | ✅ | QuakeJS | WASM Quake3 | Free for all! |
 | 🚧 | Redis | Key value & cache | Handy |
+| ✅ | Scrutiny | Hard drive monitoring | Handy |
 | ✅ | Snapdrop | Airdrop alternative | Handy |
 | 🛑 | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |
