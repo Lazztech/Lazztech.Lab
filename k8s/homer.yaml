@@ -358,13 +358,20 @@ data:
       - name: "SysAdmin"
         icon: "fa fa-server"
         items:
-          # - name: "Wireguard"
-          #   logo: "assets/icons/wireguard.png"
-          #   subtitle: "Wireguard VPN Management"
-          #   tag: "sysadmin"
-          #   # Optional tagstyle
-          #   tagstyle: "is-success"
-          #   url: "https://wireguard.internal.lazz.tech/"
+          - name: "ILO"
+            logo: "assets/icons/ilo.svg"
+            subtitle: "HPE Integrated Lights Out"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://ilomxq1140rdz/"
+          - name: "Wireguard"
+            logo: "assets/icons/wireguard.png"
+            subtitle: "Wireguard VPN Management"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://wireguard.internal.lazz.tech/"
           - name: "FreeIPA"
             logo: "assets/icons/freeipa.png"
             subtitle: "Identity Management"

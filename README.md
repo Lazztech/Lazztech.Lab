@@ -135,7 +135,9 @@ $ helm install prometheus prometheus-community/kube-prometheus-stack
 
 # apply grafana ingress
 $ kubectl apply -f helm/grafana-ingress.yaml
+```
 
+```bash
 # uninstall command if needed
 $ helm uninstall prometheus
 ```
@@ -157,6 +159,11 @@ $ helm repo add loki https://grafana.github.io/loki/charts
 
 # install loki
 $ helm upgrade --install loki loki/loki-stack
+```
+
+```bash
+# uninstall command if needed
+$ helm uninstall loki
 ```
 
 > Loki can now be added as a datasource in Grafana.
