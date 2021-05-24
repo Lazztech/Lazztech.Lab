@@ -189,8 +189,7 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 | ✅ | Lazztech DDNS | *.lazz.tech domains to WAN IP | Needs cert-manager helm |
 | ✅ | Code-Server | VSCode Web Server | Needs more recourses |
 | 🚧 | Deepstack | AI web interface | Various uses |
-| 🚧 | Docker-Registry-Frontend | Registry Frontend | Basic and works |
-| 🚧 | Docker-Registry | Registry for containers | works |
+| ✅ | Docker-Registry | Registry & UI | works |
 | 🚧 | Double-take | Facial Recognition | WIP |
 | 🛑 | Drone | CICD | WIP |
 | 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
