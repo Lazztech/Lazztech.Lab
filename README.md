@@ -211,7 +211,7 @@ Add loki as a data source in grafana with `http://loki:3100` as the url.
 | 🚧 | Redis | Key value & cache | Handy |
 | ✅ | Scrutiny | Hard drive monitoring | Handy |
 | ✅ | Snapdrop | Airdrop alternative | Handy |
-| 🛑 | Wg-access-server | Wireguard & UI | Needs work or replacement |
+| ✅ | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |
 
 

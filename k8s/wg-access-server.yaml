@@ -15,6 +15,10 @@ spec:
       labels:
         app: wg-access-server
     spec:
+      # needed for port forwarding wireguard 51820 port
+      hostNetwork: true
+      # needed to allow access to cluster's internal dns for services
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: wg-access-server
           image: place1/wg-access-server:v0.4.6
@@ -46,9 +50,8 @@ spec:
               memory: "128Mi"
               cpu: "500m"
           ports:
-          - containerPort: 80
-          - name: wireguard
-            containerPort: 51820
+          # this gets used in conjunction to "hostNetwork: true" to expose port 51820 from the container
+          - containerPort: 51820
             protocol: UDP
           volumeMounts:
           - mountPath: /data
