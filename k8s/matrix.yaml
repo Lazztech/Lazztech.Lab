@@ -15,15 +15,29 @@ spec:
       labels:
         app: matrix
     spec:
-      containers:
-        - name: matrix
+      initContainers:
+        - name: matrix-init-config
           image: matrixdotorg/synapse:v1.32.2
-          # args: ["generate"]
-          # env:
-          # - name: SYNAPSE_SERVER_NAME
-          #   value: "matrix.internal.lazz.tech"
-          # - name: SYNAPSE_REPORT_STATS
-          #   value: "no"
+          args: ["generate"]
+          env:
+          - name: SYNAPSE_SERVER_NAME
+            value: "matrix.internal.lazz.tech"
+          - name: SYNAPSE_REPORT_STATS
+            value: "no"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /data
+            name: matrix-data
+            subPath: data
+      containers:
+        - name: matrix-synapse-server
+          image: matrixdotorg/synapse:v1.32.2
           resources:
             requests:
               memory: "64Mi"
