@@ -20,28 +20,19 @@ spec:
           image: nextcloud:stable-apache
           resources:
             requests:
-              memory: "128Mi"
+              memory: "512Mi"
               cpu: "100m"
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
               cpu: "500m"
           env:
-            # needed to ensure saml requests to authentik are from https
+            # needed to ensure saml requests are from https
             - name: OVERWRITEPROTOCOL
               value: https
             - name: NEXTCLOUD_TRUSTED_DOMAINS
               value: nextcloud.internal.lazz.tech
-            - name: POSTGRES_DB
+            - name: SQLITE_DATABASE
               value: nextcloud
-            - name: POSTGRES_USER
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: password
-            - name: POSTGRES_HOST
-              value: postgres-service.default.svc.cluster.local
             - name: NEXTCLOUD_ADMIN_USER
               value: admin
             - name: NEXTCLOUD_ADMIN_PASSWORD
