@@ -286,7 +286,13 @@ data:
             logo: "assets/icons/lazztech.png"
             subtitle: "Local development deployment"
             tag: "community"
-            url: "https://dev-lazztechhub.internal.lazz.tech/graphql"
+            url: "https://dev-lazztechhub.lazz.tech/graphql"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "dev-2bedone-service"
+            logo: "assets/icons/lazztech.png"
+            subtitle: "Local development deployment"
+            tag: "community"
+            url: "https://tobedone.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Development Resources"
