@@ -242,7 +242,7 @@ data:
             logo: "assets/icons/element.png"
             subtitle: "Matrix chat server"
             tag: "community"
-            url: "https://matrix.internal.lazz.tech/"
+            url: "https://chat.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Snapdrop"
             logo: "assets/icons/snapdrop.png"
