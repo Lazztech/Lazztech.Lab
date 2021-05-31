@@ -21,7 +21,7 @@ spec:
           args: ["generate"]
           env:
           - name: SYNAPSE_SERVER_NAME
-            value: "matrix.internal.lazz.tech"
+            value: "matrix.lazz.tech"
           - name: SYNAPSE_REPORT_STATS
             value: "no"
           resources:
