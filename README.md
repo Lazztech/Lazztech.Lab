@@ -171,6 +171,16 @@ $ helm uninstall loki
 
 Add loki as a data source in grafana with `http://loki:3100` as the url.
 
+## Kubernetes Dashboard
+
+Lens is recommended:
+- https://k8slens.dev/
+
+Metric can be made to work with the monitoring stack from above via opening up the settings for your context:
+- Go to prometheus section
+- Set to prometheus-operator
+- Set prometheus service address to `default/prometheus-kube-prometheus-prometheus:9090`
+
 ## Services
 - ✅ : runs stably
 - 🚧 : needs work though runs
