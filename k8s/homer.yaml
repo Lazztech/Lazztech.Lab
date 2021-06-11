@@ -346,13 +346,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://grafana.internal.lazz.tech/"
-          # - name: "Prometheus"
-          #   logo: "assets/icons/prometheus.png"
-          #   subtitle: "Records real-time metrics"
-          #   tag: "sysadmin"
-          #   # Optional tagstyle
-          #   tagstyle: "is-success"
-          #   url: "https://prometheus.internal.lazz.tech/"
+          - name: "Prometheus"
+            logo: "assets/icons/prometheus.png"
+            subtitle: "Records real-time metrics"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://prometheus.internal.lazz.tech/"
           - name: "Scrutiny"
             logo: "assets/icons/scrutiny.svg"
             subtitle: "Hard Drive S.M.A.R.T Monitoring"

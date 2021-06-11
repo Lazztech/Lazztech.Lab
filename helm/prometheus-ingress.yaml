@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: prometheus-prometheus-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: prometheus.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-kube-prometheus-prometheus
+          servicePort: 9090

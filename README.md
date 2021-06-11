@@ -138,6 +138,14 @@ $ kubectl apply -f helm/grafana-ingress.yaml
 ```
 
 ```bash
+# to access prometheus directly
+$ kubectl port-foward prometheus-prometheus-kube-prometheus-prometheus-0 9090:9090
+
+# or optionally apply prometheus ingress
+$ kubectl apply -f helm/prometheus-ingress.yaml
+```
+
+```bash
 # uninstall command if needed
 $ helm uninstall prometheus
 ```
