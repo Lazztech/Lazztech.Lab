@@ -21,6 +21,20 @@ spec:
           env:
             - name: url
               value: https://lazz.tech
+            - name: mail__transport
+              value: SMTP
+            - name: mail__options__service
+              value: Mailgun
+            - name: mail__options__auth__user
+              valueFrom:
+                secretKeyRef:
+                  name: mail
+                  key: user
+            - name: mail__options__auth__pass
+              valueFrom:
+                secretKeyRef:
+                  name: mail
+                  key: password
           resources:
             requests:
               memory: "256Mi"
