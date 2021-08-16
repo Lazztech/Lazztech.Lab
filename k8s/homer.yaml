@@ -399,6 +399,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://unifi.ui.com/"
+          - name: "Longhorn"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/longhorn.png"
+            subtitle: "Storage Management"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://longhorn.internal.lazz.tech"
           - name: "Adminer"
             logo: "assets/icons/adminer.png"
             subtitle: "Database Management"

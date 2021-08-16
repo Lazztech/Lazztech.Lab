@@ -54,6 +54,11 @@ local-path           rancher.io/local-path   Delete          WaitForFirstConsume
 ```
 
 ```bash
+# apply longhorn ui ingress
+$ kubectl apply -f helm/longhorn-ingress.yaml
+```
+
+```bash
 # uninstall command if needed
 $ kubectl delete -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
 ```
