@@ -167,14 +167,14 @@ data:
       # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
       style: "is-warning"
       title: "Work in Progress!"
-      content: "Services may change and shouldn't be considered stable. Future announcements may be posted here."
+      content: "Services are largely stable at this point, though a solid backup process is not in place yet. So don't upload any critical data."
 
     # Optional navbar
     # links: [] # Allows for navbar (dark mode, layout, and search) without any links
     links:
       - name: "Lazztech Status"
         icon: "fas fa-heartbeat"
-        url: "https://status.internal.lazz.tech/"
+        url: "https://status.lazz.tech/"
         target: "_blank" # optional html tag target attribute
       - name: "Lazztech Blog"
         icon: "fas fa-blog"

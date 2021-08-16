@@ -1,0 +1,88 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-kuma-deployment
+  labels:
+    app: uptime-kuma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      containers:
+        - name: uptime-kuma
+          image: louislam/uptime-kuma:1
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+          volumeMounts:
+          - mountPath: /app/data
+            name: uptime-kuma-data
+            subPath: data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: uptime-kuma-data
+        persistentVolumeClaim:
+          claimName: uptime-kuma-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: uptime-kuma-pvc
+  namespace: default
+  labels:
+    app: uptime-kuma
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma-service
+  labels:
+    app: uptime-kuma
+spec:
+  ports:
+  - port: 80
+    targetPort: 3001
+    name: tcp
+  selector:
+    app: uptime-kuma
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: uptime-kuma-ingress
+  labels:
+    app: uptime-kuma
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  rules:
+  - host: status.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: uptime-kuma-service
+          servicePort: 80

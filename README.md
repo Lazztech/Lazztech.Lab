@@ -139,7 +139,7 @@ $ kubectl apply -f helm/grafana-ingress.yaml
 
 ```bash
 # to access prometheus directly
-$ kubectl port-foward prometheus-prometheus-kube-prometheus-prometheus-0 9090:9090
+$ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 9090:9090
 
 # or optionally apply prometheus ingress
 $ kubectl apply -f helm/prometheus-ingress.yaml
@@ -229,6 +229,7 @@ Metric can be made to work with the monitoring stack from above via opening up t
 | 🚧 | Redis | Key value & cache | Handy |
 | ✅ | Scrutiny | Hard drive monitoring | Handy |
 | ✅ | Snapdrop | Airdrop alternative | Handy |
+| ✅ | Uptime-Kuma | Status Page | Stable |
 | ✅ | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |
 
