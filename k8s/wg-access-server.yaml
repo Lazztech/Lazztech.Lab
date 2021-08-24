@@ -38,10 +38,7 @@ spec:
                 name: wireguard
                 key: admin-password
           - name: WG_EXTERNAL_HOST
-            valueFrom:
-              secretKeyRef:
-                name: wireguard
-                key: external-host
+            value: vpn.lazz.tech
           resources:
             requests:
               memory: "64Mi"
