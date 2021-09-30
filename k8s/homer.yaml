@@ -257,7 +257,7 @@ data:
           #   url: "https://share.internal.lazz.tech/"
           #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
-      - name: "Community"
+      - name: "Entertainment"
         icon: "fas fa-tv"
         items:
           - name: "Jellyfin"
