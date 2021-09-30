@@ -203,7 +203,7 @@ Metric can be made to work with the monitoring stack from above via opening up t
 | Status      | Service Name | Purpose | Comments     |
 | :---        |    :----:   | :----: |          ---: |
 | ✅ | Ackee | Analytics | Pretty stable |
-| ✅ | Adminer | DB Admin | Pretty stable |
+| ❌ | Adminer | DB Admin | Pretty stable |
 | ✅ | Calibre-web | Ebooks | Pretty stable |
 | ✅ | Cluster Issuer | Issues SSL | Needs cert-manager helm |
 | ✅ | Internal Cert | Internal SSL | Uses DNS01 via cert-manager helm |
@@ -216,7 +216,7 @@ Metric can be made to work with the monitoring stack from above via opening up t
 | 🚧 | Double-take | Facial Recognition | WIP |
 | ❌ | Drone | CICD | WIP |
 | ✅ | Jenkins| CICD | Simple & well documented with Blue Ocean for containers |
-| 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
+| ❌ | Freeipa | AD Alternative | Deploys though not yet documented |
 | 🚧 | Frigate | Object detection NVR | Uses Google Coral USB TPU |
 | 🚧 | Geoip | geoip | For analytics |
 | ✅ | Ghost | Wordpress alternative | Works great behind CDN |
@@ -232,9 +232,9 @@ Metric can be made to work with the monitoring stack from above via opening up t
 | 🚧 | Nextcloud | GSuite Alternative | WIP |
 | 🚧 | Node-red | Low code automation | WIP |
 | ✅ | QuakeJS | WASM Quake3 | Free for all! |
-| 🚧 | Redis | Key value & cache | Handy |
+| ❌ | Redis | Key value & cache | Handy |
 | ✅ | Scrutiny | Hard drive monitoring | Handy |
-| ✅ | Snapdrop | Airdrop alternative | Handy |
+| ❌ | Snapdrop | Airdrop alternative | Dissatisfied with usability/reliability |
 | ✅ | Uptime-Kuma | Status Page | Stable |
 | ✅ | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |

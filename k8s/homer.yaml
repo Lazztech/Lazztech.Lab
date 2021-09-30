@@ -244,22 +244,22 @@ data:
             tag: "community"
             url: "https://chat.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Snapdrop"
-            logo: "assets/icons/snapdrop.png"
-            subtitle: "The easiest way to transfer data across devices"
-            tag: "community"
-            url: "https://share.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-
-      - name: "Community"
-        icon: "fas fa-building"
-        items:
           - name: "Calibreweb"
             logo: "assets/icons/calibreweb.png"
             subtitle: "Community Ebook Libary & Reader"
             tag: "community"
             url: "https://read.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          # - name: "Snapdrop"
+          #   logo: "assets/icons/snapdrop.png"
+          #   subtitle: "The easiest way to transfer data across devices"
+          #   tag: "community"
+          #   url: "https://share.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+
+      - name: "Community"
+        icon: "fas fa-tv"
+        items:
           - name: "Jellyfin"
             logo: "assets/icons/jellyfin.png"
             subtitle: "Media server"
@@ -384,13 +384,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://wireguard.internal.lazz.tech/"
-          - name: "FreeIPA"
-            logo: "assets/icons/freeipa.png"
-            subtitle: "Identity Management"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://ipa.internal.lazz.tech/"
+          # - name: "FreeIPA"
+          #   logo: "assets/icons/freeipa.png"
+          #   subtitle: "Identity Management"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "https://ipa.internal.lazz.tech/"
           - name: "Keycloak"
             logo: "assets/icons/keycloak.png"
             subtitle: "SSO Identity Provider"
@@ -412,10 +412,10 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://longhorn.internal.lazz.tech"
-          - name: "Adminer"
-            logo: "assets/icons/adminer.png"
-            subtitle: "Database Management"
-            tag: "community"
-            url: "https://adminer.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          # - name: "Adminer"
+          #   logo: "assets/icons/adminer.png"
+          #   subtitle: "Database Management"
+          #   tag: "community"
+          #   url: "https://adminer.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           
