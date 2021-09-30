@@ -214,7 +214,8 @@ Metric can be made to work with the monitoring stack from above via opening up t
 | 🚧 | Deepstack | AI web interface | Various uses |
 | ✅ | Docker-Registry | Registry & UI | works |
 | 🚧 | Double-take | Facial Recognition | WIP |
-| 🛑 | Drone | CICD | WIP |
+| ❌ | Drone | CICD | WIP |
+| ✅ | Jenkins| CICD | Simple & well documented with Blue Ocean for containers |
 | 🚧 | Freeipa | AD Alternative | Deploys though not yet documented |
 | 🚧 | Frigate | Object detection NVR | Uses Google Coral USB TPU |
 | 🚧 | Geoip | geoip | For analytics |

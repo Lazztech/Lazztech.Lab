@@ -304,11 +304,17 @@ data:
             tag: "community"
             url: "https://git.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Drone"
-            logo: "assets/icons/drone.png"
-            subtitle: "Container native Continous Integration /Continous Delivery"
+          # - name: "Drone"
+          #   logo: "assets/icons/drone.png"
+          #   subtitle: "Container native Continous Integration /Continous Delivery"
+          #   tag: "community"
+          #   url: "https://cicd.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Jenkins"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/jenkins.png"
+            subtitle: "CI-CD"
             tag: "community"
-            url: "https://cicd.internal.lazz.tech/"
+            url: "https://jenkins.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "Docker Registry"
             logo: "assets/icons/docker.png"
