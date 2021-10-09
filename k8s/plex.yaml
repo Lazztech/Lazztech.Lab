@@ -1,0 +1,96 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex-deployment
+  labels:
+    app: plex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plex
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      containers:
+        - name: plex
+          image: linuxserver/plex
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "100m"
+            limits:
+              memory: "2048Mi"
+              cpu: "500m"
+          volumeMounts:
+          - mountPath: /config
+            name: plex-data
+            subPath: config
+          - mountPath: /tv
+            name: plex-data
+            subPath: tv
+          - mountPath: /movies
+            name: plex-data
+            subPath: movies
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: plex-data
+        persistentVolumeClaim:
+          claimName: plex-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-pvc
+  namespace: default
+  labels:
+    app: plex
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plex-service
+  labels:
+    app: plex
+spec:
+  ports:
+  - port: 80
+    targetPort: 32400
+    name: tcp
+  selector:
+    app: plex
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: plex-ingress
+  labels:
+    app: plex
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: plex.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: plex-service
+          servicePort: 80

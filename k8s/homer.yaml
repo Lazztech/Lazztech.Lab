@@ -260,12 +260,18 @@ data:
       - name: "Entertainment"
         icon: "fas fa-tv"
         items:
-          - name: "Jellyfin"
-            logo: "assets/icons/jellyfin.png"
+          - name: "Plex"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png"
             subtitle: "Media server"
             tag: "community"
-            url: "https://jellyfin.internal.lazz.tech/"
+            url: "https://plex.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          # - name: "Jellyfin"
+          #   logo: "assets/icons/jellyfin.png"
+          #   subtitle: "Media server"
+          #   tag: "community"
+          #   url: "https://jellyfin.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           - name: "QuakeJS"
             logo: "assets/icons/quakejs.png"
             subtitle: "WASM Quake3 in the browser"
@@ -328,23 +334,23 @@ data:
             tag: "community"
             url: "https://objects.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Code Server"
-            logo: "assets/icons/code.png"
-            subtitle: "VSCode web server"
-            tag: "community"
-            url: "https://code.internal.lazz.tech/"
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          # - name: "Code Server"
+          #   logo: "assets/icons/code.png"
+          #   subtitle: "VSCode web server"
+          #   tag: "community"
+          #   url: "https://code.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
 
       - name: "Monitoring"
         icon: "fas fa-heartbeat"
         items:
-          - name: "Ackee"
-            logo: "assets/icons/ackee.png"
-            subtitle: "Site analytics"
-            tag: "sysadmin"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "https://ackee.internal.lazz.tech/"
+          # - name: "Ackee"
+          #   logo: "assets/icons/ackee.png"
+          #   subtitle: "Site analytics"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "https://ackee.internal.lazz.tech/"
           - name: "Grafana"
             logo: "assets/icons/grafana.png"
             subtitle: "Monitoring & Visibility"
@@ -370,6 +376,13 @@ data:
       - name: "SysAdmin"
         icon: "fa fa-server"
         items:
+          - name: "Proxmox"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/proxmox.png"
+            subtitle: "Hypervisor"
+            tag: "sysadmin"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "https://192.168.1.11:8006/"
           - name: "ILO"
             logo: "assets/icons/ilo.svg"
             subtitle: "HPE Integrated Lights Out"
