@@ -35,8 +35,8 @@ spec:
           - name: WG_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: wireguard
-                key: admin-password
+                name: admin
+                key: password
           - name: WG_EXTERNAL_HOST
             value: vpn.lazz.tech
           resources:
