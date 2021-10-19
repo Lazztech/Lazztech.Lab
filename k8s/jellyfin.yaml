@@ -15,6 +15,10 @@ spec:
       labels:
         app: jellyfin
     spec:
+      # needed for client & service discovery
+      hostNetwork: true
+      # needed to allow access to cluster's internal dns for services
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jellyfin
           image: linuxserver/jellyfin
@@ -23,13 +27,11 @@ spec:
               value: America/Los_Angeles
           resources:
             requests:
-              memory: "64Mi"
+              memory: "1024Mi"
               cpu: "100m"
             limits:
-              memory: "128Mi"
+              memory: "2048Mi"
               cpu: "500m"
-          ports:
-          - containerPort: 8096
           volumeMounts:
           - mountPath: /config
             name: jellyfin-data
@@ -40,11 +42,20 @@ spec:
           - mountPath: /data/movies
             name: jellyfin-data
             subPath: data/movies
+          - mountPath: /tv
+            name: plex-data
+            subPath: tv
+          - mountPath: /movies
+            name: plex-data
+            subPath: movies
           imagePullPolicy: IfNotPresent
       volumes:
       - name: jellyfin-data
         persistentVolumeClaim:
           claimName: jellyfin-pvc
+      - name: plex-data
+        persistentVolumeClaim:
+          claimName: plex-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
