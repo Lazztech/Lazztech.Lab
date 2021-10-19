@@ -15,6 +15,10 @@ spec:
       labels:
         app: jellyfin
     spec:
+      # needed for client & service discovery
+      hostNetwork: true
+      # needed to allow access to cluster's internal dns for services
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jellyfin
           image: linuxserver/jellyfin
