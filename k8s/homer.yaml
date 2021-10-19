@@ -207,12 +207,18 @@ data:
             tag: "community"
             url: "https://plex.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-          - name: "Calibreweb"
-            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/calibreweb.png"
-            subtitle: "Community Ebook Libary & Reader"
+          - name: "MakeMKV"
+            logo: "https://camo.githubusercontent.com/389390a345c649d2efb99c803a3ea9e354567fb4f8ef8085e5834c6299f9b899/68747470733a2f2f696d616765732e7765736572762e6e6c2f3f75726c3d7261772e67697468756275736572636f6e74656e742e636f6d2f6a6c65736167652f646f636b65722d74656d706c617465732f6d61737465722f6a6c65736167652f696d616765732f6d616b656d6b762d69636f6e2e706e6726773d323030"
+            subtitle: "Disk ripper"
             tag: "community"
-            url: "https://read.internal.lazz.tech/"
+            url: "https://makemkv.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          # - name: "Calibreweb"
+          #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/calibreweb.png"
+          #   subtitle: "Community Ebook Libary & Reader"
+          #   tag: "community"
+          #   url: "https://read.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           # - name: "Jellyfin"
           #   logo: "assets/icons/jellyfin.png"
           #   subtitle: "Media server"

@@ -1,0 +1,106 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: makemkv-deployment
+  labels:
+    app: makemkv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: makemkv
+  template:
+    metadata:
+      labels:
+        app: makemkv
+    spec:
+      containers:
+        - name: makemkv
+          image: jlesage/makemkv
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+          - mountPath: /media/makemkv
+            name: makemkv-data
+            subPath: media/makemkv
+          - mountPath: /dev/sr0
+            name: usb-disk0-dev
+          - mountPath: /dev/sg1
+            name: usb-disk1-dev
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: makemkv-data
+          persistentVolumeClaim:
+            claimName: makemkv-pvc
+        - name: plex-data
+          persistentVolumeClaim:
+            claimName: plex-pvc
+        - name: usb-disk0-dev
+          hostPath:
+            path: /dev/sr0
+        - name: usb-disk1-dev
+          hostPath:
+            path: /dev/sg1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: makemkv-pvc
+  namespace: default
+  labels:
+    app: makemkv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: makemkv-service
+  labels:
+    app: makemkv
+spec:
+  ports:
+  - port: 80
+    targetPort: 5800
+    name: tcp
+  selector:
+    app: makemkv
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: makemkv-ingress
+  labels:
+    app: makemkv
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: makemkv.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: makemkv-service
+          servicePort: 80

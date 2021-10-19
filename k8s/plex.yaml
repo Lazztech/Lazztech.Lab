@@ -21,6 +21,11 @@ spec:
           env:
             - name: TZ
               value: America/Los_Angeles
+            - name: PLEX_CLAIM
+              valueFrom:
+                secretKeyRef:
+                  name: plex
+                  key: claim
           resources:
             requests:
               memory: "1024Mi"
