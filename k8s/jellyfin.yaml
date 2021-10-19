@@ -23,10 +23,10 @@ spec:
               value: America/Los_Angeles
           resources:
             requests:
-              memory: "64Mi"
+              memory: "1024Mi"
               cpu: "100m"
             limits:
-              memory: "128Mi"
+              memory: "2048Mi"
               cpu: "500m"
           ports:
           - containerPort: 8096
