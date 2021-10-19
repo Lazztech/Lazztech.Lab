@@ -25,13 +25,13 @@ spec:
           - name: MINIO_ROOT_USER
             valueFrom:
               secretKeyRef:
-                name: minio
-                key: minio-user
+                name: admin
+                key: username
           - name: MINIO_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: minio
-                key: minio-password
+                name: admin
+                key: password
           resources:
             requests:
               memory: "512Mi"

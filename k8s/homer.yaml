@@ -200,7 +200,7 @@ data:
             logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png"
             subtitle: "Home Automation"
             tag: "community"
-            url: "https://home-assistant.internal.lazz.tech/"
+            url: "http://homeassistant.local:8123/"
           # - name: "Plex"
           #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png"
           #   subtitle: "Media server"
@@ -313,7 +313,7 @@ data:
             url: "https://kubernetes.internal.lazz.tech/"
           - name: "Gitea"
             logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/gitea.png"
-            subtitle: "Local Git mirror"
+            subtitle: "Git repository server"
             tag: "community"
             url: "https://git.internal.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
