@@ -21,7 +21,7 @@ $ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1
 $ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
 ```
 
-## Storage
+<!-- ## Storage
 Ranchers Longhorn CSI is recommended as the Container Storage Interface (CSI). The default k3s local-path Persistent Volume Claims (PVC) use hostPaths in `/var/lib/rancher/k3s/storage` and aren't supported by velero with automatic restic based volume backup. Longhorn is supported as a first class citizen of k3s.
 
 - https://rancher.com/docs/k3s/latest/en/storage/
@@ -61,9 +61,9 @@ $ kubectl apply -f helm/longhorn-ingress.yaml
 ```bash
 # uninstall command if needed
 $ kubectl delete -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
-```
+``` -->
 
-## Backup
+<!-- ## Backup
 
 Velero is recommended for backups.
 
@@ -125,6 +125,31 @@ $ velero restore describe YOUR_RESTORE_NAME
 # uninstall commands if needed
 $ kubectl delete namespace/velero clusterrolebinding/velero
 $ kubectl delete crds -l component=velero
+``` -->
+
+## Resource Recommender
+
+Using a combination of the kubernetes vpa (vertical pod autoscaler) & a project called goldilocks by fairwinds you can make educated decisions on how you set your resource limits & requests based on how your services actually get used.
+
+- https://goldilocks.docs.fairwinds.com/installation/#installation-2
+- https://github.com/FairwindsOps/charts/tree/master/stable/vpa
+
+```bash
+# add helm repo
+$ helm repo add fairwinds-stable https://charts.fairwinds.com/stable
+
+# install fairwinds paired down vpa deployment
+$ helm install vpa fairwinds-stable/vpa --namespace vpa --create-namespace
+
+# install fairwinds goldilocks to the default namespace
+$ helm install goldilocks --namespace default fairwinds-stable/goldilocks
+
+# activate goldilocks on the default namespace
+$ helm install goldilocks --namespace default fairwinds-stable/goldilocks
+
+# apply load to the service you're focused on...
+# then open the goldilocks dashboard to get recommendations on resources
+$ kubectl -n default port-forward svc/goldilocks-dashboard 8080:80
 ```
 
 ## Monitoring

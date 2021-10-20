@@ -27,11 +27,11 @@ spec:
               value: America/Los_Angeles
           resources:
             requests:
-              memory: "1024Mi"
-              cpu: "100m"
+              cpu: 587m
+              memory: 1940M
             limits:
-              memory: "2048Mi"
-              cpu: "500m"
+              cpu: 587m
+              memory: 1940M
           ports:
           - containerPort: 8096
           volumeMounts:
