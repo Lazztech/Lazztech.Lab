@@ -136,4 +136,4 @@ metadata:
     app: wg-access-server
 data:
   config.yaml: |
-    loglevel: info
+    loglevel: debug
