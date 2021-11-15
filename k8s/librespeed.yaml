@@ -1,0 +1,114 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librespeed-deployment
+  labels:
+    app: librespeed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librespeed
+  template:
+    metadata:
+      labels:
+        app: librespeed
+    spec:
+      containers:
+        - name: librespeed
+          image: lscr.io/linuxserver/librespeed
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: admin
+                  key: password
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          volumeMounts:
+          - mountPath: /config
+            name: librespeed-data
+            subPath: config
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: librespeed-data
+        persistentVolumeClaim:
+          claimName: librespeed-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librespeed-pvc
+  namespace: default
+  labels:
+    app: librespeed
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: librespeed-service
+  labels:
+    app: librespeed
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: librespeed
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: librespeed-ingress
+  labels:
+    app: librespeed
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: librespeed.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: librespeed-service
+          servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: librespeed-lazztech-ingress
+  labels:
+    app: librespeed
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: lazztech-acme-crt-secret
+      hosts:
+        - 'lazz.tech'
+  rules:
+  - host: lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: librespeed-service
+          servicePort: 80
