@@ -127,6 +127,20 @@ $ kubectl delete namespace/velero clusterrolebinding/velero
 $ kubectl delete crds -l component=velero
 ``` -->
 
+## Security Basics
+
+```bash
+# create namespace for internal services
+$ kubectl create namespace internal
+# apply internal namespace network policy
+$ kubectl apply -f k8s/network-policies/internal-network-policy.yaml
+```
+
+```bash
+# configure ingress to pass through client ip addresses for whitelist support
+$ kubectl patch svc traefik -n kube-system -p '{"spec":{"externalTrafficPolicy":"Local"}}'
+```
+
 ## Resource Recommender
 
 Using a combination of the kubernetes vpa (vertical pod autoscaler) & a project called goldilocks by fairwinds you can make educated decisions on how you set your resource limits & requests based on how your services actually get used.

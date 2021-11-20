@@ -1,0 +1,94 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lldap-deployment
+  labels:
+    app: lldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lldap
+  template:
+    metadata:
+      labels:
+        app: lldap
+    spec:
+      containers:
+        - name: lldap
+          image: nitnelave/lldap:latest
+          env:
+          - name: LLDAP_LDAP_USER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: admin
+                key: password
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "100m"
+          volumeMounts:
+          - mountPath: /data
+            name: lldap-data
+            subPath: config
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: lldap-data
+        persistentVolumeClaim:
+          claimName: lldap-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lldap-pvc
+  namespace: default
+  labels:
+    app: lldap
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lldap-service
+  labels:
+    app: lldap
+spec:
+  ports:
+  - port: 80
+    targetPort: 17170
+    name: tcp
+  selector:
+    app: lldap
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: lldap-ingress
+  labels:
+    app: lldap
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: lldap.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: lldap-service
+          servicePort: 80
