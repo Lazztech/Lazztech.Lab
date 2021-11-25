@@ -104,3 +104,9 @@ spec:
       - backend:
           serviceName: keycloak-service
           servicePort: 80
+  - host: keycloak.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: keycloak-service
+          servicePort: 80
