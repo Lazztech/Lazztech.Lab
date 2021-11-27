@@ -15,6 +15,40 @@ https://ultimatesecurity.pro/post/2fa/
 - sign back in to keycloak as admin
 - you'll then be prompted to setup 2FA OTP
 
+## Email Setup
+
+- sign into keycloak as admin
+- go to configure > Realm Settings
+- click email tab
+- add the following:
+  - Host: smtp.mailgun.org
+  - From: postmaster@mg.lazz.tech
+  - Enable SSL: ON
+  - Enable Authentication: ON
+    - Username: postmaster@mg.lazz.tech
+    - Password: ADD_PASSWORD_HERE
+- save
+
+Note: the logged in user will need to have an email address for the "Test connection" button to work
+
+## Add User
+
+- sign into keycloak as admin
+- go to manage > users
+- click "Add User"
+- add username
+- add email
+- add first name
+- add last name
+- User Enabled: ON
+- Email Verified: OFF
+- Required User Actions: Configure OTP, Verify Email, Update Password
+- save
+- click Credentials tab
+- enter temporary password
+- click Set Password
+
+
 ## Datastore
 The default datastore is an embedded H2 database. This is mapped as a perstistant storage volume in /opt/jboss/keycloak/standalone/data/.
 
