@@ -8,6 +8,7 @@
     * [AI](topics/ai.md)
     * [Mobile](topics/mobile.md)
 * [Services](services/README.md)
+    * [Traefik](services/keycloak.md)
     * [Traefik](services/traefik.md)
     * [Wireguard](services/wireguard.md)
     * [Docker Registry](services/docker-registry.md)

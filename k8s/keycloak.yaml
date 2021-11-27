@@ -44,6 +44,9 @@ spec:
           - mountPath: /config
             name: keycloak-data
             subPath: config
+          - mountPath: /opt/jboss/keycloak/standalone/data/
+            name: keycloak-data
+            subPath: opt/jboss/keycloak/standalone/data/
           # - mountPath: /etc/localtime
           #   name: localtime
           imagePullPolicy: IfNotPresent
