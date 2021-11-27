@@ -48,7 +48,6 @@ Note: the logged in user will need to have an email address for the "Test connec
 - enter temporary password
 - click Set Password
 
-
 ## Datastore
 The default datastore is an embedded H2 database. This is mapped as a perstistant storage volume in /opt/jboss/keycloak/standalone/data/.
 
@@ -58,3 +57,8 @@ The default datastore is an embedded H2 database. This is mapped as a perstistan
 ## Nextcloud
 - https://janikvonrotz.ch/2020/10/20/openid-connect-with-nextcloud-and-keycloak/
 
+## Jenkins
+- https://faun.pub/integrating-keycloak-sso-with-jenkins-957dd438f831
+
+## Wikijs
+- https://gist.github.com/Sherex/283d1e4ef07b2bf0a930417dc0117238
