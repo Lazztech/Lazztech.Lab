@@ -18,6 +18,10 @@ spec:
       securityContext:
         fsGroup: 1000 
         runAsUser: 0
+      # needed for dind (docker in docker) networking
+      hostNetwork: true
+      # needed to allow access to cluster's internal dns for services
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jenkins
           image: jenkinsci/blueocean
