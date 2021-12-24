@@ -3,7 +3,7 @@
 k3s based infrastructure for homelab, smarthome, productivity, collaboration, education, or more.
 k3s was selected for its ease of deployment and repeatability of services deployed to it.
 
-k3OS can be used for a dedicated machine or k3d/k3s for local testing.
+k3OS can be used for a dedicated machine/VM or k3d/k3s for local testing.
 
 - https://k3s.io/
 - https://k3os.io/
@@ -127,6 +127,62 @@ $ kubectl delete namespace/velero clusterrolebinding/velero
 $ kubectl delete crds -l component=velero
 ``` -->
 
+## Admin Secret
+
+Create a secret, based on the values below, that holds the default admin username & password that will be injected into various services.
+
+```yaml
+secret: "admin"
+userKey: username
+passwordKey: password
+```
+
+## Monitoring
+
+Kube prometheus stack via helm installs prometheus, alertmanager & grafana.
+
+```bash
+# add helm repo
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+# install kube-prometheus-stack
+$ helm install prometheus prometheus-community/kube-prometheus-stack --values helm/kube-prometheus-stack-config.yaml
+```
+
+```bash
+# uninstall command if needed
+$ helm uninstall prometheus
+```
+
+> Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+
+Grafana:
+- https://grafana.internal.lazz.tech/
+- default username: your admin secret username
+- default password: your admin secret password
+
+## Logging
+
+Loki is used in conjunction with the prometheus stack for monitoring logging.
+
+```bash
+# add helm repo
+$ helm repo add loki https://grafana.github.io/loki/charts
+
+# install loki
+$ helm upgrade --install loki loki/loki-stack
+```
+
+```bash
+# uninstall command if needed
+$ helm uninstall loki
+```
+
+> Loki can now be added as a datasource in Grafana.
+> See http://docs.grafana.org/features/datasources/loki/ for more detail.
+
+Add loki as a data source in grafana with `http://loki:3100` as the url.
+
 ## Resource Recommender
 
 Using a combination of the kubernetes vpa (vertical pod autoscaler) & a project called goldilocks by fairwinds you can make educated decisions on how you set your resource limits & requests based on how your services actually get used.
@@ -151,63 +207,6 @@ $ helm install goldilocks --namespace default fairwinds-stable/goldilocks
 # then open the goldilocks dashboard to get recommendations on resources
 $ kubectl -n default port-forward svc/goldilocks-dashboard 8080:80
 ```
-
-## Monitoring
-
-Kube prometheus stack via helm installs prometheus, alertmanager & grafana.
-
-```bash
-# add helm repo
-$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-
-# install kube-prometheus-stack
-$ helm install prometheus prometheus-community/kube-prometheus-stack
-
-# apply grafana ingress
-$ kubectl apply -f helm/grafana-ingress.yaml
-```
-
-```bash
-# to access prometheus directly
-$ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 9090:9090
-
-# or optionally apply prometheus ingress
-$ kubectl apply -f helm/prometheus-ingress.yaml
-```
-
-```bash
-# uninstall command if needed
-$ helm uninstall prometheus
-```
-
-> Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
-
-Grafana:
-- https://grafana.internal.lazz.tech/
-- default username: admin
-- default password: prom-operator
-
-## Logging
-
-Loki is used in conjunction with the prometheus stack for monitoring logging.
-
-```bash
-# add helm repo
-$ helm repo add loki https://grafana.github.io/loki/charts
-
-# install loki
-$ helm upgrade --install loki loki/loki-stack
-```
-
-```bash
-# uninstall command if needed
-$ helm uninstall loki
-```
-
-> Loki can now be added as a datasource in Grafana.
-> See http://docs.grafana.org/features/datasources/loki/ for more detail.
-
-Add loki as a data source in grafana with `http://loki:3100` as the url.
 
 ## Kubernetes Dashboard
 
