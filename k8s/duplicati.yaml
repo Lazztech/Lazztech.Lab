@@ -62,6 +62,8 @@ spec:
           - mountPath: /source/minio/data
             name: minio-data
             subPath: data
+          - mountPath: /source/grafana/
+            name: grafana-data
           imagePullPolicy: IfNotPresent
       volumes:
       - name: duplicati-data
@@ -97,6 +99,9 @@ spec:
       - name: minio-data
         persistentVolumeClaim:
           claimName: minio-pvc
+      - name: grafana-data
+        persistentVolumeClaim:
+          claimName: prometheus-grafana
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
