@@ -1,0 +1,6 @@
+persistence:
+  type: pvc
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi

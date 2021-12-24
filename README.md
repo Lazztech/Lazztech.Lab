@@ -137,21 +137,27 @@ userKey: username
 passwordKey: password
 ```
 
-## Monitoring
+## Monitoring & Logging
 
 Kube prometheus stack via helm installs prometheus, alertmanager & grafana.
 
 ```bash
 # add helm repo
 $ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-
-# install kube-prometheus-stack
-$ helm install prometheus prometheus-community/kube-prometheus-stack --values helm/kube-prometheus-stack-config.yaml
 ```
 
 ```bash
-# uninstall command if needed
+# install kube-prometheus-stack
+$ helm install prometheus prometheus-community/kube-prometheus-stack --values helm/kube-prometheus-stack-config.yaml
+
+# install loki
+$ helm upgrade --install loki grafana/loki -f helm/loki-config.yaml
+```
+
+```bash
+# uninstall commands if needed
 $ helm uninstall prometheus
+$ helm uninstall loki
 ```
 
 > Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
@@ -160,23 +166,6 @@ Grafana:
 - https://grafana.internal.lazz.tech/
 - default username: your admin secret username
 - default password: your admin secret password
-
-## Logging
-
-Loki is used in conjunction with the prometheus stack for monitoring logging.
-
-```bash
-# add helm repo
-$ helm repo add loki https://grafana.github.io/loki/charts
-
-# install loki
-$ helm upgrade --install loki loki/loki-stack
-```
-
-```bash
-# uninstall command if needed
-$ helm uninstall loki
-```
 
 > Loki can now be added as a datasource in Grafana.
 > See http://docs.grafana.org/features/datasources/loki/ for more detail.

@@ -64,6 +64,8 @@ spec:
             subPath: data
           - mountPath: /source/grafana/
             name: grafana-data
+          - mountPath: /source/loki/
+            name: loki-data
           imagePullPolicy: IfNotPresent
       volumes:
       - name: duplicati-data
@@ -102,6 +104,9 @@ spec:
       - name: grafana-data
         persistentVolumeClaim:
           claimName: prometheus-grafana
+      - name: loki-data
+        persistentVolumeClaim:
+          claimName: storage-loki-0
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
