@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ghost
-          image: ghost:alpine
+          image: ghost:4.27.2-alpine
           env:
             - name: url
               value: https://lazz.tech
@@ -37,11 +37,11 @@ spec:
                   key: password
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "100m"
+              memory: "512Mi"
+              cpu: "250m"
             limits:
-              memory: "1024Mi"
-              cpu: "500m"
+              memory: "512Mi"
+              cpu: "250m"
           volumeMounts:
           - mountPath: /var/lib/ghost/content
             name: ghost-data

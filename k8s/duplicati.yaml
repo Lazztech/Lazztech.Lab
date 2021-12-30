@@ -1,0 +1,159 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: duplicati-deployment
+  labels:
+    app: duplicati
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: duplicati
+  template:
+    metadata:
+      labels:
+        app: duplicati
+    spec:
+      containers:
+        - name: duplicati
+          image: linuxserver/duplicati
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "100m"
+          volumeMounts:
+          - mountPath: /config
+            name: duplicati-data
+            subPath: config
+          - mountPath: /backups
+            name: duplicati-data
+            subPath: backups
+          - mountPath: /source/nextcloud/var/www/html
+            name: nextcloud-data
+            subPath: var/www/html
+          - mountPath: /source/matrix/data
+            name: matrix-data
+            subPath: data
+          - mountPath: /source/wikijs/data
+            name: wikijs-data
+            subPath: data
+          - mountPath: /source/keycloak/opt/jboss/keycloak/standalone/data/
+            name: keycloak-data
+            subPath: opt/jboss/keycloak/standalone/data/
+          - mountPath: /source/wg-access-server/data
+            name: wg-access-server-data
+            subPath: data
+          - mountPath: /source/ghost/var/lib/ghost/content
+            name: ghost-data
+            subPath: var/lib/ghost/content
+          - mountPath: /source/gitea/data
+            name: gitea-data
+            subPath: data
+          - mountPath: /source/jenkins/var/jenkins_home
+            name: jenkins-data
+            subPath: var/jenkins_home
+          - mountPath: /source/docker-registry/var/lib/registry
+            name: docker-registry-data
+            subPath: var/lib/registry
+          - mountPath: /source/minio/data
+            name: minio-data
+            subPath: data
+          - mountPath: /source/grafana/
+            name: grafana-data
+          - mountPath: /source/loki/
+            name: loki-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: duplicati-data
+        persistentVolumeClaim:
+          claimName: duplicati-pvc
+      - name: nextcloud-data
+        persistentVolumeClaim:
+          claimName: nextcloud-pvc
+      - name: matrix-data
+        persistentVolumeClaim:
+          claimName: matrix-pvc
+      - name: keycloak-data
+        persistentVolumeClaim:
+          claimName: keycloak-pvc
+      - name: wikijs-data
+        persistentVolumeClaim:
+          claimName: wikijs-pvc
+      - name: wg-access-server-data
+        persistentVolumeClaim:
+          claimName: wg-access-server-pvc
+      - name: ghost-data
+        persistentVolumeClaim:
+          claimName: ghost-pvc
+      - name: gitea-data
+        persistentVolumeClaim:
+          claimName: gitea-pvc
+      - name: jenkins-data
+        persistentVolumeClaim:
+          claimName: jenkins-pvc
+      - name: docker-registry-data
+        persistentVolumeClaim:
+          claimName: docker-registry-pvc
+      - name: minio-data
+        persistentVolumeClaim:
+          claimName: minio-pvc
+      - name: grafana-data
+        persistentVolumeClaim:
+          claimName: prometheus-grafana
+      - name: loki-data
+        persistentVolumeClaim:
+          claimName: storage-loki-0
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: duplicati-pvc
+  namespace: default
+  labels:
+    app: duplicati
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: duplicati-service
+  labels:
+    app: duplicati
+spec:
+  ports:
+  - port: 80
+    targetPort: 8200
+    name: tcp
+  selector:
+    app: duplicati
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: duplicati-lazztech-ingress
+  labels:
+    app: duplicati
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: duplicati.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: duplicati-service
+          servicePort: 80

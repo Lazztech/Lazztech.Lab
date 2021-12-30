@@ -397,13 +397,13 @@ data:
             # Optional tagstyle
             tagstyle: "is-success"
             url: "https://192.168.1.11:8006/"
-          - name: "Duplicacy"
-            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/duplicacy.png"
+          - name: "Duplicati"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/duplicati.png"
             subtitle: "Backups"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "http://duplicacy"
+            url: "https://duplicati.internal.lazz.tech"
           - name: "HP Gen10+ ILO"
             logo: "https://i.redd.it/yb6d5h1dixe41.png"
             subtitle: "HPE Integrated Lights Out KVM"

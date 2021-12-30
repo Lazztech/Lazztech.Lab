@@ -2,64 +2,52 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: keycloak-deployment
+  name: librespeed-deployment
   labels:
-    app: keycloak
+    app: librespeed
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: keycloak
+      app: librespeed
   template:
     metadata:
       labels:
-        app: keycloak
+        app: librespeed
     spec:
       containers:
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:11.0.3
+        - name: librespeed
+          image: lscr.io/linuxserver/librespeed
           env:
-          - name: KEYCLOAK_USER
-            valueFrom:
-              secretKeyRef:
-                name: admin
-                key: username
-          - name: KEYCLOAK_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: admin
-                key: password
-          - name: PROXY_ADDRESS_FORWARDING
-            value: "true"
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: admin
+                  key: password
           resources:
             requests:
-              memory: "512Mi"
+              memory: "128Mi"
               cpu: "100m"
             limits:
-              memory: "512Mi"
+              memory: "128Mi"
               cpu: "100m"
-          ports:
-          - containerPort: 8080
           volumeMounts:
           - mountPath: /config
-            name: keycloak-data
+            name: librespeed-data
             subPath: config
-          - mountPath: /opt/jboss/keycloak/standalone/data/
-            name: keycloak-data
-            subPath: opt/jboss/keycloak/standalone/data/
           imagePullPolicy: IfNotPresent
       volumes:
-      - name: keycloak-data
+      - name: librespeed-data
         persistentVolumeClaim:
-          claimName: keycloak-pvc
+          claimName: librespeed-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: keycloak-pvc
+  name: librespeed-pvc
   namespace: default
   labels:
-    app: keycloak
+    app: librespeed
 spec:
   accessModes:
     - ReadWriteOnce
@@ -70,23 +58,23 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: keycloak-service
+  name: librespeed-service
   labels:
-    app: keycloak
+    app: librespeed
 spec:
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
     name: tcp
   selector:
-    app: keycloak
+    app: librespeed
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: keycloak-ingress
+  name: librespeed-ingress
   labels:
-    app: keycloak
+    app: librespeed
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/redirect-entry-point: https
@@ -96,15 +84,31 @@ spec:
       hosts:
         - '*.internal.lazz.tech'
   rules:
-  - host: keycloak.internal.lazz.tech
+  - host: librespeed.internal.lazz.tech
     http:
       paths:
       - backend:
-          serviceName: keycloak-service
+          serviceName: librespeed-service
           servicePort: 80
-  - host: keycloak.lazz.tech
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: librespeed-lazztech-ingress
+  labels:
+    app: librespeed
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: lazztech-acme-crt-secret
+      hosts:
+        - 'lazz.tech'
+  rules:
+  - host: lazz.tech
     http:
       paths:
       - backend:
-          serviceName: keycloak-service
+          serviceName: librespeed-service
           servicePort: 80
