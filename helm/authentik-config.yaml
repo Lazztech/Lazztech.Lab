@@ -34,6 +34,10 @@ ingress:
     paths:
     - path: "/"
       pathType: Prefix
+  - host: authentik.lazz.tech
+    paths:
+    - path: "/"
+      pathType: Prefix
 
 postgresql:
   enabled: true

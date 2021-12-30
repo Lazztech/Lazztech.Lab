@@ -432,13 +432,20 @@ data:
           #   # Optional tagstyle
           #   tagstyle: "is-success"
           #   url: "https://ipa.internal.lazz.tech/"
-          - name: "Keycloak"
-            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/keycloak.png"
+          # - name: "Keycloak"
+          #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/keycloak.png"
+          #   subtitle: "SSO Identity Provider"
+          #   tag: "sysadmin"
+          #   # Optional tagstyle
+          #   tagstyle: "is-success"
+          #   url: "https://keycloak.internal.lazz.tech/"
+          - name: "Authentik"
+            logo: "https://avatars.githubusercontent.com/u/82976448?s=200&v=4"
             subtitle: "SSO Identity Provider"
             tag: "sysadmin"
             # Optional tagstyle
             tagstyle: "is-success"
-            url: "https://keycloak.internal.lazz.tech/"
+            url: "https://authentik.internal.lazz.tech/"
           - name: "Unifi"
             logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/unifi.png"
             subtitle: "Network Management"
