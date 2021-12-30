@@ -129,6 +129,16 @@ $ kubectl delete crds -l component=velero
 
 ## Security Basics
 
+Create a secret, based on the values below, that holds the default admin username & password that will be injected into various services.
+
+```yaml
+secret: "admin"
+userKey: username
+passwordKey: password
+```
+
+Setup network policies.
+
 ```bash
 # apply internal namespace network policy
 $ kubectl apply -f k8s/network-policies/network-policy.yaml
@@ -137,15 +147,20 @@ $ kubectl apply -f k8s/network-policies/network-policy.yaml
 $ kubectl patch svc traefik -n kube-system -p '{"spec":{"externalTrafficPolicy":"Local"}}'
 ```
 
-## Admin Secret
+Setup SSO provider.
 
-Create a secret, based on the values below, that holds the default admin username & password that will be injected into various services.
+```bash
+# add helm repo for authintik
+$ helm repo add authentik https://charts.goauthentik.io
+# update
+$ helm repo update
+# install authentik
+$ helm install authentik authentik/authentik -f helm/authentik-config.yaml
 
-```yaml
-secret: "admin"
-userKey: username
-passwordKey: password
+# optionally apply any updates to the authentik-config.yaml
+$ helm upgrade authentik authentik/authentik -f helm/authentik-config.yaml
 ```
+
 
 ## Monitoring & Logging
 
