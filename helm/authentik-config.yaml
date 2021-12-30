@@ -2,6 +2,8 @@
 # helm repo add authentik https://docker.beryju.org/chartrepo/authentik
 # helm repo update
 #
+# https://github.com/goauthentik/helm/blob/main/charts/authentik/README.md
+#
 # Generate passwords/secretkey values with:
 # openssl rand -base64 36
 #
@@ -11,21 +13,30 @@
 # Uninstall:
 # helm uninstall authentik-WhaterverTheGeneratedNameIs
 
-postgresql:
-  postgresqlPassword: ""
-redis:
-  password: ""
-config:
-  secretKey: ""
+authentik:
+  secret_key: "PleaseGenerateA50CharKey"
+  # This sends anonymous usage-data, stack traces on errors and
+  # performance data to sentry.beryju.org, and is fully opt-in
+  error_reporting:
+    enabled: true
+  postgresql:
+    password: "ThisIsNotASecurePassword"
+
 # used to allow k3s with master node only to work
+# https://github.com/goauthentik/authentik/issues/741
 pvc:
   mode: ReadWriteOnce
+
 ingress:
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
+  enabled: true
   hosts:
-    - authentik.internal.lazz.tech
-  tls:
-    - secretName: internal-acme-crt-secret
-      hosts:
-        - '*.internal.lazz.tech'
+  - host: authentik.internal.lazz.tech
+    paths:
+    - path: "/"
+      pathType: Prefix
+
+postgresql:
+  enabled: true
+  postgresqlPassword: "ThisIsNotASecurePassword"
+redis:
+  enabled: true
