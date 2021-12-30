@@ -127,6 +127,16 @@ $ kubectl delete namespace/velero clusterrolebinding/velero
 $ kubectl delete crds -l component=velero
 ``` -->
 
+## Security Basics
+
+```bash
+# apply internal namespace network policy
+$ kubectl apply -f k8s/network-policies/network-policy.yaml
+
+# configure ingress to pass through client ip addresses for whitelist support
+$ kubectl patch svc traefik -n kube-system -p '{"spec":{"externalTrafficPolicy":"Local"}}'
+```
+
 ## Admin Secret
 
 Create a secret, based on the values below, that holds the default admin username & password that will be injected into various services.
