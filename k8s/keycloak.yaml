@@ -47,16 +47,11 @@ spec:
           - mountPath: /opt/jboss/keycloak/standalone/data/
             name: keycloak-data
             subPath: opt/jboss/keycloak/standalone/data/
-          # - mountPath: /etc/localtime
-          #   name: localtime
           imagePullPolicy: IfNotPresent
       volumes:
       - name: keycloak-data
         persistentVolumeClaim:
           claimName: keycloak-pvc
-      # - name: localtime
-      #   hostPath:
-      #     path: /etc/localtime
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
