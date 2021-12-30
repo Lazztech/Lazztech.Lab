@@ -130,10 +130,8 @@ $ kubectl delete crds -l component=velero
 ## Security Basics
 
 ```bash
-# create namespace for internal services
-$ kubectl create namespace internal
 # apply internal namespace network policy
-$ kubectl apply -f k8s/network-policies/internal-network-policy.yaml
+$ kubectl apply -f k8s/network-policies/network-policy.yaml
 ```
 
 ```bash
