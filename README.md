@@ -132,9 +132,7 @@ $ kubectl delete crds -l component=velero
 ```bash
 # apply internal namespace network policy
 $ kubectl apply -f k8s/network-policies/network-policy.yaml
-```
 
-```bash
 # configure ingress to pass through client ip addresses for whitelist support
 $ kubectl patch svc traefik -n kube-system -p '{"spec":{"externalTrafficPolicy":"Local"}}'
 ```
