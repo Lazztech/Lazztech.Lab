@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
         - name: matrix-init-config
-          image: matrixdotorg/synapse:v1.32.2
+          image: matrixdotorg/synapse:v1.49.2
           args: ["generate"]
           env:
           - name: SYNAPSE_SERVER_NAME
@@ -37,11 +37,11 @@ spec:
             subPath: data
       containers:
         - name: matrix-synapse-server
-          image: matrixdotorg/synapse:v1.32.2
+          image: matrixdotorg/synapse:v1.49.2
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "100m"
+              memory: "1024Mi"
+              cpu: "500m"
             limits:
               memory: "1024Mi"
               cpu: "500m"
@@ -51,7 +51,7 @@ spec:
             subPath: data
           imagePullPolicy: IfNotPresent
         - name: matrix-element-web
-          image: vectorim/element-web
+          image: vectorim/element-web:v1.9.8
           resources:
             requests:
               memory: "64Mi"
