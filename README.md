@@ -53,6 +53,9 @@ $ helm install authentik authentik/authentik -f helm/authentik-config.yaml
 
 # optionally apply any updates to the authentik-config.yaml
 $ helm upgrade authentik authentik/authentik -f helm/authentik-config.yaml
+
+# uninstall command if needed
+$ helm uninstall authentik
 ```
 
 
