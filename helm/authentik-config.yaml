@@ -20,7 +20,7 @@ authentik:
   error_reporting:
     enabled: true
   postgresql:
-    password: ""
+    password: "ThisIsNotASecurePassword"
 
 # used to allow k3s with master node only to work
 # https://github.com/goauthentik/authentik/issues/741
@@ -41,6 +41,6 @@ ingress:
 
 postgresql:
   enabled: true
-  postgresqlPassword: ""
+  postgresqlPassword: "ThisIsNotASecurePassword"
 redis:
   enabled: true

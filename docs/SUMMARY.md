@@ -9,7 +9,7 @@
     * [Mobile](topics/mobile.md)
 * [Services](services/README.md)
     * [Traefik](services/traefik.md)
-    * [Keycloak](services/keycloak.md)
+    * [Authentik](services/authentik.md)
     * [Wireguard](services/wireguard.md)
     * [Docker Registry](services/docker-registry.md)
     * [Nextcloud](services/nextcloud.md)
