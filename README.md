@@ -25,10 +25,8 @@ $ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v
 
 Create a secret, based on the values below, that holds the default admin username & password that will be injected into various services.
 
-```yaml
-secret: "admin"
-userKey: username
-passwordKey: password
+```bash
+$ kubectl create secret generic admin --from-literal username=USERNAME --from-literal password="PASSWORD"
 ```
 
 Setup network policies.
