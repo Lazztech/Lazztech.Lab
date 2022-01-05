@@ -34,11 +34,11 @@ spec:
                 key: password
           resources:
             requests:
-              memory: "512Mi"
+              memory: "128Mi"
               cpu: "100m"
             limits:
-              memory: "512Mi"
-              cpu: "500m"
+              memory: "128Mi"
+              cpu: "100m"
           ports:
           - containerPort: 9000
           volumeMounts:
