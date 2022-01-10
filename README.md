@@ -9,18 +9,6 @@ k3OS can be used for a dedicated machine/VM or k3d/k3s for local testing.
 - https://k3os.io/
 - https://k3d.io/
 
-## SSL
-
-https://cert-manager.io/docs/installation/kubernetes/
-
-```bash
-# install cert-manager
-$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
-
-# uninstall command if needed
-$ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
-```
-
 ## Security Basics
 
 Create a secret, based on the values below, that holds the default admin username & password that will be injected into various services.
@@ -56,6 +44,45 @@ $ helm upgrade authentik authentik/authentik -f helm/authentik-config.yaml
 $ helm uninstall authentik
 ```
 
+## Database
+One primary Postgres instance shall be configured and used across most the services. This is done with the kubegres operator for ease of managment.
+- https://www.kubegres.io/doc/getting-started.html
+
+```bash
+# install kubegres operator
+$ kubectl apply -f https://raw.githubusercontent.com/reactive-tech/kubegres/v1.15/kubegres.yaml
+
+# watch status of kubegres
+$ watch kubectl get all -n kubegres-system
+
+# deploy postgres database
+$ kubectl apply -f k8s/postgres.yaml
+
+# check status of backup cron job
+$ kubectl get CronJob
+
+# deploy pgAdmin client to manage database
+# connect to postgres.default.svc.cluster.local
+# port is 5432
+# user is "postgres"
+# password is admin password secret
+$ kubectl apply -f k8s/pgAdmin.yaml
+
+# uninstall command if needed
+$ kubectl delete -f https://raw.githubusercontent.com/reactive-tech/kubegres/v1.15/kubegres.yaml
+```
+
+## SSL
+
+https://cert-manager.io/docs/installation/kubernetes/
+
+```bash
+# install cert-manager
+$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
+
+# uninstall command if needed
+$ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
+```
 
 ## Monitoring & Logging
 
