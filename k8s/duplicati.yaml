@@ -66,6 +66,8 @@ spec:
             name: grafana-data
           - mountPath: /source/loki/
             name: loki-data
+          - mountPath: /source/postgres-backup/
+            name: postgres-backup-data
           imagePullPolicy: IfNotPresent
       volumes:
       - name: duplicati-data
@@ -107,6 +109,9 @@ spec:
       - name: loki-data
         persistentVolumeClaim:
           claimName: storage-loki-0
+      - name: postgres-backup-data
+        persistentVolumeClaim:
+          claimName: postgres-backup-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
