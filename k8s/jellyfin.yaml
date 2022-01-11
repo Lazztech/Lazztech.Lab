@@ -21,29 +21,21 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin
+          image: linuxserver/jellyfin:10.7.7
           env:
             - name: TZ
               value: America/Los_Angeles
           resources:
             requests:
-              cpu: 587m
-              memory: 1940M
+              cpu: 100m
+              memory: 100M
             limits:
-              cpu: 587m
-              memory: 1940M
-          ports:
-          - containerPort: 8096
+              cpu: 3000m
+              memory: 1000M
           volumeMounts:
           - mountPath: /config
             name: jellyfin-data
             subPath: config
-          - mountPath: /data/tvshows
-            name: jellyfin-data
-            subPath: data/tvshows
-          - mountPath: /data/movies
-            name: jellyfin-data
-            subPath: data/movies
           imagePullPolicy: IfNotPresent
       volumes:
       - name: jellyfin-data
@@ -94,6 +86,12 @@ spec:
         - '*.internal.lazz.tech'
   rules:
   - host: jellyfin.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: jellyfin-service
+          servicePort: 80
+  - host: jellyfin.lazz.tech
     http:
       paths:
       - backend:
