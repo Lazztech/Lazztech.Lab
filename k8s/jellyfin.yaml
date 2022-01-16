@@ -37,6 +37,31 @@ spec:
             name: jellyfin-data
             subPath: config
           imagePullPolicy: IfNotPresent
+        - name: samba
+          image: dperson/samba
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: WORKGROUP
+              value: workgroup
+            - name: USER
+              value: admin;admin
+            - name: RECYCLE
+              value: "false"
+            - name: SHARE
+              value: Mount;/mount;yes;no;no;;gerben 
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100M
+            limits:
+              cpu: 100m
+              memory: 100M
+          volumeMounts:
+          - mountPath: /mount
+            name: jellyfin-data
+            subPath: config
+          imagePullPolicy: IfNotPresent
       volumes:
       - name: jellyfin-data
         persistentVolumeClaim:
