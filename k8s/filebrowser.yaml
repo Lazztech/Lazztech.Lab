@@ -1,0 +1,85 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filebrowser-deployment
+  labels:
+    app: filebrowser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filebrowser
+  template:
+    metadata:
+      labels:
+        app: filebrowser
+    spec:
+      containers:
+        - name: filebrowser
+          image: filebrowser/filebrowser
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100M
+          volumeMounts:
+          - mountPath: /srv
+            name: filebrowser-data
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: filebrowser-data
+        persistentVolumeClaim:
+          claimName: filebrowser-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: filebrowser-pvc
+  namespace: default
+  labels:
+    app: filebrowser
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filebrowser-service
+  labels:
+    app: filebrowser
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: tcp
+  selector:
+    app: filebrowser
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: filebrowser-ingress
+  labels:
+    app: filebrowser
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: filebrowser.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: filebrowser-service
+          servicePort: 80
