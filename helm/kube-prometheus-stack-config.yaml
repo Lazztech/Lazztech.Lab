@@ -53,6 +53,10 @@ prometheus:
         hosts:
           - '*.internal.lazz.tech'
   prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: "External servers"
+        static_configs:
+          - targets: ["lazztech-hub-service-z84zo.ondigitalocean.app"]
     storageSpec:
       volumeClaimTemplate:
         spec:

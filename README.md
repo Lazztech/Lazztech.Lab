@@ -30,6 +30,11 @@ $ kubectl patch svc traefik -n kube-system -p '{"spec":{"externalTrafficPolicy":
 Setup SSO provider.
 
 ```bash
+# prepare environment variable secrets for authentik
+$ kubectl create secret generic authentik --from-literal AUTHENTIK_SECRET_KEY="SECRET_KEY" --from-literal AUTHENTIK_POSTGRESQL__PASSWORD="PASSWORD"
+```
+
+```bash
 # add helm repo for authintik
 $ helm repo add authentik https://charts.goauthentik.io
 # update
@@ -95,7 +100,8 @@ $ helm repo add prometheus-community https://prometheus-community.github.io/helm
 
 ```bash
 # install kube-prometheus-stack
-$ helm install prometheus prometheus-community/kube-prometheus-stack --values helm/kube-prometheus-stack-config.yaml
+# this command can also be used to update the config
+$ helm upgrade prometheus prometheus-community/kube-prometheus-stack --values helm/kube-prometheus-stack-config.yaml
 
 # install loki
 $ helm upgrade --install loki grafana/loki -f helm/loki-config.yaml
@@ -118,6 +124,17 @@ Grafana:
 > See http://docs.grafana.org/features/datasources/loki/ for more detail.
 
 Add loki as a data source in grafana with `http://loki:3100` as the url.
+
+## Networked Storage
+
+```bash
+# install support for samba shares
+$ helm repo add csi-driver-smb https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+$ helm install csi-driver-smb csi-driver-smb/csi-driver-smb --namespace kube-system --version v1.4.0
+
+# uninstall if needed
+$ helm uninstall csi-driver-smb -n kube-system
+```
 
 ## Resource Recommender
 
