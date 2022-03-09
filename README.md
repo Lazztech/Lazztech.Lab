@@ -100,7 +100,7 @@ $ helm repo add prometheus-community https://prometheus-community.github.io/helm
 
 ```bash
 # install kube-prometheus-stack
-# this command can also be used to update the config
+# this command can also be used to update the
 $ helm upgrade prometheus prometheus-community/kube-prometheus-stack --values helm/kube-prometheus-stack-config.yaml
 
 # install loki
