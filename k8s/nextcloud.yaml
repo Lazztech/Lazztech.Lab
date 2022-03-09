@@ -20,11 +20,11 @@ spec:
           image: nextcloud:stable-apache
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "100m"
+              memory: "250Mi"
+              cpu: "250m"
             limits:
-              memory: "1024Mi"
-              cpu: "500m"
+              memory: "250Mi"
+              cpu: "250m"
           env:
             # needed to ensure saml requests are from https
             - name: OVERWRITEPROTOCOL

@@ -171,6 +171,38 @@ Metric can be made to work with the monitoring stack from above via opening up t
 - Set to prometheus-operator
 - Set prometheus service address to `default/prometheus-kube-prometheus-prometheus:9090`
 
+## k3OS tips and tricks
+
+```bash
+# resize root partition to 100%
+$ sudo parted /dev/sda resizepart 1
+# then enter yes, and 100% after that
+
+# print root filesystem size
+$ df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       127G   82G   39G  68% /
+
+# resize root filesystem
+$ sudo resize2fs /dev/sda1
+resize2fs 1.45.6 (20-Mar-2020)
+Filesystem at /dev/sda1 is mounted on /; on-line resizing required
+old_desc_blocks = 16, new_desc_blocks = 128
+The filesystem on /dev/sda1 is now 268435200 (4k) blocks long.
+
+# confirm that it is now at the expected size
+$ df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1      1011G   82G  887G   9% /
+```
+
+```bash
+# editing k3OS config https://github.com/rancher/k3os#configuration-reference
+$ sudo vi /var/lib/rancher/k3os/config.yaml
+$ sudo reboot
+```
+
+
 ## Services
 - ✅ : runs stably
 - 🚧 : needs work though runs
