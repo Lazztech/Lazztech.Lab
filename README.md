@@ -39,10 +39,7 @@ $ kubectl create secret generic authentik --from-literal AUTHENTIK_SECRET_KEY="S
 $ helm repo add authentik https://charts.goauthentik.io
 # update
 $ helm repo update
-# install authentik
-$ helm install authentik authentik/authentik -f helm/authentik-config.yaml
-
-# optionally apply any updates to the authentik-config.yaml
+# install authentik or apply any updates to the authentik-config.yaml
 $ helm upgrade authentik authentik/authentik -f helm/authentik-config.yaml
 
 # uninstall command if needed
