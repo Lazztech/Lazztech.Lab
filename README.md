@@ -42,6 +42,8 @@ $ helm repo update
 # install authentik or apply any updates to the authentik-config.yaml
 $ helm upgrade authentik authentik/authentik -f helm/authentik-config.yaml
 
+# go to https://<your server>/if/flow/initial-setup/ for initial setup
+
 # uninstall command if needed
 $ helm uninstall authentik
 ```

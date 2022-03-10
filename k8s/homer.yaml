@@ -460,6 +460,12 @@ data:
           #   # Optional tagstyle
           #   tagstyle: "is-success"
           #   url: "https://longhorn.internal.lazz.tech"
+          - name: "pgAdmin"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/pgadmin.png"
+            subtitle: "Database Management"
+            tag: "community"
+            url: "https://pgadmin.internal.lazz.tech/"
+          #   # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           # - name: "Adminer"
           #   logo: "assets/icons/adminer.png"
           #   subtitle: "Database Management"
