@@ -21,7 +21,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin:10.7.7
+          image: linuxserver/jellyfin:10.8.0
           env:
             - name: TZ
               value: America/Los_Angeles
