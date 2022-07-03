@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ghost
-          image: ghost:4-alpine
+          image: ghost:5-alpine
           env:
             - name: url
               value: https://lazz.tech
