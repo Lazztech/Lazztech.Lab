@@ -1,0 +1,110 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photoprism-deployment
+  labels:
+    app: photoprism
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: photoprism
+  template:
+    metadata:
+      labels:
+        app: photoprism
+    spec:
+      containers:
+        - name: photoprism
+          image: photoprism/photoprism
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PHOTOPRISM_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: admin
+                  key: password
+            - name: PHOTOPRISM_DEBUG
+              value: "true"
+            - name: PHOTOPRISM_CACHE_PATH
+              value: /assets/cache
+            - name: PHOTOPRISM_IMPORT_PATH
+              value: /assets/photos/import
+            - name: PHOTOPRISM_EXPORT_PATH
+              value: /assets/photos/export
+            - name: PHOTOPRISM_ORIGINALS_PATH
+              value: /assets/photos/originals
+            - name: PHOTOPRISM_DATABASE_DRIVER
+              value: sqlite
+            - name: PHOTOPRISM_HTTP_HOST
+              value: "0.0.0.0"
+            - name: PHOTOPRISM_HTTP_PORT
+              value: "2342"
+          resources:
+            requests:
+              cpu: 400m
+              memory: 400M
+            limits:
+              cpu: 400m
+              memory: 400M
+          volumeMounts:
+          - mountPath: /config
+            name: photoprism-data
+            subPath: config
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: photoprism-data
+        persistentVolumeClaim:
+          claimName: photoprism-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoprism-pvc
+  namespace: default
+  labels:
+    app: photoprism
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: photoprism-service
+  labels:
+    app: photoprism
+spec:
+  ports:
+  - port: 80
+    targetPort: 2342
+    name: tcp
+  selector:
+    app: photoprism
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: photoprism-ingress
+  labels:
+    app: photoprism
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - '*.internal.lazz.tech'
+  rules:
+  - host: photoprism.internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: photoprism-service
+          servicePort: 80
