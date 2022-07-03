@@ -274,6 +274,12 @@ data:
             tag: "community"
             url: "https://chat.lazz.tech/"
             # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+          - name: "Paperless-NGX"
+            logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
+            subtitle: "Paper document repository"
+            tag: "community"
+            url: "https://paperless.internal.lazz.tech/"
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
           # - name: "Snapdrop"
           #   logo: "assets/icons/snapdrop.png"
           #   subtitle: "The easiest way to transfer data across devices"
