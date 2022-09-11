@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homarr-deployment
+  labels:
+    app: homarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homarr
+  template:
+    metadata:
+      labels:
+        app: homarr
+    spec:
+      containers:
+        - name: homarr
+          image: ghcr.io/ajnart/homarr:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100M
+            limits:
+              cpu: 100m
+              memory: 100M
+          ports:
+          - containerPort: 7575
+          volumeMounts:
+            - mountPath: app/data/configs
+              name: homarr-data
+              subPath: app/data/configs
+            - mountPath: app/public/icons
+              name: homarr-data
+              subPath: app/public/icons
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: homarr-data
+        persistentVolumeClaim:
+          claimName: homarr-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homarr-pvc
+  namespace: default
+  labels:
+    app: homarr
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homarr-service
+  labels:
+    app: homarr
+spec:
+  ports:
+  - port: 80
+    targetPort: 7575
+    name: tcp
+  selector:
+    app: homarr
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: homarr-ingress
+  labels:
+    app: homarr
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  tls:
+    - secretName: internal-acme-crt-secret
+      hosts:
+        - 'internal.lazz.tech'
+  rules:
+  - host: internal.lazz.tech
+    http:
+      paths:
+      - backend:
+          serviceName: homarr-service
+          servicePort: 80
