@@ -124,6 +124,11 @@ Grafana:
 
 Add loki as a data source in grafana with `http://loki:3100` as the url.
 
+Metrics can be made to work with the monitoring stack from above via opening up the settings for your context:
+- Go to prometheus section
+- Set to prometheus-operator
+- Set prometheus service address to `default/prometheus-kube-prometheus-prometheus:9090`
+
 ## Networked Storage
 
 ```bash
@@ -165,10 +170,10 @@ $ kubectl -n default port-forward svc/goldilocks-dashboard 8080:80
 Lens is recommended:
 - https://k8slens.dev/
 
-Metric can be made to work with the monitoring stack from above via opening up the settings for your context:
-- Go to prometheus section
-- Set to prometheus-operator
-- Set prometheus service address to `default/prometheus-kube-prometheus-prometheus:9090`
+```bash
+# install dashboard
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+```
 
 ## k3OS tips and tricks
 
@@ -246,6 +251,11 @@ $ sudo reboot
 | ✅ | Uptime-Kuma | Status Page | Stable |
 | ✅ | Wg-access-server | Wireguard & UI | Needs work or replacement |
 | ✅ | Wikijs | Wiki | Switching from Dokuwiki |
+
+## Troubleshooting
+
+Certs on k3os seem to automatically change every year or so, so you'll neect to update your kubeconfig to regain access.
+https://serverfault.com/questions/1032367/kubectl-get-nodes-error-you-must-be-logged-in-to-the-server-unauthorized-ho
 
 
 
